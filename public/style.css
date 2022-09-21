@@ -1,21 +1,52 @@
 body {
-  font-family: sans-serif;
+  font-family: verdana;
+  background-color: #aac0aa;
 }
 
-a {
-  text-decoration: none;
+#main {
+  background-color: #d0dcd0;
 }
 
 label {
   display: block;
 }
 
+a {
+  text-decoration: none;
+}
+
 nav a {
   display: inline-block;
-  margin: 1em;
+  margin: 0.5rem;
+  background-color: #e6cb91;
+  color: #729772;
+  font-weight: bold;
+  padding: 0.7rem;
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 0.3rem;
+}
+
+nav a:hover {
+  color: #70ac87;
+  transition: 0.3s;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+#store_name {
+  display: flex;
+}
+
+#store_name > img {
+  width: 5rem;
+  object-fit: contain;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #d09462;
 }
