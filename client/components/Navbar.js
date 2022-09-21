@@ -16,7 +16,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <div className="home_button">
             <Link to="/">Home</Link>
           </div>
-          <Link to="/allProducts">All</Link>
+          <Link to="/products">All</Link>
           <Link to="/food">Food</Link>
           <Link to="/clothes">Clothes</Link>
           <Link to="/furniture">Furniture</Link>
@@ -31,7 +31,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <div className="home_button">
               <Link to="/">Home</Link>
             </div>
-            <Link to="/allProducts">All</Link>
+            <Link to="/products">All</Link>
             <Link to="/food">Food</Link>
             <Link to="/clothes">Clothes</Link>
             <Link to="/furniture">Furniture</Link>

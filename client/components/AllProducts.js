@@ -49,7 +49,7 @@ class AllProducts extends Component {
             return (
               <div className="allProducts" key={product.id}>
                 <h3>
-                  <Link to={`/allProducts/${product.id}`}>{product.name}</Link>
+                  <Link to={`/products/${product.id}`}>{product.name}</Link>
                 </h3>
                 <p>
                   <img src={product.imageURL} alt="product image" />

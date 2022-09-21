@@ -11,7 +11,7 @@ export const _getAllProducts = (allProducts) => ({
 export const getAllProducts = () => {
   return async (dispatch) => {
     try {
-      const { data: products } = await axios.get("/api/allProducts");
+      const { data: products } = await axios.get("/api/products");
       dispatch(_getAllProducts(products));
     } catch (error) {
       console.log(error);
