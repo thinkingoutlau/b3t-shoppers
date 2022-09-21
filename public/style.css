@@ -60,3 +60,34 @@ h1 {
   margin: 0 1rem 1rem 1rem;
   border-radius: 0 0 15px 15px;
 }
+
+#featured {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#featured > img {
+  width: 3rem;
+}
+
+#featured > h2 {
+  text-align: center;
+  color: #5f3a1c;
+  margin: 0.5rem;
+}
+
+.banner {
+  height: calc(100vh - 30rem);
+  width: 100%;
+  display: flex;
+}
+
+.banner_slide {
+  background-color: #e8d19b;
+  width: 33%;
+  margin: 1rem;
+  border-color: #dab476;
+  border-style: solid;
+  border-width: 0.3rem;
+}

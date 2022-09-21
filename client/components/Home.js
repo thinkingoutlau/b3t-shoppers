@@ -9,7 +9,16 @@ export const Home = (props) => {
 
   return (
     <div>
-      <h3>Hello from Home</h3>
+      <div id="featured">
+        <img src="/images/Gold_Roses_NH_Inv_Icon.png" />
+        <h2>featured items:</h2>
+        <img src="/images/Gold_Roses_NH_Inv_Icon.png" />
+      </div>
+      <div class="banner">
+        <div className="banner_slide"></div>
+        <div className="banner_slide"></div>
+        <div className="banner_slide"></div>
+      </div>
     </div>
   );
 };
