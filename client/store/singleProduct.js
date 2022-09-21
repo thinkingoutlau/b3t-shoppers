@@ -14,7 +14,7 @@ export const gotSingleProduct = (id, history) => {
   console.log("hit this thunk");
   return async (dispatch) => {
     try {
-      const { data: product } = await axios.get(`/api/product/${id}`);
+      const { data: product } = await axios.get(`/api/products/${id}`);
       console.log("product in thunk", product);
       dispatch(_gotSingleProduct(product));
     } catch (error) {

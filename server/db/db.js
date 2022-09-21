@@ -30,6 +30,9 @@ const db = new Sequelize({
   password: "admin", // setting password because on Windows it won't connect without a password specified
 });
 
-// const db = new Sequelize(process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config);
+// const db = new Sequelize(
+//   process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
+//   config
+// );
 
 module.exports = db;

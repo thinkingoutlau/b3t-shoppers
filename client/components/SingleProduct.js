@@ -12,7 +12,7 @@ class SingleProduct extends React.Component {
     return (
       <div>
         <h1>This item's name is:{this.props.product.name}</h1>
-        <img src={this.props.product.imageUrl} alt="product icon" />
+        <img src={this.props.product.imageURL} alt="product icon" />
         <h1>This item's description is:{this.props.product.description}</h1>
       </div>
     );
