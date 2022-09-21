@@ -5,7 +5,6 @@ import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import AllProducts from "./components/AllProducts";
 import { me } from "./store";
-// import { getAllProducts } from "./store/allProducts";
 
 /**
  * COMPONENT
@@ -13,7 +12,6 @@ import { me } from "./store";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
-    // this.props.getAllProducts();
   }
 
   render() {
@@ -23,12 +21,13 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
-            <Redirect to="/home" />
+            <Route exact path="/" component={Home} />
+            <Redirect to="/" />
+            <Route path="/allProducts" component={AllProducts} />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
+            <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/allProducts" component={AllProducts} />
@@ -55,7 +54,6 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
     },
-    // getAllProducts: () => dispatch(getAllProducts()),
   };
 };
 
