@@ -1,5 +1,6 @@
 "use strict";
 
+const { default: axios } = require("axios");
 const {
   db,
   models: { User, Product },
@@ -13,12 +14,13 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  // Creating Users
+  // Creating users
   const users = await Promise.all([
     User.create({ username: "cody", password: "123" }),
     User.create({ username: "murphy", password: "123" }),
   ]);
 
+  // Creating products
   const products = await Promise.all([
     Product.create(
       {
@@ -40,8 +42,6 @@ async function seed() {
     ),
   ]);
 
-  console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
   return {
     users: {
