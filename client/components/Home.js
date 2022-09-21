@@ -14,7 +14,7 @@ export const Home = (props) => {
         <h2>featured items:</h2>
         <img src="/images/Gold_Roses_NH_Inv_Icon.png" />
       </div>
-      <div class="banner">
+      <div className="banner">
         <div className="banner_slide"></div>
         <div className="banner_slide"></div>
         <div className="banner_slide"></div>
