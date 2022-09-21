@@ -69,10 +69,6 @@ nav a:hover {
   color: #dc9a84;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
-}
 
 .allProducts {
   display: inline-block;
@@ -182,4 +178,19 @@ form div {
   width: 8rem;
   height: 3rem;
   transition-duration: 0.3s;
+}
+
+.auth_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #729772;
+  border-radius: 15px;
+  margin: 4rem;
+}
+
+form div {
+  margin: 1em;
+  display: inline-block;
 }

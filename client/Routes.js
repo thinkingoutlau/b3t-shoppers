@@ -24,8 +24,8 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/products/:id" component={SingleProduct} />
-            <Redirect to="/" />
             <Route path="/products" component={AllProducts} />
+            <Redirect to="/" />
           </Switch>
         ) : (
           <Switch>
