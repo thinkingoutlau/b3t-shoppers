@@ -11,10 +11,11 @@ const _gotSingleProduct = (product) => ({
 
 //thunk creators
 export const gotSingleProduct = (id, history) => {
+  console.log("hit this thunk");
   return async (dispatch) => {
     try {
-      console.log("hit this thunk");
       const { data: product } = await axios.get(`/api/product/${id}`);
+      console.log("product in thunk", product);
       dispatch(_gotSingleProduct(product));
     } catch (error) {
       next(err);
@@ -26,6 +27,7 @@ export const gotSingleProduct = (id, history) => {
 export default function productReducer(state = {}, action) {
   switch (action.type) {
     case GOT_SINGLE_PRODUCT:
+      console.log("product in reducer", action.product);
       return action.product;
     default:
       return state;

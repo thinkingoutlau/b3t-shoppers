@@ -3,26 +3,32 @@ import { connect } from "react-redux";
 import { gotSingleProduct } from "../store/singleProduct";
 
 class SingleProduct extends React.Component {
-  componentDidMout() {
+  componentDidMount() {
     this.props.gotSingleProduct(this.props.match.params.id);
   }
 
   render() {
-    console.log("this.props", this.props);
+    console.log("this.props.product", this.props.product);
     return (
       <div>
-        <h1>
-          I'm on the single product page displaying {this.props.match.params.id}
-        </h1>
+        <h1>This item's name is:{this.props.product.name}</h1>
+        <img src={this.props.product.imageUrl} alt="product icon"></img>
+        <h1>This item's description is:{this.props.product.description}</h1>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    gotSingleProduct: (id) => dispatch(gotSingleProduct(id)),
+    product: state.product,
   };
 };
 
-export default connect(null, mapDispatchToProps)(SingleProduct);
+const mapDispatchToProps = (dispatch, { history }) => {
+  return {
+    gotSingleProduct: (id) => dispatch(gotSingleProduct(id, history)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct);
