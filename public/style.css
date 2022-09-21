@@ -45,7 +45,7 @@ h1 {
   align-items: center;
 }
 
-nav a {
+.product_buttons > a {
   margin: 0.5rem;
   background-color: #e6cb91;
   color: #729772;
@@ -61,21 +61,23 @@ nav a:hover {
   transition: 0.3s;
 }
 
-.home_button > a {
+.nonprod_button > a {
+  margin: 0.5rem;
+  background-color: #e6cb91;
   color: #dc9a84;
-}
-
-.login_button > a {
-  color: #dc9a84;
+  font-weight: bold;
+  padding: 0.7rem;
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 0.3rem;
 }
 
 .cart_button {
   background-color: transparent;
   border: none;
-  cursor: pointer;
 }
 
-.cart_button > img {
+.cart_img {
   width: 4.5rem;
 }
 

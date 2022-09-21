@@ -14,19 +14,26 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <div id="nav_bar">
           {/* The navbar will show these links after you log in */}
           <div>
-            <div className="home_button">
+            <div className="nonprod_button">
               <Link to="/">Home</Link>
             </div>
-            <Link to="/products">All</Link>
-            <Link to="/food">Food</Link>
-            <Link to="/clothes">Clothes</Link>
-            <Link to="/furniture">Furniture</Link>
-            <Link to="/myAccount">My Account</Link>
+            <div className="product_buttons">
+              <Link to="/products">All</Link>
+              <Link to="/food">Food</Link>
+              <Link to="/clothes">Clothes</Link>
+              <Link to="/furniture">Furniture</Link>
+            </div>
           </div>
-          <div className="login_button">
-            <button type="button" className="cart_button">
-              <img src="/images/Menu_Nook_Shopping_NH_Icon.png" />
-            </button>
+          <div className="nonprod_button">
+            <div className="cart_button">
+              <Link to="/cart">
+                <img
+                  src="/images/Menu_Nook_Shopping_NH_Icon.png"
+                  className="cart_img"
+                />
+              </Link>
+            </div>
+            <Link to="/myAccount">My Account</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -36,18 +43,25 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <div id="nav_bar">
           {/* The navbar will show these links before you log in */}
           <div>
-            <div className="home_button">
+            <div className="nonprod_button">
               <Link to="/">Home</Link>
             </div>
-            <Link to="/products">All</Link>
-            <Link to="/food">Food</Link>
-            <Link to="/clothes">Clothes</Link>
-            <Link to="/furniture">Furniture</Link>
+            <div className="product_buttons">
+              <Link to="/products">All</Link>
+              <Link to="/food">Food</Link>
+              <Link to="/clothes">Clothes</Link>
+              <Link to="/furniture">Furniture</Link>
+            </div>
           </div>
-          <div className="login_button">
-            <button type="button" className="cart_button">
-              <img src="/images/Menu_Nook_Shopping_NH_Icon.png" />
-            </button>
+          <div className="nonprod_button">
+            <div className="cart_button">
+              <Link to="/cart">
+                <img
+                  src="/images/Menu_Nook_Shopping_NH_Icon.png"
+                  className="cart_img"
+                />
+              </Link>
+            </div>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
