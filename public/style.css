@@ -69,6 +69,16 @@ nav a:hover {
   color: #dc9a84;
 }
 
+.cart_button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.cart_button > img {
+  width: 4.5rem;
+}
+
 form div {
   margin: 1em;
   display: inline-block;

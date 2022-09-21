@@ -23,6 +23,9 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <Link to="/furniture">Furniture</Link>
           </div>
           <div className="login_button">
+            <button type="button" className="cart_button">
+              <img src="/images/Menu_Nook_Shopping_NH_Icon.png" />
+            </button>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -41,6 +44,9 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <Link to="/furniture">Furniture</Link>
           </div>
           <div className="login_button">
+            <button type="button" className="cart_button">
+              <img src="/images/Menu_Nook_Shopping_NH_Icon.png" />
+            </button>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
