@@ -97,31 +97,30 @@ form div {
   border-radius: 0 0 15px 15px;
 }
 
-#featured {
+.featured {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#featured > img {
+.featured > img {
   width: 3rem;
 }
 
-#featured > h2 {
+.featured > h2 {
   text-align: center;
   color: #5f3a1c;
   margin: 0.5rem;
 }
 
 .banner {
-  height: calc(100vh - 30rem);
   display: flex;
   justify-content: center;
 }
 
 .banner_slide {
   background-color: #e8d19b;
-  height: 20rem;
+  height: 18rem;
   width: 15rem;
   margin: 1rem;
   border-color: #dab476;
@@ -138,7 +137,7 @@ form div {
 }
 
 .single_product_img {
-  display:flex;
+  display: flex;
   width: 30%;
   justify-content: center;
   align-items: center;
@@ -153,11 +152,11 @@ form div {
   color: #729772;
 }
 
-.single_product_info > h1{
+.single_product_info > h1 {
   color: #729772;
 }
 
-.single_product_actions{
+.single_product_actions {
   display: flex;
   width: 30%;
   flex-direction: column;
