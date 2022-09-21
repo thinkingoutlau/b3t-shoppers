@@ -3,12 +3,15 @@ body {
   background-color: #aac0aa;
 }
 
-#main {
-  background-color: #d0dcd0;
-}
-
 label {
   display: block;
+}
+
+#nav {
+  background-color: #d0dcd0;
+  padding: 1rem;
+  margin: 1rem 1rem 0 1rem;
+  border-radius: 15px 15px 0 0;
 }
 
 a {
@@ -49,4 +52,11 @@ form div {
 h1 {
   font-size: 2.5rem;
   color: #d09462;
+}
+
+#components {
+  background-color: #f0e0bc;
+  padding: 1rem;
+  margin: 0 1rem 1rem 1rem;
+  border-radius: 0 0 15px 15px;
 }

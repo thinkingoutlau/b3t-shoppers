@@ -5,9 +5,13 @@ import Routes from './Routes';
 
 const App = () => {
   return (
-    <div id="main">
-      <Navbar />
-      <Routes />
+    <div>
+      <div id="nav">
+        <Navbar />
+      </div>
+      <div id="components">
+        <Routes />
+      </div>
     </div>
   );
 };
