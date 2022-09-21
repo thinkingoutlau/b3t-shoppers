@@ -23,7 +23,6 @@ class AllProducts extends Component {
     const products = this.props.allProducts;
     const { filter } = this.state;
     products.filter((product) => {
-      console.log(product.type);
       if (filter === "Food") return product.type.includes("fish");
     });
     return (

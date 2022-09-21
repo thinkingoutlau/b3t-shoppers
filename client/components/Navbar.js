@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { logout } from '../store';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
@@ -21,6 +21,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <Link to="/food">Food</Link>
             <Link to="/clothes">Clothes</Link>
             <Link to="/furniture">Furniture</Link>
+            <Link to="/myAccount">My Account</Link>
           </div>
           <div className="login_button">
             <button type="button" className="cart_button">
