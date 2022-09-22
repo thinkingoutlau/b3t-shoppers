@@ -52,7 +52,7 @@ async function fetchAllSeaCreatures() {
 
 async function mapSeaCreaturesObj() {
   const seaCreaturesObj = await fetchAllSeaCreatures();
-  for (const property in SeaCreaturesObj) {
+  for (const property in seaCreaturesObj) {
     const capitalizedProperty = capitalizeName(property);
     await Promise.all([
       Product.create({
