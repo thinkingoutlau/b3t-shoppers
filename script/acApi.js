@@ -20,14 +20,19 @@ async function fetchAllHouseware() {
   const { data } = await axios.get("https://acnhapi.com/v1/houseware");
   return data;
 }
+//chests
 
-async function mapHousewareObj() {
-  const housewareObj = await fetchAllHouseware();
-  for (const property in housewareObj) {
-    const capitalizedProperty = capitalizeName(property);
-    let arrVariants = housewareObj[property];
-    for (let i = 0; i < arrVariants.length; i++) {
-      console.log(arrVariants[i].name["name-USen"]);
-    }
-  }
-}
+// tags to seed:
+
+// housewares:
+// bed + chair + desk + dresser + sofa + table + bathroom things + bath = furniture
+// lamps + clocks + arch + folk craft decor + house door decor + decor = decor
+// home appliances + audio + tv + air conditioning = electronics
+
+// outdoor stuff:
+// garden + outdoors decor = outdoor
+
+// other:
+// musical instruments
+// easter + seasonal decor + seasonal Decor = seasonal
+// fish + game console + insect + toy = toys

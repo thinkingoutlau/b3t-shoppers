@@ -1,5 +1,20 @@
 "use strict";
 
+// tags to seed:
+
+// housewares:
+// bed + chair + desk + dresser + sofa + table + bathroom things + bath = furniture
+// lamps + clocks + arch + folk craft decor + house door decor + decor = decor
+// home appliances + audio + tv + air conditioning = electronics
+
+// outdoor stuff:
+// garden + outdoors decor = outdoor
+
+// other:
+// musical instruments
+// easter + seasonal decor + seasonal Decor = seasonal
+// fish + game console + insect + toy = toys
+
 const { default: axios } = require("axios");
 const {
   db,
