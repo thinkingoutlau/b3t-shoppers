@@ -36,6 +36,37 @@ function capitalizeName(string) {
   return finalString;
 }
 
+let tagsToSeed = [
+  "Bed",
+  "Chair",
+  "Desk",
+  "Dresser",
+  "Sofa",
+  "Table",
+  "Bathroom Things",
+  "Bath",
+  "Lamps",
+  "Clocks",
+  "Arch",
+  "Folk Craft Decor",
+  "House Door Decor",
+  "Decor",
+  "Audio",
+  "TV",
+  "Air Conditioning",
+  "Home Appliances",
+  "Garden",
+  "Outdoors Decor",
+  "Musical Instruments",
+  "Easter",
+  "Seasonal Decor",
+  "Seasonal decor",
+  "Fish",
+  "Game Console",
+  "Insect",
+  "Toy",
+];
+
 // seed fishies
 async function fetchAllFish() {
   const { data } = await axios.get("http://acnhapi.com/v1/fish");
@@ -128,22 +159,83 @@ async function mapFossilsObj() {
   }
 }
 
-// // seed houseware
-// async function fetchAllHouseware() {
-//   const { data } = await axios.get("https://acnhapi.com/v1/houseware");
-//   return data;
-// }
+// seed housewares
+async function fetchAllHouseware() {
+  const { data } = await axios.get("https://acnhapi.com/v1/houseware");
+  return data;
+}
 
-// async function mapHousewareObj() {
-//   const housewareObj = await fetchAllHouseware();
-//   for (const property in housewareObj) {
-//     const capitalizedProperty = capitalizeName(property);
-//     let arrVariants = housewareObj[property];
-//     for (let i = 0; i < arrVariants.length; i++) {
-//       if (arrVariants[i])
-//     }
-//   }
-// }
+async function mapHousewareObj() {
+  const housewareObj = await fetchAllHouseware();
+  for (const property in housewareObj) {
+    const capitalizedProperty = capitalizeName(property);
+    let arrVariants = housewareObj[property];
+    if (tagsToSeed.includes(arrVariants[0].tag)) {
+      await Promise.all([
+        Product.create({
+          name: capitalizedProperty,
+          type: arrVariants[0].tag,
+          description: "",
+          price: arrVariants[0]["sell-price"],
+          imageURL: arrVariants[0]["image_uri"],
+          quantity: 100,
+        }),
+      ]);
+    }
+  }
+}
+
+// seed wall mounted
+async function fetchAllWallMounted() {
+  const { data } = await axios.get("https://acnhapi.com/v1/wallmounted");
+  return data;
+}
+
+async function mapWallMountedObj() {
+  const wallMountedObj = await fetchAllWallMounted();
+  for (const property in wallMountedObj) {
+    const capitalizedProperty = capitalizeName(property);
+    let arrVariants = wallMountedObj[property];
+    if (tagsToSeed.includes(arrVariants[0].tag)) {
+      await Promise.all([
+        Product.create({
+          name: capitalizedProperty,
+          type: arrVariants[0].tag,
+          description: "",
+          price: arrVariants[0]["sell-price"],
+          imageURL: arrVariants[0]["image_uri"],
+          quantity: 100,
+        }),
+      ]);
+    }
+  }
+}
+
+// seed misc
+async function fetchAllMisc() {
+  const { data } = await axios.get("https://acnhapi.com/v1/misc");
+  return data;
+}
+
+async function mapMiscObj() {
+  const miscObj = await fetchAllMisc();
+  for (const property in miscObj) {
+    const capitalizedProperty = capitalizeName(property);
+    let arrVariants = miscObj[property];
+    if (tagsToSeed.includes(arrVariants[0].tag)) {
+      await Promise.all([
+        Product.create({
+          name: capitalizedProperty,
+          type: arrVariants[0].tag,
+          description: "",
+          price: arrVariants[0]["sell-price"],
+          imageURL: arrVariants[0]["image_uri"],
+          quantity: 100,
+        }),
+      ]);
+    }
+  }
+}
 
 /**
  * seed - this function clears the database, updates tables to
@@ -169,6 +261,9 @@ async function seed() {
   await mapSeaCreaturesObj();
   await mapBugsObj();
   await mapFossilsObj();
+  await mapHousewareObj();
+  await mapWallMountedObj();
+  await mapMiscObj();
 
   console.log(`seeded successfully`);
 }
