@@ -26,7 +26,7 @@ router.get("/:username", async (req, res, next) => {
       where: {
         username: req.params.username,
       },
-      attributes: ["id", "username", "cart", "wishlist"],
+      attributes: ["id", "username"],
     });
     res.json(user);
   } catch (err) {

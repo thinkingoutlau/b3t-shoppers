@@ -6,11 +6,19 @@ const axios = require("axios");
 
 const SALT_ROUNDS = 5;
 
+//include address
+//payment method
 const User = db.define("user", {
   username: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      isEmail: true,
+    },
   },
   password: {
     type: Sequelize.STRING,

@@ -20,11 +20,25 @@ class AllProducts extends Component {
   }
 
   render() {
-    const products = this.props.allProducts;
     const { filter } = this.state;
-    products.filter((product) => {
-      if (filter === "Food") return product.type.includes("fish");
+    const products = this.props.allProducts.filter((product) => {
+      if (filter === "All Products") {
+        return product;
+      }
+      if (filter === "Fish") {
+        return product.type.includes("fish");
+      }
+      if (filter === "Sea Creatures") {
+        return product.type.includes("sea creatures");
+      }
+      if (filter === "Bugs") {
+        return product.type.includes("bugs");
+      }
+      if (filter === "Fossils") {
+        return product.type.includes("fossils");
+      }
     });
+    // console.log("print out types", products);
     return (
       <>
         <div>
@@ -37,9 +51,10 @@ class AllProducts extends Component {
               onChange={this.handleFilter}
             >
               <option value="All Products">All Products</option>
-              <option value="Food">Food</option>
-              <option value="Drinks">Drinks</option>
-              <option value="Clothes">Clothes</option>
+              <option value="Fish">Fish</option>
+              <option value="Sea Creatures">Sea Creatures</option>
+              <option value="Bugs">Bugs</option>
+              <option value="Fossils">Fossils</option>
             </select>
           </p>
         </div>

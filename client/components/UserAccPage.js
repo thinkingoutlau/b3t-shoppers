@@ -5,7 +5,7 @@ import { getUserFromServer } from "../store/user";
 //what we still want:
 //include email
 //reset password button
-//personal info --> address, payment info
+//personal info --> address, payment info //add in edit button
 //history
 
 class UserAccPage extends Component {
@@ -13,6 +13,7 @@ class UserAccPage extends Component {
     this.props.getUserFromServer(this.props.username);
   }
   render() {
+    console.log("showthis", this.props);
     return (
       <div>
         <h1>{`Welcome ${this.props.username}!`}</h1>
