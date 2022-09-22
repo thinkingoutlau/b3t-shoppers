@@ -54,7 +54,6 @@ class AllProducts extends Component {
                   <img src={product.imageURL} alt="product image" />
                 </p>
                 <p>{product.price}</p>
-                <p>{product.description}</p>
               </div>
             );
           })}

@@ -1,58 +1,157 @@
 "use strict";
 
+const { default: axios } = require("axios");
 const {
   db,
   models: { User, Product },
 } = require("../server/db");
 
+// functions to help seed db
+function capitalizeName(string) {
+  while (string.includes("_")) {
+    let spaceSpot = string.indexOf("_");
+    string =
+      string.substring(0, spaceSpot) +
+      " " +
+      string.charAt(spaceSpot + 1).toUpperCase() +
+      string.substring(spaceSpot + 2);
+  }
+  const finalString = string.charAt(0).toUpperCase() + string.slice(1);
+
+  return finalString;
+}
+
+// seed fishies
+async function fetchAllFish() {
+  const { data } = await axios.get("http://acnhapi.com/v1/fish");
+  return data;
+}
+
+async function mapFishObj() {
+  const fishObj = await fetchAllFish();
+  for (const property in fishObj) {
+    const capitalizedProperty = capitalizeName(property);
+    await Promise.all([
+      Product.create({
+        name: capitalizedProperty,
+        type: "fish",
+        description: fishObj[property]["museum-phrase"],
+        price: fishObj[property]["price"],
+        imageURL: fishObj[property]["icon_uri"],
+        quantity: 100,
+      }),
+    ]);
+  }
+}
+
+// seed sea creatures
+async function fetchAllSeaCreatures() {
+  const { data } = await axios.get("http://acnhapi.com/v1/sea");
+  return data;
+}
+
+async function mapSeaCreaturesObj() {
+  const seaCreaturesObj = await fetchAllSeaCreatures();
+  for (const property in SeaCreaturesObj) {
+    const capitalizedProperty = capitalizeName(property);
+    await Promise.all([
+      Product.create({
+        name: capitalizedProperty,
+        type: "sea creatures",
+        description: seaCreaturesObj[property]["museum-phrase"],
+        price: seaCreaturesObj[property]["price"],
+        imageURL: seaCreaturesObj[property]["icon_uri"],
+        quantity: 100,
+      }),
+    ]);
+  }
+}
+
+// seed bugs
+async function fetchAllBugs() {
+  const { data } = await axios.get("https://acnhapi.com/v1/bugs");
+  return data;
+}
+
+async function mapBugsObj() {
+  const bugsObj = await fetchAllBugs();
+  for (const property in bugsObj) {
+    const capitalizedProperty = capitalizeName(property);
+    await Promise.all([
+      Product.create({
+        name: capitalizedProperty,
+        type: "bugs",
+        description: bugsObj[property]["museum-phrase"],
+        price: bugsObj[property]["price"],
+        imageURL: bugsObj[property]["icon_uri"],
+        quantity: 100,
+      }),
+    ]);
+  }
+}
+
+// seed fossils
+async function fetchAllFossils() {
+  const { data } = await axios.get("http://acnhapi.com/v1/fossils");
+  return data;
+}
+
+async function mapFossilsObj() {
+  const fossilsObj = await fetchAllFossils();
+  for (const property in fossilsObj) {
+    const capitalizedProperty = capitalizeName(property);
+    await Promise.all([
+      Product.create({
+        name: capitalizedProperty,
+        type: "fossils",
+        description: fossilsObj[property]["museum-phrase"],
+        price: fossilsObj[property]["price"],
+        imageURL: fossilsObj[property]["image_uri"],
+        quantity: 100,
+      }),
+    ]);
+  }
+}
+
+// // seed houseware
+// async function fetchAllHouseware() {
+//   const { data } = await axios.get("https://acnhapi.com/v1/houseware");
+//   return data;
+// }
+
+// async function mapHousewareObj() {
+//   const housewareObj = await fetchAllHouseware();
+//   for (const property in housewareObj) {
+//     const capitalizedProperty = capitalizeName(property);
+//     let arrVariants = housewareObj[property];
+//     for (let i = 0; i < arrVariants.length; i++) {
+//       if (arrVariants[i])
+//     }
+//   }
+// }
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
+
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  // Creating Users
+  // Creating users
   const users = await Promise.all([
     User.create({ username: "cody", password: "123" }),
     User.create({ username: "murphy", password: "123" }),
   ]);
 
-  const products = await Promise.all([
-    Product.create(
-      {
-        name: "surgeon fish",
-        type: "fish",
-        description: "this aint real",
-        price: "1000",
-        imageURL: "https://acnhapi.com/v1/icons/fish/50",
-        quantity: 1,
-      },
-      Product.create({
-        name: "yellow butterfly",
-        type: "bug",
-        description: "its yello",
-        price: "160",
-        imageURL: "https://acnhapi.com/v1/icons/bugs/2",
-        quantity: 2,
-      })
-    ),
-  ]);
+  // Creating products
+  await mapFishObj();
+  await mapSeaCreaturesObj();
+  await mapBugsObj();
+  await mapFossilsObj();
 
-  console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1],
-    },
-    products: {
-      surgeonFish: products[0],
-      yellowButterfly: products[1],
-    },
-  };
 }
 
 /*
@@ -82,6 +181,3 @@ async function runSeed() {
 if (module === require.main) {
   runSeed();
 }
-
-// we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed;
