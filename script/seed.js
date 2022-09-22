@@ -51,16 +51,16 @@ async function fetchAllSeaCreatures() {
 }
 
 async function mapSeaCreaturesObj() {
-  const SeaCreaturesObj = await fetchAllSeaCreatures();
+  const seaCreaturesObj = await fetchAllSeaCreatures();
   for (const property in SeaCreaturesObj) {
     const capitalizedProperty = capitalizeName(property);
     await Promise.all([
       Product.create({
         name: capitalizedProperty,
         type: "sea creatures",
-        description: SeaCreaturesObj[property]["museum-phrase"],
-        price: SeaCreaturesObj[property]["price"],
-        imageURL: SeaCreaturesObj[property]["icon_uri"],
+        description: seaCreaturesObj[property]["museum-phrase"],
+        price: seaCreaturesObj[property]["price"],
+        imageURL: seaCreaturesObj[property]["icon_uri"],
         quantity: 100,
       }),
     ]);
@@ -113,7 +113,22 @@ async function mapFossilsObj() {
   }
 }
 
-// seed houseware
+// // seed houseware
+// async function fetchAllHouseware() {
+//   const { data } = await axios.get("https://acnhapi.com/v1/houseware");
+//   return data;
+// }
+
+// async function mapHousewareObj() {
+//   const housewareObj = await fetchAllHouseware();
+//   for (const property in housewareObj) {
+//     const capitalizedProperty = capitalizeName(property);
+//     let arrVariants = housewareObj[property];
+//     for (let i = 0; i < arrVariants.length; i++) {
+//       if (arrVariants[i])
+//     }
+//   }
+// }
 
 /**
  * seed - this function clears the database, updates tables to
