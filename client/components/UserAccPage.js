@@ -17,10 +17,13 @@ class UserAccPage extends Component {
     console.log("showthis", this.props);
     return (
       <div>
-        <h1>{`Welcome ${this.props.auth.username}!`}</h1>
-        <br></br>
+        <h1>{`Welcome ${this.props.auth.fullName}!`}</h1>
+        {/* <br></br> */}
         <p>
           <strong>Name:</strong> {this.props.auth.fullName}
+        </p>
+        <p>
+          <strong>Username:</strong> {this.props.auth.username}
         </p>
         <p>
           <strong>Email:</strong> {this.props.auth.email}
