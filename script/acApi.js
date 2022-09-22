@@ -3,7 +3,6 @@ const axios = require("axios");
 // has icons
 async function fetchAllFish() {
   const { data } = await axios.get("http://acnhapi.com/v1/fish");
-  console.log(data);
   return data;
 }
 
@@ -38,4 +37,4 @@ async function fetchAllMisc() {
   return data;
 }
 
-fetchAllFish();
+module.exports;

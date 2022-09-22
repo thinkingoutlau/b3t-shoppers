@@ -6,10 +6,95 @@ const {
   models: { User, Product },
 } = require("../server/db");
 
+// functions to help seed db
+function capitalizeName(string) {
+  while (string.includes("_")) {
+    let spaceSpot = string.indexOf("_");
+    string =
+      string.substring(0, spaceSpot) +
+      " " +
+      string.charAt(spaceSpot + 1).toUpperCase() +
+      string.substring(spaceSpot + 2);
+  }
+  const finalString = string.charAt(0).toUpperCase() + string.slice(1);
+
+  return finalString;
+}
+
+// seed fishies
+async function fetchAllFish() {
+  const { data } = await axios.get("http://acnhapi.com/v1/fish");
+  return data;
+}
+
+async function mapFishObj() {
+  const fishObj = await fetchAllFish();
+  for (const property in fishObj) {
+    const capitalizedProperty = capitalizeName(property);
+    await Promise.all([
+      Product.create({
+        name: capitalizedProperty,
+        type: "fish",
+        description: fishObj[property]["museum-phrase"],
+        price: fishObj[property]["price"],
+        imageURL: fishObj[property]["icon_uri"],
+        quantity: 100,
+      }),
+    ]);
+  }
+}
+
+// seed sea creatures
+async function fetchAllSeaCreatures() {
+  const { data } = await axios.get("http://acnhapi.com/v1/sea");
+  return data;
+}
+
+async function mapSeaCreaturesObj() {
+  const SeaCreaturesObj = await fetchAllSeaCreatures();
+  for (const property in SeaCreaturesObj) {
+    const capitalizedProperty = capitalizeName(property);
+    await Promise.all([
+      Product.create({
+        name: capitalizedProperty,
+        type: "sea creatures",
+        description: SeaCreaturesObj[property]["museum-phrase"],
+        price: SeaCreaturesObj[property]["price"],
+        imageURL: SeaCreaturesObj[property]["icon_uri"],
+        quantity: 100,
+      }),
+    ]);
+  }
+}
+
+// seed bugs
+async function fetchAllBugs() {
+  const { data } = await axios.get("https://acnhapi.com/v1/bugs");
+  return data;
+}
+
+async function mapBugsObj() {
+  const bugsObj = await fetchAllBugs();
+  for (const property in bugsObj) {
+    const capitalizedProperty = capitalizeName(property);
+    await Promise.all([
+      Product.create({
+        name: capitalizedProperty,
+        type: "bugs",
+        description: bugsObj[property]["museum-phrase"],
+        price: bugsObj[property]["price"],
+        imageURL: bugsObj[property]["icon_uri"],
+        quantity: 100,
+      }),
+    ]);
+  }
+}
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
+
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
@@ -21,38 +106,11 @@ async function seed() {
   ]);
 
   // Creating products
-  const products = await Promise.all([
-    Product.create(
-      {
-        name: "surgeon fish",
-        type: "fish",
-        description: "this aint real",
-        price: "1000",
-        imageURL: "https://acnhapi.com/v1/icons/fish/50",
-        quantity: 1,
-      },
-      Product.create({
-        name: "yellow butterfly",
-        type: "bug",
-        description: "its yello",
-        price: "160",
-        imageURL: "https://acnhapi.com/v1/icons/bugs/2",
-        quantity: 2,
-      })
-    ),
-  ]);
+  await mapFishObj();
+  await mapSeaCreaturesObj();
+  await mapBugsObj();
 
   console.log(`seeded successfully`);
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1],
-    },
-    products: {
-      surgeonFish: products[0],
-      yellowButterfly: products[1],
-    },
-  };
 }
 
 /*
@@ -82,6 +140,3 @@ async function runSeed() {
 if (module === require.main) {
   runSeed();
 }
-
-// we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed;
