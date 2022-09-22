@@ -90,6 +90,31 @@ async function mapBugsObj() {
   }
 }
 
+// seed fossils
+async function fetchAllFossils() {
+  const { data } = await axios.get("http://acnhapi.com/v1/fossils");
+  return data;
+}
+
+async function mapFossilsObj() {
+  const fossilsObj = await fetchAllFossils();
+  for (const property in fossilsObj) {
+    const capitalizedProperty = capitalizeName(property);
+    await Promise.all([
+      Product.create({
+        name: capitalizedProperty,
+        type: "fossils",
+        description: fossilsObj[property]["museum-phrase"],
+        price: fossilsObj[property]["price"],
+        imageURL: fossilsObj[property]["image_uri"],
+        quantity: 100,
+      }),
+    ]);
+  }
+}
+
+// seed houseware
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -109,6 +134,7 @@ async function seed() {
   await mapFishObj();
   await mapSeaCreaturesObj();
   await mapBugsObj();
+  await mapFossilsObj();
 
   console.log(`seeded successfully`);
 }
