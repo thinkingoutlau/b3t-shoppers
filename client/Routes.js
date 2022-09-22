@@ -31,7 +31,6 @@ class Routes extends Component {
             <Route path="/products" component={AllProducts} />
             <Route path="/cart" component={Cart} />
             <Route path="/myAccount" component={UserAccPage} />
-            {/* <Redirect to="/" /> */}
           </Switch>
         ) : (
           <Switch>

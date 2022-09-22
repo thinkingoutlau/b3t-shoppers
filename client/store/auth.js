@@ -44,8 +44,6 @@ export const authenticate =
     }
   };
 
-//separate
-
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   history.push("/login");

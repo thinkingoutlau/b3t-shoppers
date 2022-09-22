@@ -38,7 +38,7 @@ class AllProducts extends Component {
         return product.type.includes("fossils");
       }
     });
-    // console.log("print out types", products);
+
     return (
       <>
         <div>
