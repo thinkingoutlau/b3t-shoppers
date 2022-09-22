@@ -8,7 +8,6 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    console.log(this.props.product);
     return (
       <div className="single_product">
         <div className="single_product_img">

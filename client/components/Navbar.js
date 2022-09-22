@@ -2,6 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
+import Cart from "./Cart";
+
+function handleCart() {
+  const cartBlock = document.getElementById("cart_block");
+  if (cartBlock.classList.contains("hide_block")) {
+    cartBlock.classList.remove("hide_block");
+    cartBlock.classList.add("show_block");
+  } else {
+    cartBlock.classList.add("fade_out");
+    setTimeout(() => {
+      cartBlock.classList.remove("show_block");
+      cartBlock.classList.add("hide_block");
+      cartBlock.classList.remove("fade_out");
+    }, 900);
+  }
+}
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
@@ -14,16 +30,30 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <div id="nav_bar">
           {/* The navbar will show these links after you log in */}
           <div>
-            <div className="home_button">
+            <div className="nonprod_button">
               <Link to="/">Home</Link>
             </div>
-            <Link to="/products">All</Link>
-            <Link to="/food">Food</Link>
-            <Link to="/clothes">Clothes</Link>
-            <Link to="/furniture">Furniture</Link>
-            <Link to="/myAccount">My Account</Link>
+            <div className="product_buttons">
+              <Link to="/products">All</Link>
+              <Link to="/food">Food</Link>
+              <Link to="/clothes">Clothes</Link>
+              <Link to="/furniture">Furniture</Link>
+            </div>
           </div>
-          <div className="login_button">
+          <div className="nonprod_button">
+            <div>
+              <button
+                type="button"
+                className="cart_button"
+                onClick={() => handleCart()}
+              >
+                <img
+                  src="/images/Menu_Nook_Shopping_NH_Icon.png"
+                  className="cart_img"
+                />
+              </button>
+            </div>
+            <Link to="/myAccount">My Account</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -33,21 +63,50 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <div id="nav_bar">
           {/* The navbar will show these links before you log in */}
           <div>
-            <div className="home_button">
+            <div className="nonprod_button">
               <Link to="/">Home</Link>
             </div>
-            <Link to="/products">All</Link>
-            <Link to="/food">Food</Link>
-            <Link to="/clothes">Clothes</Link>
-            <Link to="/furniture">Furniture</Link>
+            <div className="product_buttons">
+              <Link to="/products">All</Link>
+              <Link to="/food">Food</Link>
+              <Link to="/clothes">Clothes</Link>
+              <Link to="/furniture">Furniture</Link>
+            </div>
           </div>
-          <div className="login_button">
+          <div className="nonprod_button">
+            <div className="cart_button">
+              <button
+                type="button"
+                className="cart_button"
+                onClick={() => handleCart()}
+              >
+                <img
+                  src="/images/Menu_Nook_Shopping_NH_Icon.png"
+                  className="cart_img"
+                />
+              </button>
+            </div>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
         </div>
       )}
     </nav>
+    <div id="cart_block" className="hide_block">
+      <div id="behind_cart">
+        <div id="cart_view">
+          <div id="inner_cart_view">
+            <div id="cart_text">
+              <h2>YOUR CART:</h2>
+              <button type="button" onClick={() => handleCart()}>
+                X
+              </button>
+            </div>
+            <Cart />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 );
 

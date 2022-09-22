@@ -2,9 +2,15 @@ import axios from "axios";
 
 const initialState = {};
 const GET_USER = "GET_USER";
+const UPDATE_USER = "UPDATE_USER";
 
 export const _getUser = (user) => ({
   type: GET_USER,
+  user,
+});
+
+export const _updateUser = (user) => ({
+  type: UPDATE_USER,
   user,
 });
 
@@ -19,9 +25,25 @@ export const getUserFromServer = (username) => {
   };
 };
 
+export const updateUser = (user) => {
+  return async (dispatch) => {
+    try {
+      const { data: user } = await axios.put(
+        `/api/users/${user.username}`,
+        user
+      );
+      dispatch(_updateUser(user));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_USER:
+      return action.user;
+    case UPDATE_USER:
       return action.user;
     default:
       return state;
