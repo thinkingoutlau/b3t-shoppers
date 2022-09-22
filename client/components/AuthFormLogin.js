@@ -5,9 +5,8 @@ import { authenticate } from "../store";
 /**
  * COMPONENT
  */
-const AuthForm = (props) => {
+const AuthFormLogin = (props) => {
   const { name, displayName, handleSubmit, error } = props;
-
   return (
     <div>
       <form onSubmit={handleSubmit} name={name} className="auth_form">
@@ -49,14 +48,6 @@ const mapLogin = (state) => {
   };
 };
 
-const mapSignup = (state) => {
-  return {
-    name: "signup",
-    displayName: "Sign Up",
-    error: state.auth.error,
-  };
-};
-
 const mapDispatch = (dispatch) => {
   return {
     handleSubmit(evt) {
@@ -64,10 +55,9 @@ const mapDispatch = (dispatch) => {
       const formName = evt.target.name;
       const username = evt.target.username.value;
       const password = evt.target.password.value;
-      dispatch(authenticate(username, password, formName));
+      dispatch(authenticate(username, null, password, formName));
     },
   };
 };
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm);
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
+export const Login = connect(mapLogin, mapDispatch)(AuthFormLogin);
