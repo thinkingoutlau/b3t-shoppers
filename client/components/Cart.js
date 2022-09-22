@@ -1,24 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
+import { getUserFromServer } from "../store/user";
 
 class Cart extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getUserFromServer(this.props.username);
+  }
 
   render() {
-    return <div>Hello from Cart</div>;
+    return (
+      <div>
+        <h2>Your Cart:</h2>
+      </div>
+    );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    product: state.product,
+    username: state.auth.username,
   };
 };
 
-const mapDispatchToProps = (dispatch, { history }) => {
-  return {
-    gotSingleProduct: (id) => dispatch(gotSingleProduct(id, history)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  getUserFromServer: (username) => dispatch(getUserFromServer(username)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
