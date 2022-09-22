@@ -9,6 +9,10 @@ const SALT_ROUNDS = 5;
 //include address
 //payment method
 const User = db.define("user", {
+  // name: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  // },
   username: {
     type: Sequelize.STRING,
     unique: true,

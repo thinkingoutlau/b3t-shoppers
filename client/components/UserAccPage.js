@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getUserFromServer } from "../store/user";
+import { Link } from "react-router-dom";
 
 //what we still want:
 //include email
@@ -10,13 +11,24 @@ import { getUserFromServer } from "../store/user";
 
 class UserAccPage extends Component {
   componentDidMount() {
-    this.props.getUserFromServer(this.props.username);
+    this.props.getUserFromServer(this.props.auth.username);
   }
   render() {
     console.log("showthis", this.props);
     return (
       <div>
-        <h1>{`Welcome ${this.props.username}!`}</h1>
+        <h1>{`Welcome ${this.props.auth.username}!`}</h1>
+        <br></br>
+        <p>
+          <strong>Name:</strong> {"Winnie Lau"}
+        </p>
+        <p>
+          <strong>Email:</strong> {this.props.auth.email}
+        </p>
+        <p>
+          <strong>Password:</strong> ***********{" "}
+          <Link to="/editPassword">Edit Password</Link>{" "}
+        </p>
       </div>
     );
   }
@@ -24,7 +36,7 @@ class UserAccPage extends Component {
 
 const mapState = (state) => {
   return {
-    username: state.auth.username,
+    auth: state.auth,
   };
 };
 
