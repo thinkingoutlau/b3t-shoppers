@@ -10,7 +10,7 @@ class Cart extends React.Component {
   render() {
     return (
       <div>
-        <h2>Your Cart:</h2>
+        <h2>PLACEHOLDER CART STUFF</h2>
       </div>
     );
   }

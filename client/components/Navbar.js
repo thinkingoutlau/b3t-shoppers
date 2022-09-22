@@ -2,6 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
+import Cart from "./Cart";
+
+function handleCart() {
+  const cartBlock = document.getElementById("cart_block");
+  if (cartBlock.classList.contains("hide_block")) {
+    cartBlock.classList.remove("hide_block");
+    cartBlock.classList.add("show_block");
+  } else {
+    cartBlock.classList.add("fade_out");
+    setTimeout(() => {
+      cartBlock.classList.remove("show_block");
+      cartBlock.classList.add("hide_block");
+      cartBlock.classList.remove("fade_out");
+    }, 900);
+  }
+}
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
@@ -25,13 +41,17 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             </div>
           </div>
           <div className="nonprod_button">
-            <div className="cart_button">
-              <Link to="/cart">
+            <div>
+              <button
+                type="button"
+                className="cart_button"
+                onClick={() => handleCart()}
+              >
                 <img
                   src="/images/Menu_Nook_Shopping_NH_Icon.png"
                   className="cart_img"
                 />
-              </Link>
+              </button>
             </div>
             <Link to="/myAccount">My Account</Link>
             <a href="#" onClick={handleClick}>
@@ -55,12 +75,16 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           </div>
           <div className="nonprod_button">
             <div className="cart_button">
-              <Link to="/cart">
+              <button
+                type="button"
+                className="cart_button"
+                onClick={() => handleCart()}
+              >
                 <img
                   src="/images/Menu_Nook_Shopping_NH_Icon.png"
                   className="cart_img"
                 />
-              </Link>
+              </button>
             </div>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
@@ -68,6 +92,21 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         </div>
       )}
     </nav>
+    <div id="cart_block" className="hide_block">
+      <div id="behind_cart">
+        <div id="cart_view">
+          <div id="inner_cart_view">
+            <div id="cart_text">
+              <h2>YOUR CART:</h2>
+              <button type="button" onClick={() => handleCart()}>
+                X
+              </button>
+            </div>
+            <Cart />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 );
 
