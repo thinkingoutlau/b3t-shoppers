@@ -20,14 +20,23 @@ class UserAccPage extends Component {
         <h1>{`Welcome ${this.props.auth.username}!`}</h1>
         <br></br>
         <p>
-          <strong>Name:</strong> {"Winnie Lau"}
+          <strong>Name:</strong> {this.props.auth.fullName}
         </p>
         <p>
           <strong>Email:</strong> {this.props.auth.email}
         </p>
         <p>
           <strong>Password:</strong> ***********{" "}
-          <Link to="/editPassword">Edit Password</Link>{" "}
+          <Link to="/editPassword">Edit Password</Link>
+        </p>
+        {/* <p>
+          <strong>
+            <Link to="/orderHistory">Order History</Link>
+          </strong>
+        </p> */}
+        <p>
+          <strong>Order History: </strong>
+          <Link to="/orderHistory">Show History</Link>
         </p>
       </div>
     );

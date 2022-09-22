@@ -29,9 +29,10 @@ export const me = () => async (dispatch) => {
 };
 
 export const authenticate =
-  (username, email, password, method) => async (dispatch) => {
+  (fullName, username, email, password, method) => async (dispatch) => {
     try {
       const res = await axios.post(`/auth/${method}`, {
+        fullName,
         username,
         email,
         password,
