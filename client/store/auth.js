@@ -18,7 +18,6 @@ const setAuth = (auth) => ({ type: SET_AUTH, auth });
  */
 export const me = () => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
-  console.log(token); //undefined -- why?
   if (token) {
     const res = await axios.get("/auth/me", {
       headers: {
@@ -44,8 +43,6 @@ export const authenticate =
       return dispatch(setAuth({ error: authError }));
     }
   };
-
-//separate
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
