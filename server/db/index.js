@@ -19,6 +19,7 @@ module.exports = {
   models: {
     User,
     Product,
+    Order,
     Order_Product,
   },
 };

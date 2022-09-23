@@ -7,12 +7,14 @@ import allProducts from "./allProducts";
 import productReducer from "./singleProduct";
 import user from "./user";
 import users from "./users";
+import order from "./order";
 
 const reducer = combineReducers({
   auth,
   allProducts,
   product: productReducer,
   user,
+  order,
   users,
 });
 const middleware = composeWithDevTools(
