@@ -14,7 +14,7 @@ router.get("/:id", async (req, res, next) => {
         model: Product,
       },
     });
-    console.log(Object.keys(Order.prototype));
+
     res.json(orders);
   } catch (err) {
     next(err);
