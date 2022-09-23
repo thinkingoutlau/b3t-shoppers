@@ -8,7 +8,8 @@
 // home appliances + audio + tv + air conditioning = electronics
 
 // outdoor stuff:
-// garden + outdoors decor = outdoor
+// garden
+// outdoors decor
 
 // other:
 // musical instruments
@@ -307,16 +308,15 @@ async function fetchUsers() {
 
 async function mapUsersObj() {
   const usersObj = await fetchUsers();
-  console.log(usersObj);
   for (const property in usersObj) {
     const email = emailGenerator(usersObj[property]["name"]["name-USen"]);
-    console.log(email);
     await Promise.all([
       User.create({
         fullName: usersObj[property]["name"]["name-USen"],
         username: usersObj[property]["name"]["name-USen"],
         email: email,
         password: "123",
+        imageURL: usersObj[property]["icon_uri"],
       }),
     ]);
   }
@@ -339,6 +339,8 @@ async function seed() {
       email: "TomNook@gmail.com",
       password: "123",
       isAdmin: true,
+      imageURL:
+        "https://static.wikia.nocookie.net/animalcrossingpocketcamp_gamepedia_en/images/6/6e/Tom_Nook_Icon.png/revision/latest/scale-to-width-down/128?cb=20171106034142",
     }),
     User.create({
       fullName: "Timmy",
@@ -346,6 +348,8 @@ async function seed() {
       email: "Timmy@gmail.com",
       password: "123",
       isAdmin: true,
+      imageURL:
+        "https://static.wikia.nocookie.net/animalcrossingpocketcamp_gamepedia_en/images/4/4f/Timmy_Icon.png/revision/latest/scale-to-width-down/128?cb=20171106034131",
     }),
     User.create({
       fullName: "Tommy",
@@ -353,6 +357,8 @@ async function seed() {
       email: "Tommy@gmail.com",
       password: "123",
       isAdmin: true,
+      imageURL:
+        "https://static.wikia.nocookie.net/animalcrossingpocketcamp_gamepedia_en/images/4/4f/Timmy_Icon.png/revision/latest/scale-to-width-down/128?cb=20171106034131",
     }),
   ]);
 
