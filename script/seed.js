@@ -170,7 +170,7 @@ async function mapFishObj() {
     await Promise.all([
       Product.create({
         name: capitalizedProperty,
-        type: "fish",
+        type: "foodFish",
         description: fishObj[property]["museum-phrase"],
         price: fishObj[property]["price"],
         imageURL: fishObj[property]["icon_uri"],

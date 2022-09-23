@@ -20,13 +20,17 @@ class AllProducts extends Component {
   }
 
   render() {
+    // const show = Object.values(this.props.allProducts).map(
+    //   (value) => value.type
+    // );
+    // console.log(show);
     const { filter } = this.state;
     const products = this.props.allProducts.filter((product) => {
       if (filter === "All Products") {
         return product;
       }
       if (filter === "Fish") {
-        return product.type.includes("fish");
+        return product.type.includes("foodFish");
       }
       if (filter === "Fossils") {
         return product.type.includes("fossils");
@@ -91,6 +95,9 @@ class AllProducts extends Component {
       if (filter === "House Door Decor") {
         return product.type.includes("House Door Decor");
       }
+      if (filter === "Decor") {
+        return product.type.includes("Decor");
+      }
     });
 
     return (
@@ -106,27 +113,28 @@ class AllProducts extends Component {
             >
               <option value="All Products">All Products</option>
               <option value="Fish">Fish</option>
-              <option value="Fossils">Fossils</option>
               <option value="Insect">Insect</option>
+              <option value="Fossils">Fossils</option>
               <option value="Home Appliances">Home Appliances</option>
-              <option value="Arch">Arch</option>
+              <option value="Air Conditioning">Air Conditioning</option>
+              <option value="Audio">Audio</option>
               <option value="Bed">Bed</option>
               <option value="Desk">Desk</option>
-              <option value="Chair">Chair</option>
-              <option value="Table">Table</option>
               <option value="Dresser">Dresser</option>
-              <option value="Bathroom Things">Bathroom Things</option>
-              <option value="Toy">Toy</option>
+              <option value="Chair">Chair</option>
               <option value="Sofa">Sofa</option>
-              <option value="Audio">Audio</option>
-              <option value="Outdoors Decor">Outdoor Decor</option>
-              <option value="Seasonal Decor">Seasonal Decor</option>
-              <option value="Garden">Garden</option>
-              <option value="Easter">Easter</option>
+              <option value="Table">Table</option>
+              <option value="Toy">Toy</option>
+              <option value="Bathroom Things">Bathroom Things</option>
               <option value="Bathtub">Bathtub</option>
-              <option value="Folk Craft Decor">Folk Craft Decor</option>
-              <option value="Air Conditioning">Air Conditioning</option>
               <option value="House Door Decor">House Door Decor</option>
+              <option value="Decor">Decor</option>
+              <option value="Arch">Arch</option>
+              <option value="Outdoors Decor">Outdoor Decor</option>
+              <option value="Garden">Garden</option>
+              <option value="Seasonal Decor">Seasonal Decor</option>
+              <option value="Easter">Easter</option>
+              <option value="Folk Craft Decor">Folk Craft Decor</option>
             </select>
           </p>
         </div>
