@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getUserFromServer } from "../store/user";
+import { getAllUsers } from "../store/users";
 import { Link } from "react-router-dom";
 
 //what we still want:
@@ -10,10 +10,12 @@ import { Link } from "react-router-dom";
 //history
 
 class AdminAccPage extends Component {
-  componentDidMount() {
-    this.props.getUserFromServer(this.props.auth.username);
+  async componentDidMount() {
+    await this.props.getAllUsers();
   }
   render() {
+    const { users } = this.props;
+
     return (
       <div>
         <h1>{`Welcome ${this.props.auth.fullName} to the admin page!`}</h1>
@@ -48,11 +50,12 @@ class AdminAccPage extends Component {
 const mapState = (state) => {
   return {
     auth: state.auth,
+    users: state.users,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getUserFromServer: (username) => dispatch(getUserFromServer(username)),
+  getAllUsers: () => dispatch(getAllUsers()),
 });
 
 export default connect(mapState, mapDispatchToProps)(AdminAccPage);
