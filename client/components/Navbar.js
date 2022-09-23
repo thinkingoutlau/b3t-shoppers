@@ -20,7 +20,6 @@ function handleCart() {
 }
 
 const Navbar = ({ handleClick, isLoggedIn, auth }) => {
-  console.log("auth", auth);
   return (
     <div>
       <div id="store_name">

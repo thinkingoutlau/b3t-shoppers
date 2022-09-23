@@ -23,12 +23,6 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn } = this.props;
-    console.log("this.props", this.props);
-
-    let accComponent = <Route path="/myAccount" component={UserAccPage} />;
-    if (this.props.auth.isAdmin === true) {
-      accComponent = <Route path="/myAdminAccount" component={AdminAccPage} />;
-    }
 
     return (
       <div>
@@ -40,7 +34,11 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/editPassword" component={UserPassword} />
             <Route path="/orderHistory" component={OrderHistory} />
-            {accComponent}
+            {this.props.auth.isAdmin ? (
+              <Route path="/myAdminAccount" component={AdminAccPage} />
+            ) : (
+              <Route path="/myAccount" component={UserAccPage} />
+            )}
           </Switch>
         ) : (
           <Switch>
