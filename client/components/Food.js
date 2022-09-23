@@ -21,7 +21,6 @@ class Food extends Component {
 
   render() {
     const { filter } = this.state;
-    console.log("show all products", this.props.allProducts);
     const products = this.props.allProducts.filter((product) => {
       if (filter === "All Foods") {
         return product.type.includes("foodFish");

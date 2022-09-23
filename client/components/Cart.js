@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { getOrder } from "../store/order";
+import { getCurrentOrder } from "../store/orders";
 
 class Cart extends React.Component {
   componentDidUpdate(prevProps) {
@@ -11,26 +11,22 @@ class Cart extends React.Component {
   }
 
   render() {
-    let cart = {
-      products: [],
-    };
-
-    this.props.order.forEach((obj) => {
-      if (obj.status === "unfulfilled") {
-        cart = obj;
-        return cart;
-      }
-    });
+    let cart = this.props.currentOrder || {};
 
     return (
       <div>
-        {cart.products.map((product) => {
-          return (
-            <div key={product.id}>
-              {product.name} ${product.price}
-            </div>
-          );
-        })}
+        {cart.products ? (
+          cart.products.map((product) => {
+            return (
+              <div key={product.id}>
+                {product.name} ${product.price}
+              </div>
+            );
+          })
+        ) : (
+          <p> Nothing in your cart!</p>
+        )}
+        {}
       </div>
     );
   }
@@ -39,12 +35,12 @@ class Cart extends React.Component {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    order: state.order,
+    currentOrder: state.currentOrder,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getCart: (id) => dispatch(getOrder(id)),
+  getCart: (id) => dispatch(getCurrentOrder(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

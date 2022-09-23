@@ -2,7 +2,10 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { createLogger } from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+
 import auth from "./auth";
+import user from "./user";
+
 import allProducts from "./allProducts";
 import productReducer from "./singleProduct";
 import user from "./user";
@@ -11,10 +14,11 @@ import order from "./order";
 
 const reducer = combineReducers({
   auth,
+  user,
   allProducts,
   product: productReducer,
   user,
-  order,
+  currentOrder,
   users,
 });
 const middleware = composeWithDevTools(
