@@ -28,16 +28,71 @@ class AllProducts extends Component {
       if (filter === "Fish") {
         return product.type.includes("fish");
       }
-      if (filter === "Sea Creatures") {
-        return product.type.includes("sea creatures");
-      }
-      if (filter === "Bugs") {
-        return product.type.includes("bugs");
-      }
       if (filter === "Fossils") {
         return product.type.includes("fossils");
       }
+      if (filter === "Insect") {
+        return product.type.includes("Insect");
+      }
+      if (filter === "Home Appliances") {
+        return product.type.includes("Home Appliances");
+      }
+      if (filter === "Arch") {
+        return product.type.includes("Arch");
+      }
+      if (filter === "Bed") {
+        return product.type.includes("Bed");
+      }
+      if (filter === "Desk") {
+        return product.type.includes("Desk");
+      }
+      if (filter === "Chair") {
+        return product.type.includes("Chair");
+      }
+      if (filter === "Table") {
+        return product.type.includes("Table");
+      }
+      if (filter === "Dresser") {
+        return product.type.includes("Dresser");
+      }
+      if (filter === "Bathroom Things") {
+        return product.type.includes("Bathroom Things");
+      }
+      if (filter === "Toy") {
+        return product.type.includes("Toy");
+      }
+      if (filter === "Sofa") {
+        return product.type.includes("Sofa");
+      }
+      if (filter === "Audio") {
+        return product.type.includes("Audio");
+      }
+      if (filter === "Outdoors Decor") {
+        return product.type.includes("Outdoors Decor");
+      }
+      if (filter === "Seasonal Decor") {
+        return product.type.includes("Seasonal Decor");
+      }
+      if (filter === "Garden") {
+        return product.type.includes("Garden");
+      }
+      if (filter === "Easter") {
+        return product.type.includes("Easter");
+      }
+      if (filter === "Bathtub") {
+        return product.type.includes("Bathtub");
+      }
+      if (filter === "Folk Craft Decor") {
+        return product.type.includes("Folk Craft Decor");
+      }
+      if (filter === "Air Conditioning") {
+        return product.type.includes("Air Conditioning");
+      }
+      if (filter === "House Door Decor") {
+        return product.type.includes("House Door Decor");
+      }
     });
+    console.log("show products", this.props.allProducts);
 
     return (
       <>
@@ -52,9 +107,27 @@ class AllProducts extends Component {
             >
               <option value="All Products">All Products</option>
               <option value="Fish">Fish</option>
-              <option value="Sea Creatures">Sea Creatures</option>
-              <option value="Bugs">Bugs</option>
               <option value="Fossils">Fossils</option>
+              <option value="Insect">Insect</option>
+              <option value="Home Appliances">Home Appliances</option>
+              <option value="Arch">Arch</option>
+              <option value="Bed">Bed</option>
+              <option value="Desk">Desk</option>
+              <option value="Chair">Chair</option>
+              <option value="Table">Table</option>
+              <option value="Dresser">Dresser</option>
+              <option value="Bathroom Things">Bathroom Things</option>
+              <option value="Toy">Toy</option>
+              <option value="Sofa">Sofa</option>
+              <option value="Audio">Audio</option>
+              <option value="Outdoors Decor">Outdoor Decor</option>
+              <option value="Seasonal Decor">Seasonal Decor</option>
+              <option value="Garden">Garden</option>
+              <option value="Easter">Easter</option>
+              <option value="Bathtub">Bathtub</option>
+              <option value="Folk Craft Decor">Folk Craft Decor</option>
+              <option value="Air Conditioning">Air Conditioning</option>
+              <option value="House Door Decor">House Door Decor</option>
             </select>
           </p>
         </div>
