@@ -8,18 +8,31 @@ import { getUserFromServer } from "../store/user";
 class SingleProduct extends React.Component {
   constructor() {
     super();
+    this.state = {
+      quantity: 1,
+    };
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
   }
+
   componentDidMount() {
     this.props.gotSingleProduct(this.props.match.params.id);
   }
 
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
   handleAddToCart() {
+    console.log(this.state.quantity);
     const userId = this.props.auth.id;
     const product = {
       productId: this.props.product.id,
       price: this.props.product.price,
-      quantity: 1,
+      quantity: this.state.quantity,
     };
 
     this.props.addToCart(userId, product);
@@ -37,6 +50,12 @@ class SingleProduct extends React.Component {
           <h3>{this.props.product.description}</h3>
         </div>
         <div className="single_product_actions">
+          quantity
+          <input
+            name="quantity"
+            onChange={this.handleChange}
+            value={this.state.quantity}
+          ></input>
           <button
             type="button"
             className="single_product_action_buttons"
