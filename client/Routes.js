@@ -12,6 +12,11 @@ import UserAccPage from "./components/UserAccPage";
 import OrderHistory from "./components/OrderHistory";
 import UserPassword from "./components/UserPassword";
 import AdminAccPage from "./components/AdminAccPage";
+import Food from "./components/Food";
+import Furniture from "./components/Furniture";
+import Others from "./components/Others";
+import Decorations from "./components/Decorations";
+import HomeAppliances from "./components/HomeAppliances";
 
 /**
  * COMPONENT
@@ -34,6 +39,11 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/editPassword" component={UserPassword} />
             <Route path="/orderHistory" component={OrderHistory} />
+            <Route path="/decorations" component={Decorations} />
+            <Route path="/food" component={Food} />
+            <Route path="/furniture" component={Furniture} />
+            <Route path="/homeAppliances" component={HomeAppliances} />
+            <Route path="/others" component={Others} />
             {this.props.auth.isAdmin ? (
               <Route path="/myAdminAccount" component={AdminAccPage} />
             ) : (
@@ -47,6 +57,11 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/products" component={AllProducts} />
+            <Route path="/decorations" component={Decorations} />
+            <Route path="/food" component={Food} />
+            <Route path="/furniture" component={Furniture} />
+            <Route path="/homeAppliances" component={HomeAppliances} />
+            <Route path="/others" component={Others} />
           </Switch>
         )}
       </div>

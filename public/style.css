@@ -199,6 +199,86 @@ form div {
   text-align: center;
 }
 
+.allDecorations {
+  display: inline-block;
+  text-align: center;
+  font-size: 20px;
+  margin: 50px;
+}
+
+.allDecorations img {
+  display: flex;
+  flex-wrap: wrap;
+  height: 150px;
+  width: 150px;
+  justify-content: center;
+  text-align: center;
+}
+
+.allFoods {
+  display: inline-block;
+  text-align: center;
+  font-size: 20px;
+  margin: 50px;
+}
+
+.allFoods img {
+  display: flex;
+  flex-wrap: wrap;
+  height: 150px;
+  width: 150px;
+  justify-content: center;
+  text-align: center;
+}
+
+.allFurniture {
+  display: inline-block;
+  text-align: center;
+  font-size: 20px;
+  margin: 50px;
+}
+
+.allFurniture img {
+  display: flex;
+  flex-wrap: wrap;
+  height: 150px;
+  width: 150px;
+  justify-content: center;
+  text-align: center;
+}
+
+.allHomeAppliances {
+  display: inline-block;
+  text-align: center;
+  font-size: 20px;
+  margin: 50px;
+}
+
+.allHomeAppliances img {
+  display: flex;
+  flex-wrap: wrap;
+  height: 150px;
+  width: 150px;
+  justify-content: center;
+  text-align: center;
+}
+
+.allOthers {
+  display: inline-block;
+  text-align: center;
+  font-size: 20px;
+  margin: 50px;
+}
+
+.allOthers img {
+  display: flex;
+  flex-wrap: wrap;
+  height: 150px;
+  width: 150px;
+  justify-content: center;
+  text-align: center;
+}
+
 #components {
   background-color: #f0e0bc;
   padding: 1rem;
