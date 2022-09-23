@@ -8,7 +8,15 @@ class AdminAccPage extends Component {
     await this.props.getAllUsers();
   }
   render() {
-    const { users } = this.props;
+    const { users, auth } = this.props;
+
+    var cards = document.querySelectorAll(".card");
+
+    [...cards].forEach((card) => {
+      card.addEventListener("click", function () {
+        card.classList.toggle("is-flipped");
+      });
+    });
 
     return (
       <div>
@@ -17,12 +25,39 @@ class AdminAccPage extends Component {
         </div>
         <div>
           {users.map((user) => {
-            return (
-              <div className="all_users" key={user.id}>
-                <img src={user.imageURL} alt="user profile pic" />
-                <h3>{user.fullName}</h3>
-              </div>
-            );
+            if (auth.id !== user.id) {
+              // do not render own profile into all users
+              return (
+                // <div className="flip-card" key={user.id}>
+                //   <div className="flip-card-inner">
+                //     <div className="flip-card-front">
+                //       <div className="all_users">
+                //         <img src={user.imageURL} alt="user profile pic" />
+                //         <h3>{user.fullName}</h3>
+                //       </div>
+                //     </div>
+                //     <div className="flip-card-back">
+                //       <h4>{user.username}</h4>
+                //       <h4>{user.email}</h4>
+                //       <h4>{user.isAdmin ? "Admin user" : "User"}</h4>
+                //     </div>
+                //   </div>
+                // </div>
+                <div className="scene scene--card" key={user.id}>
+                  <div className="card">
+                    <div className="card__face card__face--front">
+                      <img src={user.imageURL} alt="user profile pic" />
+                      <h3>{user.fullName}</h3>
+                    </div>
+                    <div className="card__face card__face--back">
+                      <h4>{user.username}</h4>
+                      <h4>{user.email}</h4>
+                      <h4>{user.isAdmin ? "Admin user" : "User"}</h4>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
           })}
         </div>
       </div>

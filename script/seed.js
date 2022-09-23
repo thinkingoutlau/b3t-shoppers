@@ -340,7 +340,7 @@ async function seed() {
       password: "123",
       isAdmin: true,
       imageURL:
-        "https://static.wikia.nocookie.net/animalcrossingpocketcamp_gamepedia_en/images/6/6e/Tom_Nook_Icon.png/revision/latest/scale-to-width-down/128?cb=20171106034142",
+        "https://cdn.discord.me/server/164cd45d755c64daff37e6c0a1b7cf4fa3bd7cd6e4bd50493f7c584acc5cde6c/icon_c9ca35972866dca40d88e65d10d02c963ad0a1cf13b016f50d73422a886604ed.jpg",
     }),
     User.create({
       fullName: "Timmy",
@@ -348,8 +348,7 @@ async function seed() {
       email: "Timmy@gmail.com",
       password: "123",
       isAdmin: true,
-      imageURL:
-        "https://static.wikia.nocookie.net/animalcrossingpocketcamp_gamepedia_en/images/4/4f/Timmy_Icon.png/revision/latest/scale-to-width-down/128?cb=20171106034131",
+      imageURL: "https://dodo.ac/np/images/7/73/Timmy%27s_Poster_NH_Icon.png",
     }),
     User.create({
       fullName: "Tommy",
@@ -357,8 +356,7 @@ async function seed() {
       email: "Tommy@gmail.com",
       password: "123",
       isAdmin: true,
-      imageURL:
-        "https://static.wikia.nocookie.net/animalcrossingpocketcamp_gamepedia_en/images/4/4f/Timmy_Icon.png/revision/latest/scale-to-width-down/128?cb=20171106034131",
+      imageURL: "https://dodo.ac/np/images/1/1e/Tommy%27s_Poster_NH_Icon.png",
     }),
   ]);
 
