@@ -307,10 +307,8 @@ async function fetchUsers() {
 
 async function mapUsersObj() {
   const usersObj = await fetchUsers();
-  console.log(usersObj);
   for (const property in usersObj) {
     const email = emailGenerator(usersObj[property]["name"]["name-USen"]);
-    console.log(email);
     await Promise.all([
       User.create({
         fullName: usersObj[property]["name"]["name-USen"],
