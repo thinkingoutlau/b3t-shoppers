@@ -331,7 +331,7 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  // Creating users
+  // Creating admin users
   await Promise.all([
     User.create({
       fullName: "Tom Nook",
@@ -356,8 +356,10 @@ async function seed() {
     }),
   ]);
 
-  // Creating products
+  // Creating users
   await mapUsersObj();
+
+  // Creating products
   await mapFishObj();
   await mapFossilsObj();
   await mapHousewareObj();
