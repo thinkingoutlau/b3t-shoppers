@@ -71,6 +71,18 @@ function lowercaseName(string) {
   return string.charAt(0).toLowerCase() + string.slice(1);
 }
 
+function emailGenerator(name) {
+  while (name.includes(" ")) {
+    let spaceSpot = name.indexOf(" ");
+    name = name.substring(0, spaceSpot) + name.substring(spaceSpot + 1);
+  }
+  while (name.includes(".")) {
+    let periodSpot = name.indexOf(".");
+    name = name.substring(0, periodSpot) + name.substring(periodSpot + 1);
+  }
+  return `${name}@gmail.com`;
+}
+
 function descriptionGenerator(tag, productName, color1, color2) {
   color1 = lowercaseName(color1);
   color2 = lowercaseName(color2);
@@ -287,6 +299,28 @@ async function mapMiscObj() {
   }
 }
 
+// seed users
+async function fetchUsers() {
+  const { data } = await axios.get("http://acnhapi.com/v1/villagers/");
+  return data;
+}
+
+async function mapUsersObj() {
+  const usersObj = await fetchUsers();
+  console.log(usersObj);
+  for (const property in usersObj) {
+    const email = emailGenerator(usersObj[property]["name"]["name-USen"]);
+    console.log(email);
+    await Promise.all([
+      User.create({
+        username: usersObj[property]["name"]["name-USen"],
+        email: email,
+        password: "123",
+      }),
+    ]);
+  }
+}
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -298,15 +332,28 @@ async function seed() {
 
   // Creating users
   const users = await Promise.all([
-    User.create({ username: "cody", email: "cody@gmail.com", password: "123" }),
     User.create({
-      username: "murphy",
-      email: "murphy@gmail.com",
+      username: "TomNook",
+      email: "TomNook@gmail.com",
       password: "123",
+      isAdmin: true,
+    }),
+    User.create({
+      username: "Timmy",
+      email: "Timmy@gmail.com",
+      password: "123",
+      isAdmin: true,
+    }),
+    User.create({
+      username: "Tommy",
+      email: "Tommy@gmail.com",
+      password: "123",
+      isAdmin: true,
     }),
   ]);
 
   // Creating products
+  await mapUsersObj();
   await mapFishObj();
   await mapFossilsObj();
   await mapHousewareObj();
