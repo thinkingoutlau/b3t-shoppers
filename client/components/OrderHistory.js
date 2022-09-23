@@ -4,7 +4,7 @@ class OrderHistory extends Component {
   constructor() {
     super();
     this.state = {
-      filter: "Date",
+      filter: "last 30 days",
     };
     this.handleFilter = this.handleFilter.bind(this);
   }
@@ -29,16 +29,20 @@ class OrderHistory extends Component {
               value={filter}
               onChange={this.handleFilter}
             >
-              <option value="Last 30 Days">Last 30 Days</option>
-              <option value="Last 3 Months">Last 3 Months</option>
-              <option value="Past Year">Past Year</option>
-              <option value="Past 2 Years">Past 2 Years</option>
-              <option value="Past 3 Years">Past 3 Years</option>
+              <option value="last 30 days">last 30 days</option>
+              <option value="last 3 months">last 3 months</option>
+              <option value="past year">past year</option>
+              <option value="past 2 years">past 2 years</option>
+              <option value="past 3 years">past 3 years</option>
             </select>
           </p>
         </div>
         <div>
-          <i>SHOW ALL PRODUCTS USER PURCHASED</i>
+          {filter ? (
+            `No order placed in the ${this.state.filter}`
+          ) : (
+            <i>SHOW ALL PRODUCTS USER PURCHASED</i>
+          )}
         </div>
       </>
     );

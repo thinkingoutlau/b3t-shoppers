@@ -12,7 +12,7 @@ class UserPassword extends Component {
   render() {
     return (
       <div>
-        <form className="change_password">
+        <form onSubmit={this.handleSubmit} className="change_password_form">
           <div>
             <label htmlFor="currentPassword:">
               <strong>
@@ -38,7 +38,9 @@ class UserPassword extends Component {
             <input name="reenterPassword" type="reenterPassword" />
           </div>
           <div>
-            <button type="submit" className="changePassword"></button>
+            <button type="submit" className="change_password_button">
+              Submit
+            </button>
           </div>
         </form>
       </div>
