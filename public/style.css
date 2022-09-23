@@ -199,14 +199,14 @@ form div {
   text-align: center;
 }
 
-.allDecorations {
+.allOutdoorItems {
   display: inline-block;
   text-align: center;
   font-size: 20px;
   margin: 50px;
 }
 
-.allDecorations img {
+.allOutdoorItems img {
   display: flex;
   flex-wrap: wrap;
   height: 150px;
@@ -247,14 +247,14 @@ form div {
   text-align: center;
 }
 
-.allHomeAppliances {
+.allIndoorItems {
   display: inline-block;
   text-align: center;
   font-size: 20px;
   margin: 50px;
 }
 
-.allHomeAppliances img {
+.allIndoorItems img {
   display: flex;
   flex-wrap: wrap;
   height: 150px;
