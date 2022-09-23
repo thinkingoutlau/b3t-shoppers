@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { gotSingleProduct } from "../store/singleProduct";
-import { addProduct } from "../store/order";
+import { addProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
 class SingleProduct extends React.Component {
@@ -75,6 +75,7 @@ const mapStateToProps = (state) => {
   return {
     product: state.product,
     auth: state.auth,
+    order: state.order,
   };
 };
 

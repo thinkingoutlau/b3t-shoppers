@@ -6,16 +6,23 @@ const Order_Product = require("../db/models/Order_Product");
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const orders = await Order.findAll({
+    let cart = await Order.findOne({
       where: {
         userId: req.params.id,
+        status: "unfulfilled",
       },
       include: {
         model: Product,
       },
     });
 
-    res.json(orders);
+    if (!cart) {
+      cart = await Order.create({
+        userId: req.params.id,
+      });
+    }
+
+    res.json(cart);
   } catch (err) {
     next(err);
   }
@@ -33,26 +40,24 @@ router.post("/:id", async (req, res, next) => {
       },
     });
 
-    if (!cart) {
-      cart = await Order.create({
-        userId: req.params.id,
-      });
-      await Order_Product.create({
-        orderId: cart.id,
-        productId: req.body.productId,
-        price: req.body.price,
-        quantity: req.body.quantity,
-      });
-    } else {
-      await Order_Product.create({
-        orderId: cart.id,
-        productId: req.body.productId,
-        price: req.body.price,
-        quantity: req.body.quantity,
-      });
-    }
+    await Order_Product.create({
+      orderId: cart.id,
+      productId: req.body.productId,
+      price: req.body.price,
+      quantity: req.body.quantity,
+    });
 
-    res.json(cart);
+    cart = await Order.findOne({
+      where: {
+        userId: req.params.id,
+        status: "unfulfilled",
+      },
+      include: {
+        model: Product,
+      },
+    });
+
+    res.json(cart.products);
   } catch (err) {
     next(err);
   }
