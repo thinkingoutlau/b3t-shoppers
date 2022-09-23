@@ -7,25 +7,42 @@ import { authenticate } from "../store";
  */
 const AuthFormSignUp = (props) => {
   const { name, displayName, handleSubmit, error } = props;
-  console.log(displayName);
   return (
     <div>
       <form onSubmit={handleSubmit} name={name} className="auth_form">
         <div>
+          <label htmlFor="fullname">
+            <strong>
+              <small>Full Name</small>
+            </strong>
+          </label>
+          <input
+            name="fullname"
+            type="text"
+            placeholder="First and Last Name"
+          />
+        </div>
+        <div>
           <label htmlFor="username">
-            <small>Username</small>
+            <strong>
+              <small>Username</small>
+            </strong>
           </label>
           <input name="username" type="text" />
         </div>
         <div>
           <label htmlFor="email">
-            <small>Email</small>
+            <strong>
+              <small>Email</small>
+            </strong>
           </label>
           <input name="email" type="text" />
         </div>
         <div>
           <label htmlFor="password">
-            <small>Password</small>
+            <strong>
+              <small>Password</small>
+            </strong>
           </label>
           <input name="password" type="password" />
         </div>
@@ -61,10 +78,11 @@ const mapDispatch = (dispatch) => {
     handleSubmit(evt) {
       evt.preventDefault();
       const formName = evt.target.name;
+      const fullName = evt.target.fullname.value;
       const username = evt.target.username.value;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
-      dispatch(authenticate(username, email, password, formName));
+      dispatch(authenticate(fullName, username, email, password, formName));
     },
   };
 };
