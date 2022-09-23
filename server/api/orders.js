@@ -28,6 +28,9 @@ router.post("/:id", async (req, res, next) => {
         userId: req.params.id,
         status: "unfulfilled",
       },
+      include: {
+        model: Product,
+      },
     });
 
     if (!cart) {

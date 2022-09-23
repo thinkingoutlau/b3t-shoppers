@@ -27,7 +27,6 @@ class SingleProduct extends React.Component {
   }
 
   handleAddToCart() {
-    console.log(this.state.quantity);
     const userId = this.props.auth.id;
     const product = {
       productId: this.props.product.id,
