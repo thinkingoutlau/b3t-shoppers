@@ -1,10 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import { gotSingleProduct } from "../store/singleProduct";
+import { addProduct } from "../store/order";
+import { getUserFromServer } from "../store/user";
 
 class SingleProduct extends React.Component {
+  constructor() {
+    super();
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+  }
   componentDidMount() {
     this.props.gotSingleProduct(this.props.match.params.id);
+  }
+
+  handleAddToCart() {
+    const userId = this.props.auth.id;
+    const product = {
+      productId: this.props.product.id,
+      price: this.props.product.price,
+      quantity: 1,
+    };
+
+    this.props.addToCart(userId, product);
   }
 
   render() {
@@ -19,7 +37,11 @@ class SingleProduct extends React.Component {
           <h3>{this.props.product.description}</h3>
         </div>
         <div className="single_product_actions">
-          <button type="button" className="single_product_action_buttons">
+          <button
+            type="button"
+            className="single_product_action_buttons"
+            onClick={this.handleAddToCart}
+          >
             Add to cart!
           </button>
           <button type="button" className="single_product_action_buttons">
@@ -34,12 +56,15 @@ class SingleProduct extends React.Component {
 const mapStateToProps = (state) => {
   return {
     product: state.product,
+    auth: state.auth,
   };
 };
 
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
     gotSingleProduct: (id) => dispatch(gotSingleProduct(id, history)),
+    addToCart: (userId, product) => dispatch(addProduct(userId, product)),
+    getUserFromServer: (username) => dispatch(getUserFromServer(username)),
   };
 };
 

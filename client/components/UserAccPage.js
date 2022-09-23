@@ -14,7 +14,6 @@ class UserAccPage extends Component {
     this.props.getUserFromServer(this.props.auth.username);
   }
   render() {
-    console.log("showthis", this.props);
     return (
       <div>
         <h1>{`Welcome ${this.props.auth.fullName}!`}</h1>
