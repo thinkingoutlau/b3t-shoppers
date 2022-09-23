@@ -313,6 +313,7 @@ async function mapUsersObj() {
     console.log(email);
     await Promise.all([
       User.create({
+        fullName: usersObj[property]["name"]["name-USen"],
         username: usersObj[property]["name"]["name-USen"],
         email: email,
         password: "123",
@@ -331,20 +332,23 @@ async function seed() {
   console.log("db synced!");
 
   // Creating users
-  const users = await Promise.all([
+  await Promise.all([
     User.create({
+      fullName: "Tom Nook",
       username: "TomNook",
       email: "TomNook@gmail.com",
       password: "123",
       isAdmin: true,
     }),
     User.create({
+      fullName: "Timmy",
       username: "Timmy",
       email: "Timmy@gmail.com",
       password: "123",
       isAdmin: true,
     }),
     User.create({
+      fullName: "Tommy",
       username: "Tommy",
       email: "Tommy@gmail.com",
       password: "123",
