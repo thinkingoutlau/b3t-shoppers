@@ -31,7 +31,6 @@ export const addProduct = (userId, product) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`/api/currentOrder/${userId}`, product);
-      console.log(data);
       dispatch(_addProduct(data));
     } catch (err) {
       console.log(err);
@@ -45,8 +44,6 @@ export default (state = {}, action) => {
     case GET_CURRENT_ORDER:
       return action.order;
     case ADD_PRODUCT:
-      console.log(state);
-      console.log(action.products);
       return { ...state, products: action.products };
     default:
       return state;

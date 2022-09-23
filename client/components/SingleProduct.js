@@ -38,6 +38,8 @@ class SingleProduct extends React.Component {
   }
 
   render() {
+    const isLoggedIn = !!this.props.auth.id;
+
     return (
       <div className="single_product">
         <div className="single_product_img">
@@ -55,13 +57,31 @@ class SingleProduct extends React.Component {
             onChange={this.handleChange}
             value={this.state.quantity}
           ></input>
-          <button
-            type="button"
-            className="single_product_action_buttons"
-            onClick={this.handleAddToCart}
-          >
-            Add to cart!
-          </button>
+          {isLoggedIn ? (
+            <button
+              type="button"
+              className="single_product_action_buttons"
+              onClick={this.handleAddToCart}
+            >
+              Add to cart!
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="single_product_action_buttons"
+              onClick={() =>
+                localStorage.setItem(
+                  this.props.product.id,
+                  JSON.stringify({
+                    price: this.props.product.price,
+                    quantity: this.state.quantity,
+                  })
+                )
+              }
+            >
+              Add to cart!
+            </button>
+          )}
           <button type="button" className="single_product_action_buttons">
             Add to wish list!
           </button>
