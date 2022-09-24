@@ -6,7 +6,7 @@ const {
 module.exports = router;
 
 const adminsOnly = (req, res, next) => {
-  console.log("req", req);
+  console.log("req", req.headers);
   let { id, fullName, email, password, isAdmin } = req.user.dataValues;
 
   if (id && fullName && email && password) {
@@ -24,7 +24,7 @@ const adminsOnly = (req, res, next) => {
   }
 };
 
-router.get("/", async (req, res, next) => {
+router.get("/", adminsOnly, async (req, res, next) => {
   try {
     const users = await User.findAll({
       attributes: [
