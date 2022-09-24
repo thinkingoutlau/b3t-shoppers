@@ -36,12 +36,14 @@ class Cart extends React.Component {
     const guestCart = localStorage;
     let guestProducts = Object.keys(guestCart);
 
-    if (isLoggedIn && guestCart.length) {
+    if (isLoggedIn) {
       guestProducts.forEach((product) => {
-        const price = localStorage.getItem(product).price;
-        const quantity = localStorage.getItem(product).quantity;
-        this.handleAddGuestToCart(product, price, quantity);
-        return localStorage.removeItem(product);
+        if (product !== "token") {
+          const price = localStorage.getItem(product).price;
+          const quantity = localStorage.getItem(product).quantity;
+          this.handleAddGuestToCart(product, price, quantity);
+          return localStorage.removeItem(product);
+        }
       });
     }
 
@@ -60,7 +62,7 @@ class Cart extends React.Component {
           ) : (
             <p> Nothing in your cart!</p>
           )
-        ) : guestCart.length ? (
+        ) : guestCart.length && !guestCart.token ? (
           guestProducts.map((product) => {
             return (
               <div key={product}>
