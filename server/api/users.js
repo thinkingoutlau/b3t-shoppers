@@ -68,3 +68,17 @@ router.put("/:username", async (req, res, next) => {
     next(err);
   }
 });
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (user.dataValues.isAdmin === false) {
+      await user.destroy();
+      res.send(user);
+    } else {
+      res.send(user);
+    }
+  } catch (error) {
+    next(error);
+  }
+});

@@ -422,46 +422,76 @@ form div {
   transition-duration: 0.3s;
 }
 
-.scene {
-  display: inline-block;
-  width: 200px;
-  height: 260px;
-/*   border: 1px solid #CCC; */
-  margin: 40px 0;
-  perspective: 600px;
+.all_users {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
-.card {
+.flip-card {
+  background-color: transparent;
+  width: 15rem;
+  height: 15rem;
+  perspective: 1000px;
+  border-radius: 15px;
+  margin: 2rem;
+}
+
+.flip-card-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  cursor: pointer;
+  text-align: center;
+  transition: transform 0.8s;
   transform-style: preserve-3d;
-  transform-origin: center right;
-  transition: transform 1s;
 }
 
-.card.is-flipped {
-  transform: translateX(-100%) rotateY(-180deg);
+.flip-card-inner.is-flipped{
+  transform: rotateY(180deg);
 }
 
-.card__face {
+.flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
-  line-height: 260px;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  font-size: 40px;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-.card__face--front {
-  background: crimson;
+.flip-card-front {
+  background-color: #DC9A84;
+  color: #5F3A1C;
+  border-radius: 15px;
 }
 
-.card__face--back {
-  background: slateblue;
+.flip-card-front > img {
+  margin: 1rem;
+}
+
+.flip-card-back {
+  background-color: #DC9A84;
+  color: #5F3A1C;
+  border-radius: 15px;
   transform: rotateY(180deg);
+}
+
+.card-content {
+  width: 90%;
+  margin: auto;
+}
+
+.card-content > button {
+  background-color: #e6cb91;
+  border-radius: 15px;
+  border-color: #5F3A1C;
+  color: #5F3A1C;
+  padding: 0.5rem;
+}
+
+.card-content > button.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: #c0c0c0;
+  background-color: #fff;
+  opacity: 80%;
 }
