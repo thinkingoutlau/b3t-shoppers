@@ -20,10 +20,6 @@ class AllProducts extends Component {
   }
 
   render() {
-    // const show = Object.values(this.props.allProducts).map(
-    //   (value) => value.type
-    // );
-    // console.log(show);
     const { filter } = this.state;
     const products = this.props.allProducts.filter((product) => {
       if (filter === "All Products") {
