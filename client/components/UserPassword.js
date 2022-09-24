@@ -7,7 +7,6 @@ class UserPassword extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    console.log("hello");
   }
   render() {
     return (
