@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { getAllProducts } from "../store/allProducts";
 import { Link } from "react-router-dom";
 
-class AllProducts extends Component {
+class Indoors extends Component {
   constructor() {
     super();
     this.state = {
-      filter: "All Products",
+      filter: "All Indoor Items",
     };
     this.handleFilter = this.handleFilter.bind(this);
   }
@@ -20,13 +20,9 @@ class AllProducts extends Component {
   }
 
   render() {
-    // const show = Object.values(this.props.allProducts).map(
-    //   (value) => value.type
-    // );
-    // console.log(show);
     const { filter } = this.state;
     const products = this.props.allProducts.filter((product) => {
-      if (filter === "All Products") {
+      if (filter === "All Indoor Items") {
         return product;
       }
       if (filter === "Air Conditioning") {
@@ -50,6 +46,9 @@ class AllProducts extends Component {
       if (filter === "Chair") {
         return product.type.includes("Chair");
       }
+      if (filter === "Clocks") {
+        return product.type.includes("Clocks");
+      }
       if (filter === "Decor") {
         return product.type.includes("Decor");
       }
@@ -59,20 +58,8 @@ class AllProducts extends Component {
       if (filter === "Dresser") {
         return product.type.includes("Dresser");
       }
-      if (filter === "Easter") {
-        return product.type.includes("Easter");
-      }
-      if (filter === "Fish") {
-        return product.type.includes("foodFish");
-      }
       if (filter === "Folk Craft Decor") {
         return product.type.includes("Folk Craft Decor");
-      }
-      if (filter === "Fossils") {
-        return product.type.includes("fossils");
-      }
-      if (filter === "Garden") {
-        return product.type.includes("Garden");
       }
       if (filter === "Home Appliances") {
         return product.type.includes("Home Appliances");
@@ -80,23 +67,14 @@ class AllProducts extends Component {
       if (filter === "House Door Decor") {
         return product.type.includes("House Door Decor");
       }
-      if (filter === "Insect") {
-        return product.type.includes("Insect");
-      }
-      if (filter === "Outdoors Decor") {
-        return product.type.includes("Outdoors Decor");
-      }
       if (filter === "Sofa") {
         return product.type.includes("Sofa");
       }
       if (filter === "Table") {
         return product.type.includes("Table");
       }
-      if (filter === "Toy") {
-        return product.type.includes("Toy");
-      }
-      if (filter === "Seasonal Decor") {
-        return product.type.includes("Seasonal Decor");
+      if (filter === "TV") {
+        return product.type.includes("TV");
       }
     });
 
@@ -104,53 +82,66 @@ class AllProducts extends Component {
       <>
         <div>
           <p>
-            <label className="filterByProducts"> Filter By:</label>
+            <label className="filterByIndoorItems"> Filter By:</label>
             <select
-              className="filterByProducts"
+              className="filterByIndoorItems"
               name="filter"
               value={filter}
               onChange={this.handleFilter}
             >
-              <option value="All Products">All Products</option>
+              <option value="All Indoor Items">All Home Appliances</option>
               <option value="Air Conditioning">Air Conditioning</option>
               <option value="Arch">Arch</option>
               <option value="Audio">Audio</option>
-              <option value="Bathroom Things">Bathroom Things</option>
+              <option value="Bathroom Things">Bathroom Items</option>
               <option value="Bathtub">Bathtub</option>
               <option value="Bed">Bed</option>
               <option value="Chair">Chair</option>
+              <option value="Clocks">Clocks</option>
               <option value="Decor">Decor</option>
               <option value="Desk">Desk</option>
               <option value="Dresser">Dresser</option>
-              <option value="Easter">Easter</option>
-              <option value="Fish">Fish</option>
               <option value="Folk Craft Decor">Folk Craft Decor</option>
-              <option value="Fossils">Fossils</option>
-              <option value="Garden">Garden</option>
-              <option value="Home Appliances">Home Appliances</option>
               <option value="House Door Decor">House Door Decor</option>
-              <option value="Insect">Insect</option>
-              <option value="Outdoors Decor">Outdoor Decor</option>
-              <option value="Seasonal Decor">Seasonal Decor</option>
               <option value="Sofa">Sofa</option>
               <option value="Table">Table</option>
-              <option value="Toy">Toy</option>
+              <option value="TV">TV</option>
             </select>
           </p>
         </div>
         <div>
           {products.map((product) => {
-            return (
-              <div className="allProducts" key={product.id}>
-                <h3>
-                  <Link to={`/products/${product.id}`}>{product.name}</Link>
-                </h3>
-                <p>
-                  <img src={product.imageURL} alt="product image" />
-                </p>
-                <p>{product.price}</p>
-              </div>
-            );
+            if (
+              product.type === "Home Appliances" ||
+              product.type === "Air Conditioning" ||
+              product.type === "Arch" ||
+              product.type === "Audio" ||
+              product.type === "Bathroom Things" ||
+              product.type === "Bathtub" ||
+              product.type === "Bed" ||
+              product.type === "Clocks" ||
+              product.type === "Chair" ||
+              product.type === "Decor" ||
+              product.type === "Desk" ||
+              product.type === "Dresser" ||
+              product.type === "Folk Craft Decor" ||
+              product.type === "House Door Decor" ||
+              product.type === "Sofa" ||
+              product.type === "Table" ||
+              product.type === "TV"
+            ) {
+              return (
+                <div className="allIndoorItems" key={product.id}>
+                  <h3>
+                    <Link to={`/products/${product.id}`}>{product.name}</Link>
+                  </h3>
+                  <p>
+                    <img src={product.imageURL} alt="product image" />
+                  </p>
+                  <p>{product.price}</p>
+                </div>
+              );
+            }
           })}
         </div>
       </>
@@ -166,4 +157,4 @@ const mapDispatchToProps = (dispatch) => ({
   getAllProducts: () => dispatch(getAllProducts()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
+export default connect(mapStateToProps, mapDispatchToProps)(Indoors);

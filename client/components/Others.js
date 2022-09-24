@@ -31,18 +31,12 @@ class Others extends Component {
       if (filter === "Game Console") {
         return product.type.includes("Game Console");
       }
-      // if (filter === "Garden") {
-      //   return product.type.includes("Garden");
-      // }
       if (filter === "Insect") {
         return product.type.includes("Insect");
       }
-      if (filter === "Musical Instruments") {
-        return product.type.includes("Musical Instruments");
+      if (filter === "Seasonal Decor") {
+        return product.type.includes("Seasonal Decor" || "Seasonal decor");
       }
-      // if (filter === "Outdoors Decor") {
-      //   return product.type.includes("Outdoors Decor");
-      // }
       if (filter === "Toy") {
         return product.type.includes("Toy");
       }
@@ -62,10 +56,8 @@ class Others extends Component {
               <option value="All Others">All Others</option>
               <option value="Easter">Easter</option>
               <option value="Game Console">Game Console</option>
-              {/* <option value="Garden">Garden</option> */}
               <option value="Insect">Insect</option>
-              <option value="Musical Instruments">Musical Instruments</option>
-              {/* <option value="Outdoors Decor">Outdoors Decor</option> */}
+              <option value="Seasonal Decor">Seasonal Decor</option>
               <option value="Toy">Toy</option>
             </select>
           </p>
@@ -75,10 +67,8 @@ class Others extends Component {
             if (
               product.type === "Easter" ||
               product.type === "Game Console" ||
-              // product.type === "Garden" ||
               product.type === "Insect" ||
-              product.type === "Musical Instruments" ||
-              // product.type === "Outdoors Decor" ||
+              product.type === "Seasonal Decor" ||
               product.type === "Toy"
             ) {
               return (
