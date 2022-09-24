@@ -6,7 +6,6 @@ const {
 module.exports = router;
 
 const adminsOnly = (req, res, next) => {
-  console.log("hit this function");
   let { id, fullName, email, password, isAdmin } = req.user.dataValues;
 
   if (id && fullName && email && password) {
