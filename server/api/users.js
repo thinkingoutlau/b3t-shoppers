@@ -5,13 +5,35 @@ const {
 
 module.exports = router;
 
+const adminsOnly = (req, res, next) => {
+  let { id, fullName, email, password, isAdmin } = req.user.dataValues;
+
+  if (id && fullName && email && password) {
+    if (!isAdmin) {
+      const err = new Error(
+        "You don't have the correct admin rights to do this!"
+      );
+      err.status = 401;
+      return next(err);
+    }
+  } else {
+    const err = new Error("Please log in as admin to do this!");
+    err.status = 401;
+    return next(err);
+  }
+};
+
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
-      // explicitly select only the id and username fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ["id", "username"],
+      attributes: [
+        "id",
+        "username",
+        "isAdmin",
+        "imageURL",
+        "fullName",
+        "email",
+      ],
     });
     res.json(users);
   } catch (err) {
@@ -43,5 +65,19 @@ router.put("/:username", async (req, res, next) => {
     res.json(await user.update(req.body));
   } catch (err) {
     next(err);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (user.dataValues.isAdmin === false) {
+      await user.destroy();
+      res.send(user);
+    } else {
+      res.send(user);
+    }
+  } catch (error) {
+    next(error);
   }
 });
