@@ -36,10 +36,9 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
               </div>
               <div className="product_buttons">
                 <Link to="/products">All</Link>
-                <Link to="/decorations">Decorations</Link>
                 <Link to="/food">Food</Link>
-                <Link to="/furniture">Furniture</Link>
-                <Link to="/homeAppliances">Home Appliances</Link>
+                <Link to="/indoors">Indoors</Link>
+                <Link to="/outdoors">Outdoors</Link>
                 <Link to="/others">Others</Link>
               </div>
             </div>
@@ -75,11 +74,9 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
               </div>
               <div className="product_buttons">
                 <Link to="/products">All</Link>
-                <Link to="/decorations">Decorations</Link>
                 <Link to="/food">Food</Link>
-                <Link to="/clothes">Clothes</Link>
-                <Link to="/furniture">Furniture</Link>
-                <Link to="/homeAppliances">Home Appliances</Link>
+                <Link to="/indoors">Indoors</Link>
+                <Link to="/outdoors">Outdoors</Link>
                 <Link to="/others">Others</Link>
               </div>
             </div>
@@ -98,7 +95,7 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
               </div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
-            </div>
+              </div>
           </div>
         )}
       </nav>

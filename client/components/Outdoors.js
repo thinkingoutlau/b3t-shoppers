@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { getAllProducts } from "../store/allProducts";
 import { Link } from "react-router-dom";
 
-class Decorations extends Component {
+class Outdoors extends Component {
   constructor() {
     super();
     this.state = {
-      filter: "All Decorations",
+      filter: "All Outdoor Items",
     };
     this.handleFilter = this.handleFilter.bind(this);
   }
@@ -22,23 +22,14 @@ class Decorations extends Component {
   render() {
     const { filter } = this.state;
     const products = this.props.allProducts.filter((product) => {
-      if (filter === "All Decorations") {
+      if (filter === "All Outdoor Items") {
         return product;
       }
-      if (filter === "Arch") {
-        return product.type.includes("Arch");
+      if (filter === "Outdoors Decor") {
+        return product.type.includes("Outdoors Decor");
       }
-      if (filter === "Folk Craft Decor") {
-        return product.type.includes("Folk Craft Decor");
-      }
-      if (filter === "House Door Decor") {
-        return product.type.includes("House Door Decor");
-      }
-      if (filter === "Decor") {
-        return product.type.includes("Decor");
-      }
-      if (filter === "Seasonal Decor") {
-        return product.type.includes("Seasonal Decor");
+      if (filter === "Garden") {
+        return product.type.includes("Garden");
       }
     });
 
@@ -46,33 +37,27 @@ class Decorations extends Component {
       <>
         <div>
           <p>
-            <label className="filterByDecorations"> Filter By:</label>
+            <label className="filterByOutdoorItems"> Filter By:</label>
             <select
-              className="filterByDecorations"
+              className="filterByOutdoorItems"
               name="filter"
               value={filter}
               onChange={this.handleFilter}
             >
-              <option value="All Decorations">All Decorations</option>
-              <option value="Arch">Arch</option>
-              <option value="Folk Craft Decor">Folk Craft Decor</option>
-              <option value="House Door Decor">House Door Decor</option>
-              <option value="Decor">Decor</option>
-              <option value="Seasonal Decor">Seasonal Decor</option>
+              <option value="All Outdoor Items">All Outdoor Items</option>
+              <option value="Outdoors Decor">Outdoors Decor</option>
+              <option value="Garden">Garden</option>
             </select>
           </p>
         </div>
         <div>
           {products.map((product) => {
             if (
-              product.type === "Arch" ||
-              product.type === "Folk Craft Decor" ||
-              product.type === "House Door Decor" ||
-              product.type === "Decor" ||
-              product.type === "Seasonal Decor"
+              product.type === "Outdoors Decor" ||
+              product.type === "Garden"
             ) {
               return (
-                <div className="allDecorations" key={product.id}>
+                <div className="allOutdoorItems" key={product.id}>
                   <h3>
                     <Link to={`/products/${product.id}`}>{product.name}</Link>
                   </h3>
@@ -98,4 +83,4 @@ const mapDispatchToProps = (dispatch) => ({
   getAllProducts: () => dispatch(getAllProducts()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Decorations);
+export default connect(mapStateToProps, mapDispatchToProps)(Outdoors);
