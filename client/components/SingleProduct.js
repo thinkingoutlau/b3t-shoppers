@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { gotSingleProduct } from "../store/singleProduct";
-import { addProduct } from "../store/orders";
+import { addProduct, _addGuestProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
 class SingleProduct extends React.Component {
@@ -14,6 +14,7 @@ class SingleProduct extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handleGuestAddToCart = this.handleGuestAddToCart.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +36,21 @@ class SingleProduct extends React.Component {
     };
 
     this.props.addToCart(userId, product);
+  }
+
+  handleGuestAddToCart() {
+    let guestProducts = localStorage.setItem(
+      this.props.product.id,
+      JSON.stringify({
+        name: this.props.product.name,
+        image: this.props.product.imageURL,
+        price: this.props.product.price,
+        quantity: this.state.quantity,
+      })
+    );
+
+    console.log("singleprod gprod", guestProducts);
+    this.props.addGuestProduct(guestProducts);
   }
 
   render() {
@@ -69,15 +85,7 @@ class SingleProduct extends React.Component {
             <button
               type="button"
               className="single_product_action_buttons"
-              onClick={() =>
-                localStorage.setItem(
-                  this.props.product.id,
-                  JSON.stringify({
-                    price: this.props.product.price,
-                    quantity: this.state.quantity,
-                  })
-                )
-              }
+              onClick={this.handleGuestAddToCart}
             >
               Add to cart!
             </button>
@@ -104,6 +112,7 @@ const mapDispatchToProps = (dispatch, { history }) => {
     gotSingleProduct: (id) => dispatch(gotSingleProduct(id, history)),
     addToCart: (userId, product) => dispatch(addProduct(userId, product)),
     getUserFromServer: (username) => dispatch(getUserFromServer(username)),
+    addGuestProduct: (products) => dispatch(_addGuestProduct(products)),
   };
 };
 

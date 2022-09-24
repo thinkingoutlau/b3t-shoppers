@@ -3,6 +3,7 @@ import axios from "axios";
 //action types
 const GET_CURRENT_ORDER = "GET_CURRENT_ORDER";
 const ADD_PRODUCT = "ADD_PRODUCT";
+const ADD_GUEST_PRODUCT = "ADD_GUEST_PRODUCT";
 
 //action creators
 const _getCurrentOrder = (order) => ({
@@ -12,6 +13,11 @@ const _getCurrentOrder = (order) => ({
 
 const _addProduct = (products) => ({
   type: ADD_PRODUCT,
+  products,
+});
+
+export const _addGuestProduct = (products) => ({
+  type: ADD_GUEST_PRODUCT,
   products,
 });
 
@@ -45,6 +51,9 @@ export default (state = {}, action) => {
       return action.order;
     case ADD_PRODUCT:
       return { ...state, products: action.products };
+    case ADD_GUEST_PRODUCT:
+      console.log("reducer", action.products);
+      return [action.products];
     default:
       return state;
   }
