@@ -8,7 +8,8 @@
 // home appliances + audio + tv + air conditioning = electronics
 
 // outdoor stuff:
-// garden + outdoors decor = outdoor
+// garden
+// outdoors decor
 
 // other:
 // musical instruments
@@ -172,7 +173,7 @@ async function mapFishObj() {
         name: capitalizedProperty,
         type: "foodFish",
         description: fishObj[property]["museum-phrase"],
-        price: fishObj[property]["price"],
+        price: fishObj[property]["price"] * 100,
         imageURL: fishObj[property]["icon_uri"],
         quantity: 100,
       }),
@@ -195,7 +196,7 @@ async function mapFossilsObj() {
         name: capitalizedProperty,
         type: "fossils",
         description: fossilsObj[property]["museum-phrase"],
-        price: fossilsObj[property]["price"],
+        price: fossilsObj[property]["price"] * 100,
         imageURL: fossilsObj[property]["image_uri"],
         quantity: 100,
       }),
@@ -226,7 +227,7 @@ async function mapHousewareObj() {
           name: capitalizedProperty,
           type: arrVariants[0].tag,
           description: description,
-          price: arrVariants[0]["sell-price"],
+          price: arrVariants[0]["sell-price"] * 100,
           imageURL: arrVariants[0]["image_uri"],
           quantity: 100,
         }),
@@ -258,7 +259,7 @@ async function mapWallMountedObj() {
           name: capitalizedProperty,
           type: arrVariants[0].tag,
           description: description,
-          price: arrVariants[0]["sell-price"],
+          price: arrVariants[0]["sell-price"] * 100,
           imageURL: arrVariants[0]["image_uri"],
           quantity: 100,
         }),
@@ -290,7 +291,7 @@ async function mapMiscObj() {
           name: capitalizedProperty,
           type: arrVariants[0].tag,
           description: description,
-          price: arrVariants[0]["sell-price"],
+          price: arrVariants[0]["sell-price"] * 100,
           imageURL: arrVariants[0]["image_uri"],
           quantity: 100,
         }),
@@ -315,6 +316,7 @@ async function mapUsersObj() {
         username: usersObj[property]["name"]["name-USen"],
         email: email,
         password: "123",
+        imageURL: usersObj[property]["icon_uri"],
       }),
     ]);
   }
@@ -337,6 +339,8 @@ async function seed() {
       email: "TomNook@gmail.com",
       password: "123",
       isAdmin: true,
+      imageURL:
+        "https://cdn.discord.me/server/164cd45d755c64daff37e6c0a1b7cf4fa3bd7cd6e4bd50493f7c584acc5cde6c/icon_c9ca35972866dca40d88e65d10d02c963ad0a1cf13b016f50d73422a886604ed.jpg",
     }),
     User.create({
       fullName: "Timmy",
@@ -344,6 +348,7 @@ async function seed() {
       email: "Timmy@gmail.com",
       password: "123",
       isAdmin: true,
+      imageURL: "https://dodo.ac/np/images/7/73/Timmy%27s_Poster_NH_Icon.png",
     }),
     User.create({
       fullName: "Tommy",
@@ -351,6 +356,7 @@ async function seed() {
       email: "Tommy@gmail.com",
       password: "123",
       isAdmin: true,
+      imageURL: "https://dodo.ac/np/images/1/1e/Tommy%27s_Poster_NH_Icon.png",
     }),
   ]);
 

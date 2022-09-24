@@ -31,6 +31,11 @@ const User = db.define("user", {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+  imageURL: {
+    type: Sequelize.STRING,
+    defaultValue:
+      "https://spng.pngfind.com/pngs/s/16-168465_aws-simple-icons-non-service-specific-user-default.png",
+  },
 });
 
 module.exports = User;
