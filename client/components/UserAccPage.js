@@ -38,7 +38,7 @@ class UserAccPage extends Component {
         </p> */}
         <p>
           <strong>Order History: </strong>
-          <Link to="/orderHistory">Show History</Link>
+          <Link to={`/orderHistory/${this.props.auth.id}`}>Show History</Link>
         </p>
       </div>
     );
