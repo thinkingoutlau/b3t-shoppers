@@ -14,7 +14,7 @@ import UserPassword from "./components/UserPassword";
 import Food from "./components/Food";
 import Others from "./components/Others";
 import Outdoors from "./components/Outdoors";
-import Indoors from "./components/indoors";
+import Indoors from "./components/Indoors";
 
 /**
  * COMPONENT
