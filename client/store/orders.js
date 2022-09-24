@@ -52,7 +52,6 @@ export default (state = {}, action) => {
     case ADD_PRODUCT:
       return { ...state, products: action.products };
     case ADD_GUEST_PRODUCT:
-      console.log("reducer", action.products);
       return [action.products];
     default:
       return state;

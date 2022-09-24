@@ -49,7 +49,6 @@ class SingleProduct extends React.Component {
       })
     );
 
-    console.log("singleprod gprod", guestProducts);
     this.props.addGuestProduct(guestProducts);
   }
 

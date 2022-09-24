@@ -1,9 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { getCurrentOrder } from "../store/orders";
+import { addProduct, getCurrentOrder } from "../store/orders";
 
 class Cart extends React.Component {
+  constructor() {
+    super();
+
+    this.handleAddGuestToCart = this.handleAddGuestToCart.bind(this);
+  }
   componentDidUpdate(prevProps) {
     if (!!this.props.auth.id) {
       if (this.props.auth.id !== prevProps.auth.id) {
@@ -12,14 +17,33 @@ class Cart extends React.Component {
     }
   }
 
+  handleAddGuestToCart(id, price, quantity) {
+    const userId = this.props.auth.id;
+    const product = {
+      productId: id,
+      price: price,
+      quantity: quantity,
+    };
+
+    this.props.addToCart(userId, product);
+  }
+
   render() {
     const isLoggedIn = !!this.props.auth.id;
 
     let cart = this.props.currentOrder || {};
-    const guestCart = localStorage;
-    let products = Object.keys(guestCart);
 
-    console.log(products);
+    const guestCart = localStorage;
+    let guestProducts = Object.keys(guestCart);
+
+    if (isLoggedIn && guestCart.length) {
+      guestProducts.forEach((product) => {
+        const price = localStorage.getItem(product).price;
+        const quantity = localStorage.getItem(product).quantity;
+        this.handleAddGuestToCart(product, price, quantity);
+        return localStorage.removeItem(product);
+      });
+    }
 
     return (
       <div>
@@ -28,6 +52,7 @@ class Cart extends React.Component {
             cart.products.map((product) => {
               return (
                 <div key={product.id}>
+                  <img src={product.imageURL} />
                   {product.name} ${product.price}
                 </div>
               );
@@ -35,8 +60,8 @@ class Cart extends React.Component {
           ) : (
             <p> Nothing in your cart!</p>
           )
-        ) : (
-          products.map((product) => {
+        ) : guestCart.length ? (
+          guestProducts.map((product) => {
             return (
               <div key={product}>
                 <img src={JSON.parse(localStorage.getItem(product)).image} />
@@ -46,6 +71,8 @@ class Cart extends React.Component {
               </div>
             );
           })
+        ) : (
+          <p> Nothing in your cart! </p>
         )}
       </div>
     );
@@ -61,6 +88,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   getCart: (id) => dispatch(getCurrentOrder(id)),
+  addToCart: (userId, product) => dispatch(addProduct(userId, product)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
