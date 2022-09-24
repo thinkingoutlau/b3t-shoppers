@@ -24,7 +24,7 @@ const adminsOnly = (req, res, next) => {
   }
 };
 
-router.get("/", adminsOnly, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
       attributes: [
