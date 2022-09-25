@@ -1,8 +1,7 @@
 const router = require("express").Router();
 const {
-  models: { Order, Product },
+  models: { Order, Product, Order_Product },
 } = require("../db");
-const Order_Product = require("../db/models/Order_Product");
 
 router.get("/:id", async (req, res, next) => {
   try {
@@ -80,6 +79,36 @@ router.put("/:id", async (req, res, next) => {
     )[0].order_products;
 
     res.json(await currentProduct.update(req.body));
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const cart = await Order.findOne({
+      where: {
+        userId: req.params.id,
+        status: "unfulfilled",
+      },
+      include: {
+        model: Product,
+      },
+    });
+
+    const currentProduct = cart.products.filter(
+      (obj) => obj.id === req.body.productId
+    )[0];
+
+    const deleteProduct = await Order_Product.findOne({
+      where: {
+        productId: currentProduct.id,
+        orderId: cart.id,
+      },
+    });
+
+    await deleteProduct.destroy();
+    res.json(deleteProduct);
   } catch (e) {
     next(e);
   }

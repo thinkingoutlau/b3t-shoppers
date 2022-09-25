@@ -31,10 +31,11 @@ class Cart extends React.Component {
   render() {
     const isLoggedIn = !!this.props.auth.id;
 
-    let cart = this.props.currentOrder || {};
+    const cart = this.props.currentOrder || {};
+    const cartProducts = cart.products || [];
 
     const guestCart = localStorage;
-    let guestProducts = Object.keys(guestCart);
+    const guestProducts = Object.keys(guestCart);
 
     if (isLoggedIn) {
       guestProducts.forEach((product) => {
@@ -50,8 +51,8 @@ class Cart extends React.Component {
     return (
       <div>
         {isLoggedIn ? (
-          cart.products ? (
-            cart.products.map((product) => {
+          cartProducts.length ? (
+            cartProducts.map((product) => {
               return (
                 <div key={product.id}>
                   <img src={product.imageURL} />
