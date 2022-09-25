@@ -18,9 +18,9 @@ const _addProduct = (products) => ({
   products,
 });
 
-export const _addGuestProduct = (products) => ({
+const _addGuestProduct = (product) => ({
   type: ADD_GUEST_PRODUCT,
-  products,
+  product,
 });
 
 const _updateProduct = (product) => ({
@@ -48,10 +48,20 @@ export const getCurrentOrder = (id) => {
 export const addProduct = (userId, product) => {
   return async (dispatch) => {
     try {
-      console.log("input", product);
       const { data } = await axios.post(`/api/currentOrder/${userId}`, product);
-      console.log("output", data);
+      console.log(data);
       dispatch(_addProduct(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const addGuestProduct = (prodId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/api/products/${prodId}`);
+      dispatch(_addGuestProduct([data]));
     } catch (err) {
       console.log(err);
     }
@@ -83,14 +93,14 @@ export const deleteProduct = (userId, productId) => {
 };
 
 //reducer
-export default (state = {}, action) => {
+export default (state = { products: [] }, action) => {
   switch (action.type) {
     case GET_CURRENT_ORDER:
       return action.order;
     case ADD_PRODUCT:
       return { ...state, products: action.products };
     case ADD_GUEST_PRODUCT:
-      return [action.products];
+      return { ...state, products: [...state.products, ...action.product] };
     case UPDATE_PRODUCT:
       return { ...state, products: action.product };
     case DELETE_PRODUCT:

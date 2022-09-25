@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { gotSingleProduct } from "../store/singleProduct";
-import { addProduct, _addGuestProduct } from "../store/orders";
+import { addProduct, addGuestProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
 class SingleProduct extends React.Component {
@@ -39,17 +39,10 @@ class SingleProduct extends React.Component {
   }
 
   handleGuestAddToCart() {
-    let guestProducts = localStorage.setItem(
-      this.props.product.id,
-      JSON.stringify({
-        name: this.props.product.name,
-        image: this.props.product.imageURL,
-        price: this.props.product.price,
-        quantity: this.state.quantity,
-      })
-    );
+    localStorage.setItem(this.props.product.id, this.props.product.id);
+    let prodId = localStorage.getItem(this.props.product.id);
 
-    this.props.addGuestProduct(guestProducts);
+    this.props.addGuestProduct(prodId);
   }
 
   render() {
@@ -111,7 +104,7 @@ const mapDispatchToProps = (dispatch, { history }) => {
     gotSingleProduct: (id) => dispatch(gotSingleProduct(id, history)),
     addToCart: (userId, product) => dispatch(addProduct(userId, product)),
     getUserFromServer: (username) => dispatch(getUserFromServer(username)),
-    addGuestProduct: (products) => dispatch(_addGuestProduct(products)),
+    addGuestProduct: (prodId) => dispatch(addGuestProduct(prodId)),
   };
 };
 
