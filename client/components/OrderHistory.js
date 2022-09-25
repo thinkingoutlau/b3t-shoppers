@@ -20,13 +20,11 @@ class OrderHistory extends Component {
   }
 
   render() {
-    const productsPurchasedByUser = this.props.orderHistory.products;
-    console.log(productsPurchasedByUser);
     const { filter } = this.state;
-    const orderHistory = this.props.orderHistory;
+    const productsPurchasedByUser = this.props.orderHistory.products;
+    const dateOfPurchase = this.props.orderHistory.createdAt;
+
     const currentDate = new Date();
-    // console.log("orderHistory date before format", orderHistory.createdAt);
-    // console.log("currentDate before format", currentDate);
     function dateFormat(inputDate, format) {
       const date = new Date(inputDate);
       const day = date.getDate();
@@ -41,13 +39,12 @@ class OrderHistory extends Component {
       format = format.replace("dd", day.toString().padStart(2, "0"));
       return format;
     }
-
-    // console.log(
-    //   "Converted date: " + dateFormat(orderHistory.createdAt, "MM-dd-yyyy"),
-    //   "Converted date: " + dateFormat(currentDate, "MM-dd-yyyy")
-    // );
-    const orderHistoryDate = dateFormat(orderHistory.createdAt, "MM-dd-yyyy");
+    const orderHistoryDate = dateFormat(dateOfPurchase, "MM-dd-yyyy");
     const todaysDate = dateFormat(currentDate, "MM-dd-yyyy");
+    const monthOfPurchase = orderHistoryDate.slice(1, 2);
+    const monthOfTodaysDate = todaysDate.slice(1, 2);
+    const yearOfPurchase = orderHistoryDate.slice(6, 10);
+    const yearOfTodaysDate = todaysDate.slice(6, 10);
 
     return (
       <>
@@ -72,11 +69,12 @@ class OrderHistory extends Component {
           </p>
         </div>
         <div>
-          {todaysDate !== orderHistoryDate ? (
-            <i>`No order placed in the ${this.state.filter}`</i>
-          ) : (
+          {filter === "last 30 days" &&
+          monthOfTodaysDate - 1 <= monthOfPurchase &&
+          monthOfPurchase <= monthOfTodaysDate &&
+          yearOfPurchase === yearOfTodaysDate ? (
             <div>
-              {productsPurchasedByUser.map((product) => {
+              {productsPurchasedByUser?.map((product) => {
                 return (
                   <div className="productsFromOrderHistory" key={product.id}>
                     <h2>
@@ -85,7 +83,7 @@ class OrderHistory extends Component {
                       </p>
                     </h2>
                     <p>
-                      <strong>Order placed:</strong> {orderHistoryDate}
+                      <strong>Order placed:</strong>
                     </p>
                     <p>
                       <strong>Quantity purchased:</strong>{" "}
@@ -98,6 +96,113 @@ class OrderHistory extends Component {
                 );
               })}
             </div>
+          ) : filter === "last 3 months" &&
+            monthOfTodaysDate - 3 <= monthOfPurchase &&
+            monthOfPurchase <= monthOfTodaysDate &&
+            yearOfPurchase === yearOfTodaysDate ? (
+            <div>
+              {productsPurchasedByUser?.map((product) => {
+                return (
+                  <div className="productsFromOrderHistory" key={product.id}>
+                    <h2>
+                      <p>
+                        <strong>{product.name}</strong>
+                      </p>
+                    </h2>
+                    <p>
+                      <strong>Order placed:</strong>
+                    </p>
+                    <p>
+                      <strong>Quantity purchased:</strong>{" "}
+                      {product.order_products.quantity}
+                    </p>
+                    <p>
+                      <img src={product.imageURL} alt="rpoduct image" />
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : filter === "past year" &&
+            yearOfTodaysDate - 1 <= yearOfPurchase &&
+            yearOfPurchase <= yearOfTodaysDate ? (
+            <div>
+              {productsPurchasedByUser?.map((product) => {
+                return (
+                  <div className="productsFromOrderHistory" key={product.id}>
+                    <h2>
+                      <p>
+                        <strong>{product.name}</strong>
+                      </p>
+                    </h2>
+                    <p>
+                      <strong>Order placed:</strong>
+                    </p>
+                    <p>
+                      <strong>Quantity purchased:</strong>{" "}
+                      {product.order_products.quantity}
+                    </p>
+                    <p>
+                      <img src={product.imageURL} alt="rpoduct image" />
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : filter === "past 2 years" &&
+            yearOfTodaysDate - 2 <= yearOfPurchase &&
+            yearOfPurchase <= yearOfTodaysDate ? (
+            <div>
+              {productsPurchasedByUser?.map((product) => {
+                return (
+                  <div className="productsFromOrderHistory" key={product.id}>
+                    <h2>
+                      <p>
+                        <strong>{product.name}</strong>
+                      </p>
+                    </h2>
+                    <p>
+                      <strong>Order placed:</strong>
+                    </p>
+                    <p>
+                      <strong>Quantity purchased:</strong>{" "}
+                      {product.order_products.quantity}
+                    </p>
+                    <p>
+                      <img src={product.imageURL} alt="rpoduct image" />
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : filter === "past 3 years" &&
+            yearOfTodaysDate - 3 <= yearOfPurchase &&
+            yearOfPurchase <= yearOfTodaysDate ? (
+            <div>
+              {productsPurchasedByUser?.map((product) => {
+                return (
+                  <div className="productsFromOrderHistory" key={product.id}>
+                    <h2>
+                      <p>
+                        <strong>{product.name}</strong>
+                      </p>
+                    </h2>
+                    <p>
+                      <strong>Order placed:</strong>
+                    </p>
+                    <p>
+                      <strong>Quantity purchased:</strong>{" "}
+                      {product.order_products.quantity}
+                    </p>
+                    <p>
+                      <img src={product.imageURL} alt="rpoduct image" />
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <i>{`No order placed in the ${this.state.filter}`}</i>
           )}
         </div>
       </>
