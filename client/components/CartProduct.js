@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { updateProduct } from "../store/orders";
+import { deleteProduct, updateProduct } from "../store/orders";
 
 class CartProduct extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class CartProduct extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleUpdateCart = this.handleUpdateCart.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
   componentDidMount() {
     this.setState({
@@ -26,7 +26,7 @@ class CartProduct extends React.Component {
     });
   }
 
-  handleUpdateCart(productId, quantity) {
+  handleUpdate(productId, quantity) {
     const userId = this.props.auth.id;
     const product = {
       productId: productId,
@@ -34,6 +34,12 @@ class CartProduct extends React.Component {
     };
 
     this.props.updateCart(userId, product);
+  }
+
+  handleDelete(productId) {
+    const userId = this.props.auth.id;
+
+    this.props.deleteProduct(userId, productId);
   }
 
   render() {
@@ -50,9 +56,12 @@ class CartProduct extends React.Component {
         />
         <button
           type="button"
-          onClick={() => this.handleUpdateCart(product.id, this.state.quantity)}
+          onClick={() => this.handleUpdate(product.id, this.state.quantity)}
         >
           save
+        </button>
+        <button type="button" onClick={() => this.handleDelete(product.id)}>
+          delete
         </button>
       </div>
     );
@@ -67,6 +76,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   updateCart: (id, product) => dispatch(updateProduct(id, product)),
+  deleteProduct: (id, productId) => dispatch(deleteProduct(id, productId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProduct);

@@ -5,6 +5,7 @@ const GET_CURRENT_ORDER = "GET_CURRENT_ORDER";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const ADD_GUEST_PRODUCT = "ADD_GUEST_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 //action creators
 const _getCurrentOrder = (order) => ({
@@ -24,6 +25,11 @@ export const _addGuestProduct = (products) => ({
 
 const _updateProduct = (product) => ({
   type: UPDATE_PRODUCT,
+  product,
+});
+
+const _deleteProduct = (product) => ({
+  type: DELETE_PRODUCT,
   product,
 });
 
@@ -56,7 +62,20 @@ export const updateProduct = (userId, product) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`/api/currentOrder/${userId}`, product);
-      dispatch(_addProduct(data));
+      dispatch(_updateProduct(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const deleteProduct = (userId, productId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`/api/currentOrder/${userId}`, {
+        data: { productId: productId },
+      });
+      dispatch(_deleteProduct(data));
     } catch (err) {
       console.log(err);
     }
@@ -73,7 +92,12 @@ export default (state = {}, action) => {
     case ADD_GUEST_PRODUCT:
       return [action.products];
     case UPDATE_PRODUCT:
-      return [action.products];
+      return { ...state, products: action.product };
+    case DELETE_PRODUCT:
+      const cartProducts = state.products.filter(
+        (prod) => prod.id !== action.product.productId
+      );
+      return { ...state, products: cartProducts };
     default:
       return state;
   }
