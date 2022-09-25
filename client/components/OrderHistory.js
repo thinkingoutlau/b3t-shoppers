@@ -83,10 +83,10 @@ class OrderHistory extends Component {
                       </p>
                     </h2>
                     <p>
-                      <strong>Order placed:</strong>
+                      <strong>Order placed: </strong> {orderHistoryDate}
                     </p>
                     <p>
-                      <strong>Quantity purchased:</strong>{" "}
+                      <strong>Quantity purchased:</strong>
                       {product.order_products.quantity}
                     </p>
                     <p>
@@ -110,7 +110,7 @@ class OrderHistory extends Component {
                       </p>
                     </h2>
                     <p>
-                      <strong>Order placed:</strong>
+                      <strong>Order placed:</strong> {orderHistoryDate}
                     </p>
                     <p>
                       <strong>Quantity purchased:</strong>{" "}
@@ -136,7 +136,7 @@ class OrderHistory extends Component {
                       </p>
                     </h2>
                     <p>
-                      <strong>Order placed:</strong>
+                      <strong>Order placed:</strong> {orderHistoryDate}
                     </p>
                     <p>
                       <strong>Quantity purchased:</strong>{" "}
@@ -162,7 +162,7 @@ class OrderHistory extends Component {
                       </p>
                     </h2>
                     <p>
-                      <strong>Order placed:</strong>
+                      <strong>Order placed:</strong> {orderHistoryDate}
                     </p>
                     <p>
                       <strong>Quantity purchased:</strong>{" "}
@@ -188,7 +188,7 @@ class OrderHistory extends Component {
                       </p>
                     </h2>
                     <p>
-                      <strong>Order placed:</strong>
+                      <strong>Order placed:</strong> {orderHistoryDate}
                     </p>
                     <p>
                       <strong>Quantity purchased:</strong>{" "}
