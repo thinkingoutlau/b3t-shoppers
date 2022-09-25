@@ -4,6 +4,7 @@ import axios from "axios";
 const GET_CURRENT_ORDER = "GET_CURRENT_ORDER";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const ADD_GUEST_PRODUCT = "ADD_GUEST_PRODUCT";
+const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 
 //action creators
 const _getCurrentOrder = (order) => ({
@@ -21,6 +22,11 @@ export const _addGuestProduct = (products) => ({
   products,
 });
 
+const _updateProduct = (product) => ({
+  type: UPDATE_PRODUCT,
+  product,
+});
+
 //thunk creators
 export const getCurrentOrder = (id) => {
   return async (dispatch) => {
@@ -36,7 +42,20 @@ export const getCurrentOrder = (id) => {
 export const addProduct = (userId, product) => {
   return async (dispatch) => {
     try {
+      console.log("input", product);
       const { data } = await axios.post(`/api/currentOrder/${userId}`, product);
+      console.log("output", data);
+      dispatch(_addProduct(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateProduct = (userId, product) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/api/currentOrder/${userId}`, product);
       dispatch(_addProduct(data));
     } catch (err) {
       console.log(err);
@@ -52,6 +71,8 @@ export default (state = {}, action) => {
     case ADD_PRODUCT:
       return { ...state, products: action.products };
     case ADD_GUEST_PRODUCT:
+      return [action.products];
+    case UPDATE_PRODUCT:
       return [action.products];
     default:
       return state;

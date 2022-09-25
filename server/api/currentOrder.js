@@ -64,7 +64,7 @@ router.post("/:id", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-    const cart = await Order.findOne({
+    let cart = await Order.findOne({
       where: {
         userId: req.params.id,
         status: "unfulfilled",
@@ -78,7 +78,19 @@ router.put("/:id", async (req, res, next) => {
       (obj) => obj.id === req.body.productId
     )[0].order_products;
 
-    res.json(await currentProduct.update(req.body));
+    await currentProduct.update(req.body);
+
+    cart = await Order.findOne({
+      where: {
+        userId: req.params.id,
+        status: "unfulfilled",
+      },
+      include: {
+        model: Product,
+      },
+    });
+
+    res.json(cart.products);
   } catch (e) {
     next(e);
   }

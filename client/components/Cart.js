@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { addProduct, getCurrentOrder } from "../store/orders";
+import { addProduct, getCurrentOrder, updateProduct } from "../store/orders";
+
+import CartProduct from "./CartProduct";
 
 class Cart extends React.Component {
   constructor() {
@@ -9,6 +11,7 @@ class Cart extends React.Component {
 
     this.handleAddGuestToCart = this.handleAddGuestToCart.bind(this);
   }
+
   componentDidUpdate(prevProps) {
     if (!!this.props.auth.id) {
       if (this.props.auth.id !== prevProps.auth.id) {
@@ -17,14 +20,15 @@ class Cart extends React.Component {
     }
   }
 
-  handleAddGuestToCart(id, price, quantity) {
+  handleAddGuestToCart(productId, price, quantity) {
     const userId = this.props.auth.id;
     const product = {
-      productId: id,
+      productId: productId,
       price: price,
       quantity: quantity,
     };
 
+    //BUG: localstorage not giving proper quantity?
     this.props.addToCart(userId, product);
   }
 
@@ -53,12 +57,7 @@ class Cart extends React.Component {
         {isLoggedIn ? (
           cartProducts.length ? (
             cartProducts.map((product) => {
-              return (
-                <div key={product.id}>
-                  <img src={product.imageURL} />
-                  {product.name} ${product.price}
-                </div>
-              );
+              return <CartProduct product={product} key={product.id} />;
             })
           ) : (
             <p> Nothing in your cart!</p>
@@ -91,7 +90,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   getCart: (id) => dispatch(getCurrentOrder(id)),
-  addToCart: (userId, product) => dispatch(addProduct(userId, product)),
+  addToCart: (id, product) => dispatch(addProduct(id, product)),
+  updateCart: (id, product) => dispatch(updateProduct(id, product)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
