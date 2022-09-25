@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllProducts } from "../store/allProducts";
 import { Link } from "react-router-dom";
+
+import { getAllProducts, deleteProduct } from "../store/allProducts";
+import { addProduct } from "../store/orders";
+import { getUserFromServer } from "../store/user";
 
 class Indoors extends Component {
   constructor() {
@@ -19,9 +22,16 @@ class Indoors extends Component {
     this.setState({ filter: event.target.value });
   }
 
+  handleCardClick(event) {
+    if (event.target.className === "all_products_actions") {
+      event.preventDefault();
+    }
+  }
+
   render() {
     const { filter } = this.state;
     const { auth } = this.props;
+    const isLoggedIn = !!this.props.auth.id;
 
     const products = this.props.allProducts.filter((product) => {
       if (filter === "All Indoor Items") {
@@ -133,7 +143,11 @@ class Indoors extends Component {
               product.type === "TV"
             ) {
               return (
-                <Link to={`/products/${product.id}`} key={product.id}>
+                <Link
+                  to={`/products/${product.id}`}
+                  key={product.id}
+                  onClick={this.handleCardClick}
+                >
                   <div className="productCard">
                     <h3>{product.name}</h3>
                     <img
@@ -143,11 +157,28 @@ class Indoors extends Component {
                     />
                     <p>${product.price}</p>
                     {auth.isAdmin ? (
-                      <button type="button" className="all_products_actions">
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        id={product.id}
+                        onClick={() => this.props.deleteProduct(product.id)}
+                      >
                         Remove product
                       </button>
+                    ) : isLoggedIn ? (
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        onClick={this.handleAddToCart}
+                      >
+                        Add to cart!
+                      </button>
                     ) : (
-                      <button type="button" className="all_products_actions">
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        onClick={this.handleGuestAddToCart}
+                      >
                         Add to cart!
                       </button>
                     )}
@@ -165,10 +196,14 @@ class Indoors extends Component {
 const mapStateToProps = (state) => ({
   allProducts: state.allProducts,
   auth: state.auth,
+  order: state.order,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getAllProducts: () => dispatch(getAllProducts()),
+  addToCart: (userId, product) => dispatch(addProduct(userId, product)),
+  getUserFromServer: (username) => dispatch(getUserFromServer(username)),
+  deleteProduct: (id) => dispatch(deleteProduct(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Indoors);

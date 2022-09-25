@@ -436,3 +436,8 @@ form div {
   height: 3rem;
   transition-duration: 0.3s;
 }
+
+.product_image {
+  height: 75px;
+  width: 75px;
+}

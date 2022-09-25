@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllProducts } from "../store/allProducts";
 import { Link } from "react-router-dom";
 
+import { getAllProducts, deleteProduct } from "../store/allProducts";
 import { addProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
@@ -28,10 +28,16 @@ class AllProducts extends Component {
     const product = {
       productId: this.props.product.id,
       price: this.props.product.price,
-      quantity: this.state.quantity,
+      quantity: "1",
     };
 
     this.props.addToCart(userId, product);
+  }
+
+  handleCardClick(event) {
+    if (event.target.className === "all_products_actions") {
+      event.preventDefault();
+    }
   }
 
   render() {
@@ -155,7 +161,11 @@ class AllProducts extends Component {
         <div className="products">
           {products.map((product) => {
             return (
-              <Link to={`/products/${product.id}`} key={product.id}>
+              <Link
+                to={`/products/${product.id}`}
+                key={product.id}
+                onClick={this.handleCardClick}
+              >
                 <div className="productCard">
                   <h3>{product.name}</h3>
                   <img
@@ -165,7 +175,12 @@ class AllProducts extends Component {
                   />
                   <p>${product.price}</p>
                   {auth.isAdmin ? (
-                    <button type="button" className="all_products_actions">
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      id={product.id}
+                      onClick={() => this.props.deleteProduct(product.id)}
+                    >
                       Remove product
                     </button>
                   ) : isLoggedIn ? (
@@ -198,13 +213,14 @@ class AllProducts extends Component {
 const mapStateToProps = (state) => ({
   allProducts: state.allProducts,
   auth: state.auth,
-  // order: state.order,
+  order: state.order,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getAllProducts: () => dispatch(getAllProducts()),
   addToCart: (userId, product) => dispatch(addProduct(userId, product)),
   getUserFromServer: (username) => dispatch(getUserFromServer(username)),
+  deleteProduct: (id) => dispatch(deleteProduct(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
