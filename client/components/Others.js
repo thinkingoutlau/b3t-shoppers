@@ -21,6 +21,8 @@ class Others extends Component {
 
   render() {
     const { filter } = this.state;
+    const { auth } = this.props;
+
     const products = this.props.allProducts.filter((product) => {
       if (filter === "All Others") {
         return product;
@@ -62,7 +64,7 @@ class Others extends Component {
             </select>
           </p>
         </div>
-        <div>
+        <div className="products">
           {products.map((product) => {
             if (
               product.type === "Easter" ||
@@ -72,15 +74,26 @@ class Others extends Component {
               product.type === "Toy"
             ) {
               return (
-                <div className="allOthers" key={product.id}>
-                  <h3>
-                    <Link to={`/products/${product.id}`}>{product.name}</Link>
-                  </h3>
-                  <p>
-                    <img src={product.imageURL} alt="product image" />
-                  </p>
-                  <p>{product.price}</p>
-                </div>
+                <Link to={`/products/${product.id}`} key={product.id}>
+                  <div className="productCard">
+                    <h3>{product.name}</h3>
+                    <img
+                      src={product.imageURL}
+                      alt="product image"
+                      className="product_image"
+                    />
+                    <p>${product.price}</p>
+                    {auth.isAdmin ? (
+                      <button type="button" className="all_products_actions">
+                        Remove product
+                      </button>
+                    ) : (
+                      <button type="button" className="all_products_actions">
+                        Add to cart!
+                      </button>
+                    )}
+                  </div>
+                </Link>
               );
             }
           })}
@@ -90,8 +103,9 @@ class Others extends Component {
   }
 }
 
-const mapStateToProps = ({ allProducts }) => ({
-  allProducts,
+const mapStateToProps = (state) => ({
+  allProducts: state.allProducts,
+  auth: state.auth,
 });
 
 const mapDispatchToProps = (dispatch) => ({

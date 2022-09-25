@@ -183,100 +183,27 @@ form div {
   display: inline-block;
 }
 
-.allProducts {
+.products {
+display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.productCard {
   display: inline-block;
   text-align: center;
   font-size: 20px;
   margin: 50px;
+  width: 20rem;
+  height: 20rem;
+  background-color: #DC9A84;
+  color: #5F3A1C;
+  border-radius: 15px;
 }
 
-.allProducts img {
-  display: flex;
-  flex-wrap: wrap;
-  height: 150px;
-  width: 150px;
-  justify-content: center;
-  text-align: center;
-}
-
-.allOutdoorItems {
-  display: inline-block;
-  text-align: center;
-  font-size: 20px;
-  margin: 50px;
-}
-
-.allOutdoorItems img {
-  display: flex;
-  flex-wrap: wrap;
-  height: 150px;
-  width: 150px;
-  justify-content: center;
-  text-align: center;
-}
-
-.allFoods {
-  display: inline-block;
-  text-align: center;
-  font-size: 20px;
-  margin: 50px;
-}
-
-.allFoods img {
-  display: flex;
-  flex-wrap: wrap;
-  height: 150px;
-  width: 150px;
-  justify-content: center;
-  text-align: center;
-}
-
-.allFurniture {
-  display: inline-block;
-  text-align: center;
-  font-size: 20px;
-  margin: 50px;
-}
-
-.allFurniture img {
-  display: flex;
-  flex-wrap: wrap;
-  height: 150px;
-  width: 150px;
-  justify-content: center;
-  text-align: center;
-}
-
-.allIndoorItems {
-  display: inline-block;
-  text-align: center;
-  font-size: 20px;
-  margin: 50px;
-}
-
-.allIndoorItems img {
-  display: flex;
-  flex-wrap: wrap;
-  height: 150px;
-  width: 150px;
-  justify-content: center;
-  text-align: center;
-}
-
-.allOthers {
-  display: inline-block;
-  text-align: center;
-  font-size: 20px;
-  margin: 50px;
-}
-
-.allOthers img {
-  display: flex;
-  flex-wrap: wrap;
-  height: 150px;
-  width: 150px;
-  justify-content: center;
-  text-align: center;
+.product_image {
+  height: 6rem;
+  width: 6rem;
 }
 
 #components {
@@ -494,4 +421,18 @@ form div {
   color: #c0c0c0;
   background-color: #fff;
   opacity: 80%;
+}
+
+.all_products_actions {
+  background-color: #D09462;
+  color: #5F3A1C;
+  font-weight: bold;
+  border: 2px solid #5F3A1C;
+  border-width: 0.3rem;
+  border-radius: 15px;
+  margin: 0.5rem 0.5rem;
+  text-align: center;
+  width: 7rem;
+  height: 3rem;
+  transition-duration: 0.3s;
 }

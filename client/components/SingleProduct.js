@@ -62,7 +62,7 @@ class SingleProduct extends React.Component {
         </div>
         <div className="single_product_info">
           <h1>{this.props.product.name}</h1>
-          <h2>Current price: {this.props.product.price}</h2>
+          <h2>Current price: $ {this.props.product.price}</h2>
           <h3>{this.props.product.description}</h3>
         </div>
         <div className="single_product_actions">
