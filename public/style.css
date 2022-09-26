@@ -184,7 +184,7 @@ form div {
 }
 
 .products {
-display: flex;
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
@@ -196,8 +196,8 @@ display: flex;
   margin: 50px;
   width: 20rem;
   height: 20rem;
-  background-color: #DC9A84;
-  color: #5F3A1C;
+  background-color: #dc9a84;
+  color: #5f3a1c;
   border-radius: 15px;
 }
 
@@ -272,8 +272,8 @@ display: flex;
   color: #729772;
 }
 
-.single_product_actions >p {
-  color: #729772
+.single_product_actions > p {
+  color: #729772;
 }
 
 .single_product_actions {
@@ -424,10 +424,10 @@ form div {
 }
 
 .all_products_actions {
-  background-color: #D09462;
-  color: #5F3A1C;
+  background-color: #d09462;
+  color: #5f3a1c;
   font-weight: bold;
-  border: 2px solid #5F3A1C;
+  border: 2px solid #5f3a1c;
   border-width: 0.3rem;
   border-radius: 15px;
   margin: 0.5rem 0.5rem;
@@ -441,6 +441,7 @@ form div {
   height: 75px;
   width: 75px;
 }
+
 .productsFromOrderHistory {
   border-width: 3px;
   border-style: solid;
@@ -460,7 +461,7 @@ form div {
 
 .product-input-labels {
   padding: 1rem;
-  color: #3586BB;
+  color: #3586bb;
 }
 
 .product-inputs {
@@ -482,4 +483,40 @@ textarea {
   height: 10rem;
 }
 
+.ind_cart_prod {
+  display: flex;
+  flex-direction: column;
+  border: #e8d19b;
+  border-style: solid;
+  border-radius: 25px;
+  margin: 1rem;
+}
 
+.ind_cart_prod_info {
+  display: flex;
+  align-items: center;
+  margin-bottom: -0.5rem;
+}
+
+.ind_cart_prod_functions {
+  margin-bottom: 1rem;
+  /* fix margin bottom div is going into both divs */
+}
+
+.ind_cart_prod_functions > input {
+  height: 1rem;
+  background-color: #e8d19b;
+  border-color: #915438;
+  border-radius: 25px;
+  text-align: center;
+  width: 5rem;
+  margin-left: 1.5rem;
+}
+
+.ind_cart_prod_functions > button {
+  margin-left: 0.5rem;
+  background-color: #e8d19b;
+  color: #915438;
+  border: 915438;
+  border-radius: 25px;
+}
