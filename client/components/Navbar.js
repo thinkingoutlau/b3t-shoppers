@@ -110,7 +110,12 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
                   X
                 </button>
               </div>
-              <Cart />
+              <div className="cart_products">
+                <Cart />
+              </div>
+              <button type="button" id="checkout_cart">
+                Checkout
+              </button>
             </div>
           </div>
         </div>
