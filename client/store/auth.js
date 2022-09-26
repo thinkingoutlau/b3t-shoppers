@@ -8,10 +8,17 @@ const TOKEN = "token";
  */
 const SET_AUTH = "SET_AUTH";
 
+const UPDATE_PASSWORD = "UPDATE_PASSWORD";
+
 /**
  * ACTION CREATORS
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth });
+
+export const _updatePassword = (password) => ({
+  type: UPDATE_PASSWORD,
+  password,
+});
 
 /**
  * THUNK CREATORS
@@ -45,6 +52,24 @@ export const authenticate =
     }
   };
 
+// get new token when updating password which will set to local storage
+export const updatePassword = (username, password, newPassword) => {
+  return async (dispatch) => {
+    try {
+      const { data: updatedToken } = await axios.put(`/auth/editPassword`, {
+        username,
+        password,
+        newPassword,
+      });
+      window.localStorage.setItem(TOKEN, updatedToken);
+      dispatch(me());
+      // dispatch(updatePassword(true))
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   history.push("/login");
@@ -61,6 +86,8 @@ export default function (state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
       return action.auth;
+    case UPDATE_PASSWORD:
+      return action.password;
     default:
       return state;
   }
