@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { deleteProduct, updateProduct } from "../store/orders";
+import { deleteProduct, updateProduct, addGuestProduct } from "../store/orders";
 
 class CartProduct extends React.Component {
   constructor(props) {
@@ -14,10 +14,15 @@ class CartProduct extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
   }
-  componentDidMount() {
-    this.setState({
-      quantity: this.props.product.order_products.quantity,
-    });
+
+  async componentDidMount() {
+    const isLoggedIn = !!this.props.auth.id;
+
+    if (isLoggedIn) {
+      this.setState({
+        quantity: this.props.product.order_products.quantity,
+      });
+    }
   }
 
   handleChange(event) {
@@ -43,26 +48,37 @@ class CartProduct extends React.Component {
   }
 
   render() {
+    const isLoggedIn = !!this.props.auth.id;
+
     const product = this.props.product;
 
     return (
-      <div key={product.id}>
-        <img src={product.imageURL} />
-        {product.name} ${product.price}
-        <input
-          name="quantity"
-          value={this.state.quantity}
-          onChange={this.handleChange}
-        />
-        <button
-          type="button"
-          onClick={() => this.handleUpdate(product.id, this.state.quantity)}
-        >
-          save
-        </button>
-        <button type="button" onClick={() => this.handleDelete(product.id)}>
-          delete
-        </button>
+      <div>
+        {isLoggedIn ? (
+          <div>
+            <img src={product.imageURL} />
+            {product.name} ${product.price}
+            <input
+              name="quantity"
+              value={this.state.quantity}
+              onChange={this.handleChange}
+            />
+            <button
+              type="button"
+              onClick={() => this.handleUpdate(product.id, this.state.quantity)}
+            >
+              save
+            </button>
+            <button type="button" onClick={() => this.handleDelete(product.id)}>
+              delete
+            </button>
+          </div>
+        ) : (
+          <div>
+            <img src={product.imageURL} />
+            {product.name} ${product.price}
+          </div>
+        )}
       </div>
     );
   }
@@ -71,6 +87,7 @@ class CartProduct extends React.Component {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    order: state.currentOrder,
   };
 };
 

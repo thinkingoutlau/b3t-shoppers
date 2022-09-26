@@ -21,7 +21,7 @@ router.get("/:id", async (req, res, next) => {
       });
     }
 
-    res.json(cart);
+    res.json(cart.products);
   } catch (err) {
     next(err);
   }

@@ -6,6 +6,7 @@ const ADD_PRODUCT = "ADD_PRODUCT";
 const ADD_GUEST_PRODUCT = "ADD_GUEST_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
+const LOG_OUT = "LOG_OUT";
 
 //action creators
 const _getCurrentOrder = (order) => ({
@@ -49,7 +50,6 @@ export const addProduct = (userId, product) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`/api/currentOrder/${userId}`, product);
-      console.log(data);
       dispatch(_addProduct(data));
     } catch (err) {
       console.log(err);
@@ -92,15 +92,26 @@ export const deleteProduct = (userId, productId) => {
   };
 };
 
+const initialState = () => {
+  return {
+    products: [],
+    guestCart: [],
+  };
+};
+
 //reducer
-export default (state = { products: [] }, action) => {
+export default (state = initialState(), action) => {
   switch (action.type) {
     case GET_CURRENT_ORDER:
-      return action.order;
+      const { order } = action;
+      return {
+        ...state,
+        products: order,
+      };
     case ADD_PRODUCT:
       return { ...state, products: action.products };
     case ADD_GUEST_PRODUCT:
-      return { ...state, products: [...state.products, ...action.product] };
+      return { ...state, guestCart: [...state.guestCart, ...action.product] };
     case UPDATE_PRODUCT:
       return { ...state, products: action.product };
     case DELETE_PRODUCT:
@@ -108,6 +119,8 @@ export default (state = { products: [] }, action) => {
         (prod) => prod.id !== action.product.productId
       );
       return { ...state, products: cartProducts };
+    case LOG_OUT:
+      return initialState();
     default:
       return state;
   }

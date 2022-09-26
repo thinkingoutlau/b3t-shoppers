@@ -39,10 +39,9 @@ class SingleProduct extends React.Component {
   }
 
   handleGuestAddToCart() {
-    localStorage.setItem(this.props.product.id, this.props.product.id);
-    let prodId = localStorage.getItem(this.props.product.id);
+    localStorage.setItem(this.props.product.id, this.state.quantity);
 
-    this.props.addGuestProduct(prodId);
+    this.props.addGuestProduct(this.props.product.id);
   }
 
   render() {
