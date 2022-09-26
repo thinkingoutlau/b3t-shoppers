@@ -120,7 +120,7 @@ nav a:hover {
 #cart_text {
   display: flex;
   justify-content: space-between;
-  font-size: 1.2rem;
+  font-size: 1rem;
   letter-spacing: 0.7rem;
   margin-bottom: -1rem;
 }
@@ -184,6 +184,7 @@ nav a:hover {
 .cart_products {
   height: calc(100vh - 10rem);
   overflow-y: scroll;
+  margin-top: 1rem;
 }
 
 .ind_cart_prod {

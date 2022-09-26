@@ -101,7 +101,7 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
         )}
       </nav>
       <div id="cart_block" className="hide_block">
-        <div id="behind_cart">
+        <div id="behind_cart" onClick={() => handleCart()}>
           <div id="cart_view">
             <div id="inner_cart_view">
               <div id="cart_text">
