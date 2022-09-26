@@ -19,7 +19,7 @@
 const axios = require("axios");
 const {
   db,
-  models: { User, Product },
+  models: { User, Product, Order, Order_Product },
 } = require("../server/db");
 
 let tagsToSeed = [
@@ -370,6 +370,36 @@ async function seed() {
   await mapWallMountedObj();
   await mapMiscObj();
 
+  const cart = await Order.create({
+    userId: 9,
+    status: "fulfilled",
+  });
+
+  await Order_Product.create({
+    orderId: cart.id,
+    productId: 1,
+    price: 900,
+    quantity: 1,
+  });
+
+  await Order_Product.create({
+    orderId: cart.id,
+    productId: 2,
+    price: 200,
+    quantity: 1,
+  });
+  await Order_Product.create({
+    orderId: cart.id,
+    productId: 255,
+    price: 325,
+    quantity: 1,
+  });
+  await Order_Product.create({
+    orderId: cart.id,
+    productId: 256,
+    price: 400,
+    quantity: 1,
+  });
   console.log(`seeded successfully`);
 }
 
