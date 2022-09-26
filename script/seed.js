@@ -175,7 +175,7 @@ async function mapFishObj() {
         description: fishObj[property]["museum-phrase"],
         price: fishObj[property]["price"] * 100,
         imageURL: fishObj[property]["icon_uri"],
-        quantity: 100,
+        inventory: 100,
       }),
     ]);
   }
@@ -198,7 +198,7 @@ async function mapFossilsObj() {
         description: fossilsObj[property]["museum-phrase"],
         price: fossilsObj[property]["price"] * 100,
         imageURL: fossilsObj[property]["image_uri"],
-        quantity: 100,
+        inventory: 100,
       }),
     ]);
   }
@@ -229,7 +229,7 @@ async function mapHousewareObj() {
           description: description,
           price: arrVariants[0]["sell-price"] * 100,
           imageURL: arrVariants[0]["image_uri"],
-          quantity: 100,
+          inventory: 100,
         }),
       ]);
     }
@@ -261,7 +261,7 @@ async function mapWallMountedObj() {
           description: description,
           price: arrVariants[0]["sell-price"] * 100,
           imageURL: arrVariants[0]["image_uri"],
-          quantity: 100,
+          inventory: 100,
         }),
       ]);
     }
@@ -293,7 +293,7 @@ async function mapMiscObj() {
           description: description,
           price: arrVariants[0]["sell-price"] * 100,
           imageURL: arrVariants[0]["image_uri"],
-          quantity: 100,
+          inventory: 100,
         }),
       ]);
     }

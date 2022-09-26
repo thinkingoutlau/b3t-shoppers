@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllProducts } from "../store/allProducts";
 import { Link } from "react-router-dom";
+
+import { getAllProducts, deleteProduct } from "../store/allProducts";
+import { addProduct } from "../store/orders";
+import { getUserFromServer } from "../store/user";
 
 class Others extends Component {
   constructor() {
@@ -19,8 +22,17 @@ class Others extends Component {
     this.setState({ filter: event.target.value });
   }
 
+  handleCardClick(event) {
+    if (event.target.className === "all_products_actions") {
+      event.preventDefault();
+    }
+  }
+
   render() {
     const { filter } = this.state;
+    const { auth } = this.props;
+    const isLoggedIn = !!this.props.auth.id;
+
     const products = this.props.allProducts.filter((product) => {
       if (filter === "All Others") {
         return product;
@@ -62,7 +74,7 @@ class Others extends Component {
             </select>
           </p>
         </div>
-        <div>
+        <div className="products">
           {products.map((product) => {
             if (
               product.type === "Easter" ||
@@ -72,15 +84,47 @@ class Others extends Component {
               product.type === "Toy"
             ) {
               return (
-                <div className="allOthers" key={product.id}>
-                  <h3>
-                    <Link to={`/products/${product.id}`}>{product.name}</Link>
-                  </h3>
-                  <p>
-                    <img src={product.imageURL} alt="product image" />
-                  </p>
-                  <p>{product.price}</p>
-                </div>
+                <Link
+                  to={`/products/${product.id}`}
+                  key={product.id}
+                  onClick={this.handleCardClick}
+                >
+                  <div className="productCard">
+                    <h3>{product.name}</h3>
+                    <img
+                      src={product.imageURL}
+                      alt="product image"
+                      className="product_image"
+                    />
+                    <p>${product.price}</p>
+                    {auth.isAdmin ? (
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        id={product.id}
+                        onClick={() => this.props.deleteProduct(product.id)}
+                      >
+                        Remove product
+                      </button>
+                    ) : isLoggedIn ? (
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        onClick={this.handleAddToCart}
+                      >
+                        Add to cart!
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        onClick={this.handleGuestAddToCart}
+                      >
+                        Add to cart!
+                      </button>
+                    )}
+                  </div>
+                </Link>
               );
             }
           })}
@@ -90,12 +134,17 @@ class Others extends Component {
   }
 }
 
-const mapStateToProps = ({ allProducts }) => ({
-  allProducts,
+const mapStateToProps = (state) => ({
+  allProducts: state.allProducts,
+  auth: state.auth,
+  order: state.order,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getAllProducts: () => dispatch(getAllProducts()),
+  addToCart: (userId, product) => dispatch(addProduct(userId, product)),
+  getUserFromServer: (username) => dispatch(getUserFromServer(username)),
+  deleteProduct: (id) => dispatch(deleteProduct(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Others);
