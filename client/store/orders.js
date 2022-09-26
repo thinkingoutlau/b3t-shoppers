@@ -6,6 +6,7 @@ const ADD_PRODUCT = "ADD_PRODUCT";
 const ADD_GUEST_PRODUCT = "ADD_GUEST_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
+const DELETE_GUEST_PRODUCT = "DELETE_GUEST_PRODUCT";
 const LOG_OUT = "LOG_OUT";
 
 //action creators
@@ -32,6 +33,11 @@ const _updateProduct = (product) => ({
 const _deleteProduct = (product) => ({
   type: DELETE_PRODUCT,
   product,
+});
+
+export const _deleteGuestProduct = (productId) => ({
+  type: DELETE_GUEST_PRODUCT,
+  productId,
 });
 
 //thunk creators
@@ -119,6 +125,11 @@ export default (state = initialState(), action) => {
         (prod) => prod.id !== action.product.productId
       );
       return { ...state, products: cartProducts };
+    case DELETE_GUEST_PRODUCT:
+      const guestCartProducts = state.guestCart.filter(
+        (prod) => prod.id !== action.productId
+      );
+      return { ...state, guestCart: guestCartProducts };
     case LOG_OUT:
       return initialState();
     default:

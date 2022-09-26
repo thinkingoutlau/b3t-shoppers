@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { deleteProduct, updateProduct, addGuestProduct } from "../store/orders";
+import {
+  deleteProduct,
+  updateProduct,
+  _deleteGuestProduct,
+} from "../store/orders";
 
 class CartProduct extends React.Component {
   constructor(props) {
@@ -56,8 +60,13 @@ class CartProduct extends React.Component {
     this.props.deleteProduct(userId, productId);
   }
 
+  handleGuestDelete(productId) {
+    localStorage.removeItem(productId);
+
+    this.props.deleteGuestProduct(productId);
+  }
+
   render() {
-    console.log(this.state);
     const isLoggedIn = !!this.props.auth.id;
 
     const product = this.props.product;
@@ -100,6 +109,12 @@ class CartProduct extends React.Component {
             >
               save
             </button>
+            <button
+              type="button"
+              onClick={() => this.handleGuestDelete(product.id)}
+            >
+              delete
+            </button>
           </div>
         )}
       </div>
@@ -117,6 +132,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   updateCart: (id, product) => dispatch(updateProduct(id, product)),
   deleteProduct: (id, productId) => dispatch(deleteProduct(id, productId)),
+  deleteGuestProduct: (id) => dispatch(_deleteGuestProduct(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProduct);
