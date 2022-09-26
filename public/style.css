@@ -272,6 +272,10 @@ display: flex;
   color: #729772;
 }
 
+.single_product_actions >p {
+  color: #729772
+}
+
 .single_product_actions {
   display: flex;
   width: 30%;
@@ -333,11 +337,6 @@ form div {
   border-radius: 15px;
   padding: 3rem;
   margin: 4rem;
-}
-
-form div {
-  margin: 1em;
-  display: inline-block;
 }
 
 .change_password_button {
@@ -447,3 +446,40 @@ form div {
   border-style: solid;
   padding: 20px;
 }
+
+.product_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #70a3b3;
+  border-radius: 15px;
+  padding: 3rem;
+  margin: 4rem;
+}
+
+.product-input-labels {
+  padding: 1rem;
+  color: #3586BB;
+}
+
+.product-inputs {
+  border: 2px solid #70a3b3;
+  border-radius: 15px;
+  padding: 1rem;
+  width: 25rem;
+}
+
+.submit-product-form {
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 15px;
+  border: 4px solid #70a3b3;
+  color: #70a3b3;
+}
+
+textarea {
+  height: 10rem;
+}
+
+
