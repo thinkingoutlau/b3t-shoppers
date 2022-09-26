@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { gotSingleProduct } from "../store/singleProduct";
-import { deleteProduct } from "../store/allProducts";
+import { deleteProduct, editProduct } from "../store/allProducts";
 import { addProduct, _addGuestProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
@@ -69,12 +69,7 @@ class SingleProduct extends React.Component {
         </div>
         {auth.isAdmin ? (
           <div className="single_product_actions">
-            <div>Inventory</div>
-            <input
-              name="inventory"
-              onChange={this.handleChange}
-              value={this.state.quantity}
-            ></input>
+            <p>Inventory: {this.props.product.inventory}</p>
             <button
               type="button"
               className="single_product_action_buttons"
@@ -82,6 +77,9 @@ class SingleProduct extends React.Component {
               onClick={() => this.props.deleteProduct(this.props.product.id)}
             >
               Remove product
+            </button>
+            <button type="button" className="single_product_action_buttons">
+              Edit product
             </button>
           </div>
         ) : isLoggedIn ? (
