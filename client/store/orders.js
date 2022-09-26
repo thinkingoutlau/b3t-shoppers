@@ -4,6 +4,9 @@ import axios from "axios";
 const GET_CURRENT_ORDER = "GET_CURRENT_ORDER";
 const ADD_PRODUCT = "ADD_PRODUCT";
 const ADD_GUEST_PRODUCT = "ADD_GUEST_PRODUCT";
+const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+const DELETE_PRODUCT = "DELETE_PRODUCT";
+const LOG_OUT = "LOG_OUT";
 
 //action creators
 const _getCurrentOrder = (order) => ({
@@ -16,9 +19,19 @@ const _addProduct = (products) => ({
   products,
 });
 
-export const _addGuestProduct = (products) => ({
+const _addGuestProduct = (product) => ({
   type: ADD_GUEST_PRODUCT,
-  products,
+  product,
+});
+
+const _updateProduct = (product) => ({
+  type: UPDATE_PRODUCT,
+  product,
+});
+
+const _deleteProduct = (product) => ({
+  type: DELETE_PRODUCT,
+  product,
 });
 
 //thunk creators
@@ -44,15 +57,70 @@ export const addProduct = (userId, product) => {
   };
 };
 
+export const addGuestProduct = (prodId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/api/products/${prodId}`);
+      dispatch(_addGuestProduct([data]));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateProduct = (userId, product) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/api/currentOrder/${userId}`, product);
+      dispatch(_updateProduct(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const deleteProduct = (userId, productId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`/api/currentOrder/${userId}`, {
+        data: { productId: productId },
+      });
+      dispatch(_deleteProduct(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+const initialState = () => {
+  return {
+    products: [],
+    guestCart: [],
+  };
+};
+
 //reducer
-export default (state = {}, action) => {
+export default (state = initialState(), action) => {
   switch (action.type) {
     case GET_CURRENT_ORDER:
-      return action.order;
+      const { order } = action;
+      return {
+        ...state,
+        products: order,
+      };
     case ADD_PRODUCT:
       return { ...state, products: action.products };
     case ADD_GUEST_PRODUCT:
-      return [action.products];
+      return { ...state, guestCart: [...state.guestCart, ...action.product] };
+    case UPDATE_PRODUCT:
+      return { ...state, products: action.product };
+    case DELETE_PRODUCT:
+      const cartProducts = state.products.filter(
+        (prod) => prod.id !== action.product.productId
+      );
+      return { ...state, products: cartProducts };
+    case LOG_OUT:
+      return initialState();
     default:
       return state;
   }

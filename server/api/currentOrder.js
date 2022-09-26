@@ -1,12 +1,11 @@
 const router = require("express").Router();
 const {
-  models: { Order, User, Product },
+  models: { Order, Product, Order_Product },
 } = require("../db");
-const Order_Product = require("../db/models/Order_Product");
 
 router.get("/:id", async (req, res, next) => {
   try {
-    let cart = await Order.findOne({
+    const cart = await Order.findOne({
       where: {
         userId: req.params.id,
         status: "unfulfilled",
@@ -22,7 +21,7 @@ router.get("/:id", async (req, res, next) => {
       });
     }
 
-    res.json(cart);
+    res.json(cart.products);
   } catch (err) {
     next(err);
   }
@@ -60,6 +59,70 @@ router.post("/:id", async (req, res, next) => {
     res.json(cart.products);
   } catch (err) {
     next(err);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    let cart = await Order.findOne({
+      where: {
+        userId: req.params.id,
+        status: "unfulfilled",
+      },
+      include: {
+        model: Product,
+      },
+    });
+
+    const currentProduct = cart.products.filter(
+      (obj) => obj.id === req.body.productId
+    )[0].order_products;
+
+    await currentProduct.update(req.body);
+
+    cart = await Order.findOne({
+      where: {
+        userId: req.params.id,
+        status: "unfulfilled",
+      },
+      include: {
+        model: Product,
+      },
+    });
+
+    res.json(cart.products);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const cart = await Order.findOne({
+      where: {
+        userId: req.params.id,
+        status: "unfulfilled",
+      },
+      include: {
+        model: Product,
+      },
+    });
+
+    const currentProduct = cart.products.filter(
+      (obj) => obj.id === req.body.productId
+    )[0];
+
+    const deleteProduct = await Order_Product.findOne({
+      where: {
+        productId: currentProduct.id,
+        orderId: cart.id,
+      },
+    });
+
+    await deleteProduct.destroy();
+    res.json(deleteProduct);
+  } catch (e) {
+    next(e);
   }
 });
 
