@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
+
 import Cart from "./Cart";
 
 function handleCart() {
@@ -95,7 +96,7 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
               </div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
-              </div>
+            </div>
           </div>
         )}
       </nav>

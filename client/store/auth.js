@@ -7,6 +7,7 @@ const TOKEN = "token";
  * ACTION TYPES
  */
 const SET_AUTH = "SET_AUTH";
+const LOG_OUT = "LOG_OUT";
 
 const UPDATE_PASSWORD = "UPDATE_PASSWORD";
 
@@ -72,9 +73,10 @@ export const updatePassword = (username, password, newPassword) => {
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
+  window.localStorage.clear();
   history.push("/login");
   return {
-    type: SET_AUTH,
+    type: LOG_OUT,
     auth: {},
   };
 };
@@ -88,6 +90,8 @@ export default function (state = {}, action) {
       return action.auth;
     case UPDATE_PASSWORD:
       return action.password;
+    case LOG_OUT:
+      return action.auth;
     default:
       return state;
   }
