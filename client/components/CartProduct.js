@@ -13,6 +13,7 @@ class CartProduct extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleGuestUpdate = this.handleGuestUpdate.bind(this);
   }
 
   async componentDidMount() {
@@ -21,6 +22,10 @@ class CartProduct extends React.Component {
     if (isLoggedIn) {
       this.setState({
         quantity: this.props.product.order_products.quantity,
+      });
+    } else {
+      this.setState({
+        quantity: localStorage.getItem(this.props.product.id),
       });
     }
   }
@@ -41,6 +46,10 @@ class CartProduct extends React.Component {
     this.props.updateCart(userId, product);
   }
 
+  handleGuestUpdate(productId, quantity) {
+    localStorage.setItem(productId, quantity);
+  }
+
   handleDelete(productId) {
     const userId = this.props.auth.id;
 
@@ -48,6 +57,7 @@ class CartProduct extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     const isLoggedIn = !!this.props.auth.id;
 
     const product = this.props.product;
@@ -77,6 +87,19 @@ class CartProduct extends React.Component {
           <div>
             <img src={product.imageURL} />
             {product.name} ${product.price}
+            <input
+              name="quantity"
+              value={this.state.quantity}
+              onChange={this.handleChange}
+            />
+            <button
+              type="button"
+              onClick={() =>
+                this.handleGuestUpdate(product.id, this.state.quantity)
+              }
+            >
+              save
+            </button>
           </div>
         )}
       </div>
