@@ -29,25 +29,33 @@ class SingleProduct extends React.Component {
   }
 
   handleAddToCart() {
-    const userId = this.props.auth.id;
-    const product = {
-      productId: this.props.product.id,
-      price: this.props.product.price,
-      quantity: this.state.quantity,
-    };
+    if (!this.props.order.products.includes(this.props.product.id)) {
+      const userId = this.props.auth.id;
+      const product = {
+        productId: this.props.product.id,
+        price: this.props.product.price,
+        quantity: this.state.quantity,
+      };
 
-    this.props.addToCart(userId, product);
+      this.props.addToCart(userId, product);
+    }
   }
 
   handleGuestAddToCart() {
-    localStorage.setItem(this.props.product.id, this.state.quantity);
+    if (
+      !Object.keys(localStorage).includes(JSON.stringify(this.props.product.id))
+    ) {
+      localStorage.setItem(this.props.product.id, this.state.quantity);
 
-    this.props.addGuestProduct(this.props.product.id);
+      this.props.addGuestProduct(this.props.product.id);
+    }
   }
 
   render() {
     const isLoggedIn = !!this.props.auth.id;
     const { auth } = this.props;
+
+    console.log(this.props.product.inventory);
 
     return (
       <div className="single_product">
@@ -124,7 +132,7 @@ const mapStateToProps = (state) => {
   return {
     product: state.product,
     auth: state.auth,
-    order: state.order,
+    order: state.currentOrder,
   };
 };
 
