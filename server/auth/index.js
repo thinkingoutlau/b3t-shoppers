@@ -7,8 +7,20 @@ module.exports = router;
 router.post("/login", async (req, res, next) => {
   try {
     res.send({ token: await User.authenticate(req.body) });
+    console.log("print token", req.body.password);
   } catch (err) {
     next(err);
+  }
+});
+
+router.put("/editPassword", async (req, res, next) => {
+  try {
+    const updatePassword = await User.findByToken(req.params.id);
+    await updatePassword.update(req.body.password);
+    const updateToNewPassword = await User.findByToken(req.params.id);
+    res.send(updateToNewPassword);
+  } catch (error) {
+    next(error);
   }
 });
 

@@ -373,11 +373,12 @@ form div {
   transform-style: preserve-3d;
 }
 
-.flip-card-inner.is-flipped{
+.flip-card-inner.is-flipped {
   transform: rotateY(180deg);
 }
 
-.flip-card-front, .flip-card-back {
+.flip-card-front,
+.flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -386,8 +387,8 @@ form div {
 }
 
 .flip-card-front {
-  background-color: #DC9A84;
-  color: #5F3A1C;
+  background-color: #dc9a84;
+  color: #5f3a1c;
   border-radius: 15px;
 }
 
@@ -396,8 +397,8 @@ form div {
 }
 
 .flip-card-back {
-  background-color: #DC9A84;
-  color: #5F3A1C;
+  background-color: #dc9a84;
+  color: #5f3a1c;
   border-radius: 15px;
   transform: rotateY(180deg);
 }
@@ -410,8 +411,8 @@ form div {
 .card-content > button {
   background-color: #e6cb91;
   border-radius: 15px;
-  border-color: #5F3A1C;
-  color: #5F3A1C;
+  border-color: #5f3a1c;
+  color: #5f3a1c;
   padding: 0.5rem;
 }
 
@@ -440,4 +441,9 @@ form div {
 .product_image {
   height: 75px;
   width: 75px;
+}
+.productsFromOrderHistory {
+  border-width: 3px;
+  border-style: solid;
+  padding: 20px;
 }
