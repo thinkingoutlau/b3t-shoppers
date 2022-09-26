@@ -10,7 +10,7 @@ const _gotSingleProduct = (product) => ({
 });
 
 //thunk creators
-export const gotSingleProduct = (id, history) => {
+export const gotSingleProduct = (id) => {
   return async (dispatch) => {
     try {
       const { data: product } = await axios.get(`/api/products/${id}`);

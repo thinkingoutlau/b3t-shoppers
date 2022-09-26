@@ -43,7 +43,7 @@ class Routes extends Component {
             <Route path="/food" component={Food} />
             <Route path="/indoors" component={Indoors} />
             <Route path="/others" component={Others} />
-            <Route path="/productForm" component={ProductForm} />
+            <Route path="/productForm/:id" component={ProductForm} />
             {this.props.auth.isAdmin ? (
               <Route path="/myAdminAccount" component={AdminAccPage} />
             ) : (

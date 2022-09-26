@@ -71,7 +71,7 @@ class SingleProduct extends React.Component {
             >
               Remove product
             </button>
-            <Link to={`/productForm`}>
+            <Link to={`/productForm/${this.props.product.id}`}>
               <button type="button" className="single_product_action_buttons">
                 Edit product
               </button>
