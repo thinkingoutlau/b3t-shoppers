@@ -25,11 +25,13 @@ export const getAllProducts = () => {
   };
 };
 
-export const deleteProduct = (id) => {
+export const deleteProduct = (id, history) => {
   return async (dispatch) => {
     try {
+      console.log("history", history);
       const { data: product } = await axios.delete(`/api/products/${id}`);
       dispatch(_deleteProduct(product));
+      history.goBack();
     } catch (error) {
       console.log(error);
     }
