@@ -17,7 +17,7 @@ const Product = db.define("product", {
   imageURL: {
     type: Sequelize.STRING,
   },
-  quantity: {
+  inventory: {
     type: Sequelize.INTEGER,
   },
 });

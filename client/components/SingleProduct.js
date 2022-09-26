@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { gotSingleProduct } from "../store/singleProduct";
+import { deleteProduct } from "../store/allProducts";
 import { addProduct, addGuestProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
@@ -46,6 +47,7 @@ class SingleProduct extends React.Component {
 
   render() {
     const isLoggedIn = !!this.props.auth.id;
+    const { auth } = this.props;
 
     return (
       <div className="single_product">
@@ -54,17 +56,34 @@ class SingleProduct extends React.Component {
         </div>
         <div className="single_product_info">
           <h1>{this.props.product.name}</h1>
-          <h2>Current price: {this.props.product.price}</h2>
-          <h3>{this.props.product.description}</h3>
+          <h3>Current price: ${this.props.product.price}</h3>
+          <p>{this.props.product.description}</p>
         </div>
-        <div className="single_product_actions">
-          quantity
-          <input
-            name="quantity"
-            onChange={this.handleChange}
-            value={this.state.quantity}
-          ></input>
-          {isLoggedIn ? (
+        {auth.isAdmin ? (
+          <div className="single_product_actions">
+            <div>Inventory</div>
+            <input
+              name="inventory"
+              onChange={this.handleChange}
+              value={this.state.quantity}
+            ></input>
+            <button
+              type="button"
+              className="single_product_action_buttons"
+              id={this.props.product.id}
+              onClick={() => this.props.deleteProduct(this.props.product.id)}
+            >
+              Remove product
+            </button>
+          </div>
+        ) : isLoggedIn ? (
+          <div className="single_product_actions">
+            <div>Quantity:</div>
+            <input
+              name="quantity"
+              onChange={this.handleChange}
+              value={this.state.quantity}
+            ></input>
             <button
               type="button"
               className="single_product_action_buttons"
@@ -72,7 +91,18 @@ class SingleProduct extends React.Component {
             >
               Add to cart!
             </button>
-          ) : (
+            <button type="button" className="single_product_action_buttons">
+              Add to wish list!
+            </button>
+          </div>
+        ) : (
+          <div className="single_product_actions">
+            <div>Quantity</div>
+            <input
+              name="quantity"
+              onChange={this.handleChange}
+              value={this.state.quantity}
+            ></input>
             <button
               type="button"
               className="single_product_action_buttons"
@@ -80,11 +110,11 @@ class SingleProduct extends React.Component {
             >
               Add to cart!
             </button>
-          )}
-          <button type="button" className="single_product_action_buttons">
-            Add to wish list!
-          </button>
-        </div>
+            <button type="button" className="single_product_action_buttons">
+              Add to wish list!
+            </button>
+          </div>
+        )}
       </div>
     );
   }
@@ -104,6 +134,7 @@ const mapDispatchToProps = (dispatch, { history }) => {
     addToCart: (userId, product) => dispatch(addProduct(userId, product)),
     getUserFromServer: (username) => dispatch(getUserFromServer(username)),
     addGuestProduct: (prodId) => dispatch(addGuestProduct(prodId)),
+    deleteProduct: (id) => dispatch(deleteProduct(id, history)),
   };
 };
 
