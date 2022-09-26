@@ -40,6 +40,7 @@ class ProductForm extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
+    this.props.editProduct({ ...this.props.product, ...this.state });
   }
 
   render() {
@@ -86,7 +87,7 @@ class ProductForm extends React.Component {
             value={inventory}
           ></input>
           <button type="submit" className="submit-product-form">
-            Submit
+            Save changes
           </button>
         </form>
       </div>
