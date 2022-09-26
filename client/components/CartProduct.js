@@ -57,7 +57,7 @@ class CartProduct extends React.Component {
         {isLoggedIn ? (
           <div>
             <img src={product.imageURL} />
-            {product.name} ${product.price}
+            {product.name} ${product.order_products.price}
             <input
               name="quantity"
               value={this.state.quantity}
