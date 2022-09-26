@@ -56,8 +56,6 @@ class SingleProduct extends React.Component {
     const isLoggedIn = !!this.props.auth.id;
     const { auth } = this.props;
 
-    console.log(this.props.product.inventory);
-
     return (
       <div className="single_product">
         <div className="single_product_img">

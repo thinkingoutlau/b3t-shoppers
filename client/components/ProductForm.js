@@ -33,7 +33,6 @@ class ProductForm extends React.Component {
   }
 
   handleChange(evt) {
-    console.log("evt.target.name", evt.target.name);
     this.setState({
       [evt.target.name]: evt.target.value,
     });
