@@ -101,24 +101,23 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
         )}
       </nav>
       <div id="cart_block" className="hide_block">
-        <div id="behind_cart" onClick={() => handleCart()}>
-          <div id="cart_view">
-            <div id="inner_cart_view">
-              <div id="cart_text">
-                <h2>YOUR CART:</h2>
-                <button type="button" onClick={() => handleCart()}>
-                  X
-                </button>
-              </div>
-              <div className="cart_products">
-                <Cart />
-              </div>
-              <button type="button" id="checkout_cart">
-                Checkout
+        <div id="cart_view">
+          <div id="inner_cart_view">
+            <div id="cart_text">
+              <h2>YOUR CART:</h2>
+              <button type="button" onClick={() => handleCart()}>
+                X
               </button>
             </div>
+            <div className="cart_products">
+              <Cart />
+            </div>
+            <button type="button" id="checkout_cart">
+              Checkout
+            </button>
           </div>
         </div>
+        <div id="behind_cart" onClick={() => handleCart()} />
       </div>
     </div>
   );
