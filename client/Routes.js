@@ -16,6 +16,7 @@ import Food from "./components/Food";
 import Others from "./components/Others";
 import Outdoors from "./components/Outdoors";
 import Indoors from "./components/Indoors";
+import ProductForm from "./components/ProductForm";
 
 /**
  * COMPONENT
@@ -42,6 +43,7 @@ class Routes extends Component {
             <Route path="/food" component={Food} />
             <Route path="/indoors" component={Indoors} />
             <Route path="/others" component={Others} />
+            <Route path="/productForm" component={ProductForm} />
             {this.props.auth.isAdmin ? (
               <Route path="/myAdminAccount" component={AdminAccPage} />
             ) : (

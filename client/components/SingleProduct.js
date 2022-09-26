@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { gotSingleProduct } from "../store/singleProduct";
 import { deleteProduct, editProduct } from "../store/allProducts";
@@ -70,9 +71,11 @@ class SingleProduct extends React.Component {
             >
               Remove product
             </button>
-            <button type="button" className="single_product_action_buttons">
-              Edit product
-            </button>
+            <Link to={`/productForm`}>
+              <button type="button" className="single_product_action_buttons">
+                Edit product
+              </button>
+            </Link>
           </div>
         ) : isLoggedIn ? (
           <div className="single_product_actions">
