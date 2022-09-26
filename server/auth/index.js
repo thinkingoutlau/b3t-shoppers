@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const bcrypt = require("bcrypt");
 const {
   models: { User },
 } = require("../db");
@@ -7,7 +8,6 @@ module.exports = router;
 router.post("/login", async (req, res, next) => {
   try {
     res.send({ token: await User.authenticate(req.body) });
-    console.log("print token", req.body.password);
   } catch (err) {
     next(err);
   }
@@ -15,12 +15,18 @@ router.post("/login", async (req, res, next) => {
 
 router.put("/editPassword", async (req, res, next) => {
   try {
-    const updatePassword = await User.findByToken(req.params.id);
-    await updatePassword.update(req.body.password);
-    const updateToNewPassword = await User.findByToken(req.params.id);
-    res.send(updateToNewPassword);
-  } catch (error) {
-    next(error);
+    const token = await User.authenticate(req.body);
+    if (token) {
+      const user = await User.findByToken(token);
+      const newUser = await user.update({ password: req.body.newPassword });
+      const newToken = await User.authenticate({
+        username: req.body.username,
+        password: req.body.newPassword,
+      });
+      res.send(newToken);
+    }
+  } catch (err) {
+    next(err);
   }
 });
 
