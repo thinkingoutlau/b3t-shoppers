@@ -66,10 +66,6 @@ class Cart extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    console.log("in unmount");
-  }
-
   handleAddGuestToCart(productId, price, quantity) {
     const userId = this.props.auth.id;
     const product = {
@@ -87,8 +83,6 @@ class Cart extends React.Component {
     const cart = this.props.currentOrder || {};
     const cartProducts = cart.products || [];
     const guestCartProducts = cart.guestCart || [];
-
-    console.log("current cart", cart);
 
     return (
       <div>
