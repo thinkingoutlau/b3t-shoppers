@@ -10,6 +10,7 @@ import allProducts from "./allProducts";
 import productReducer from "./singleProduct";
 import users from "./users";
 import currentOrder from "./orders";
+import orderHistory from "./orderHistory";
 
 const reducer = combineReducers({
   auth,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   user,
   users,
   currentOrder,
+  orderHistory,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
