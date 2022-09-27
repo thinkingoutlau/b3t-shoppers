@@ -18,6 +18,7 @@ import Outdoors from "./components/Outdoors";
 import Indoors from "./components/Indoors";
 import ProductForm from "./components/ProductForm";
 import CartCheckout from "./components/CartCheckout";
+import NewProductForm from "./components/NewProductForm";
 
 /**
  * COMPONENT
@@ -46,6 +47,7 @@ class Routes extends Component {
             <Route path="/others" component={Others} />
             <Route path="/checkout" component={CartCheckout} />
             <Route path="/productForm/:id" component={ProductForm} />
+            <Route path="/newProductForm" component={NewProductForm} />
             {this.props.auth.isAdmin ? (
               <Route path="/myAdminAccount" component={AdminAccPage} />
             ) : (

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { getAllProducts, deleteProduct } from "../store/allProducts";
-import { addProduct } from "../store/orders";
+import { addProduct, addGuestProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
 class AllProducts extends Component {
@@ -13,7 +13,8 @@ class AllProducts extends Component {
       filter: "All Products",
     };
     this.handleFilter = this.handleFilter.bind(this);
-    this.handleAddToCart = this.handleAddToCart.bind(this);
+    // this.handleAddToCart = this.handleAddToCart.bind(this);
+    // this.handleGuestAddToCart = this.handleGuestAddToCart.bind(this);
   }
   componentDidMount() {
     this.props.getAllProducts();
@@ -23,16 +24,24 @@ class AllProducts extends Component {
     this.setState({ filter: event.target.value });
   }
 
-  handleAddToCart() {
-    const userId = this.props.auth.id;
-    const product = {
-      productId: this.props.product.id,
-      price: this.props.product.price,
-      quantity: "1",
-    };
+  // handleAddToCart(id, price) {
+  //   const userId = this.props.auth.id;
+  //   const product = {
+  //     productId: id,
+  //     price: price,
+  //     quantity: "1",
+  //   };
 
-    this.props.addToCart(userId, product);
-  }
+  //   this.props.addToCart(userId, product);
+  // }
+
+  // handleGuestAddToCart(id) {
+  //   if (!Object.keys(localStorage).includes(JSON.stringify(id))) {
+  //     localStorage.setItem(id, 1);
+
+  //     this.props.addGuestProduct(id);
+  //   }
+  // }
 
   handleCardClick(event) {
     if (event.target.className === "all_products_actions") {
@@ -122,11 +131,11 @@ class AllProducts extends Component {
 
     return (
       <>
-        <div>
+        <div className="all-products-functions">
           <p>
-            <label className="filterByProducts"> Filter By:</label>
+            <label className="filter-products-label"> Filter By:</label>
             <select
-              className="filterByProducts"
+              className="filter-products"
               name="filter"
               value={filter}
               onChange={this.handleFilter}
@@ -157,6 +166,15 @@ class AllProducts extends Component {
               <option value="Toy">Toy</option>
             </select>
           </p>
+          {auth.isAdmin ? (
+            <Link to="/newProductForm">
+              <button type="button" className="all_products_actions">
+                Add New Product
+              </button>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="products">
           {products.map((product) => {
@@ -187,7 +205,8 @@ class AllProducts extends Component {
                     <button
                       type="button"
                       className="all_products_actions"
-                      onClick={this.handleAddToCart}
+                      id={product.id}
+                      // onClick={this.handleAddToCart(product.id, product.price)}
                     >
                       Add to cart!
                     </button>
@@ -195,7 +214,8 @@ class AllProducts extends Component {
                     <button
                       type="button"
                       className="all_products_actions"
-                      onClick={this.handleGuestAddToCart}
+                      id={product.id}
+                      // onClick={this.handleGuestAddToCart(product.id)}
                     >
                       Add to cart!
                     </button>
@@ -218,8 +238,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAllProducts: () => dispatch(getAllProducts()),
-  addToCart: (userId, product) => dispatch(addProduct(userId, product)),
+  // addToCart: (userId, product) => dispatch(addProduct(userId, product)),
   getUserFromServer: (username) => dispatch(getUserFromServer(username)),
+  // addGuestProduct: (prodId) => dispatch(addGuestProduct(prodId)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
 });
 

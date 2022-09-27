@@ -22,4 +22,8 @@ const Product = db.define("product", {
   },
 });
 
+Product.beforeSave(function (product) {
+  product.price = product.price * 100;
+});
+
 module.exports = Product;

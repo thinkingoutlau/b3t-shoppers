@@ -4,6 +4,7 @@ const initialState = [];
 const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const EDIT_PRODUCT = "EDIT_PRODUCT";
+const CREATE_PRODUCT = "CREATE_PRODUCT";
 
 export const _getAllProducts = (allProducts) => ({
   type: GET_ALL_PRODUCTS,
@@ -17,6 +18,11 @@ export const _deleteProduct = (product) => ({
 
 export const _editProduct = (product) => ({
   type: EDIT_PRODUCT,
+  product,
+});
+
+export const _createProduct = (product) => ({
+  type: CREATE_PRODUCT,
   product,
 });
 
@@ -46,12 +52,28 @@ export const deleteProduct = (id, history) => {
 
 export const editProduct = (product, history) => {
   return async (dispatch) => {
-    const { data: updated } = await axios.put(
-      `/api/products/${product.id}`,
-      product
-    );
-    dispatch(_editProduct(updated));
-    history.push(`/products/${product.id}`);
+    try {
+      const { data: updated } = await axios.put(
+        `/api/products/${product.id}`,
+        product
+      );
+      dispatch(_editProduct(updated));
+      history.push(`/products/${product.id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const newProduct = (product, history) => {
+  return async (dispatch) => {
+    try {
+      const { data: created } = await axios.post(`/api/products/new`, product);
+      dispatch(_createProduct(created));
+      history.push(`/products/${created.id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
@@ -65,6 +87,8 @@ export default (state = initialState, action) => {
       return state.map((product) =>
         product.id === action.product.id ? action.product : product
       );
+    case CREATE_PRODUCT:
+      return [...state, action.product];
     default:
       return state;
   }
