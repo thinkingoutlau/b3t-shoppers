@@ -133,9 +133,13 @@ const Navbar = ({ handleClick, isLoggedIn, auth, order }) => {
             <div className="cart_products">
               <Cart />
             </div>
-            <button type="button" id="checkout_cart">
-              Checkout
-            </button>
+            <div id="checkout_cart">
+              <div id="checkout_button">
+                <Link to="/checkout" onClick={() => handleCart()}>
+                  Checkout
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
         <div id="behind_cart" onClick={() => handleCart()} />
