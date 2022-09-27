@@ -86,13 +86,23 @@ nav a:hover {
 }
 
 .cart_button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
 .cart_img {
-  width: 4.5rem;
+  width: 3.5rem;
+}
+
+.cart_button > p {
+  margin: 0;
+  color: #729772;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
 }
 
 #cart_view {
@@ -109,6 +119,8 @@ nav a:hover {
 }
 
 #inner_cart_view {
+  display: flex;
+  flex-direction: column;
   background-color: #e2a378;
   width: 100%;
   height: calc(100vh - 4rem);
@@ -118,8 +130,9 @@ nav a:hover {
 #cart_text {
   display: flex;
   justify-content: space-between;
-  font-size: 1.2rem;
+  font-size: 1rem;
   letter-spacing: 0.7rem;
+  margin-bottom: -1rem;
 }
 
 #cart_text > button {
@@ -176,6 +189,71 @@ nav a:hover {
   to {
     opacity: 0;
   }
+}
+
+.cart_products {
+  height: calc(100vh - 10rem);
+  overflow-y: scroll;
+  margin-top: 1rem;
+}
+
+.ind_cart_prod {
+  display: flex;
+  flex-direction: column;
+  border: #e8d19b;
+  border-style: solid;
+  border-radius: 25px;
+  margin: 1rem;
+}
+
+.ind_cart_prod_info {
+  display: flex;
+  align-items: center;
+  margin-bottom: -0.5rem;
+}
+
+.ind_cart_prod_functions {
+  margin-bottom: 1rem;
+}
+
+.ind_cart_prod_functions > select {
+  height: 1rem;
+  background-color: #e8d19b;
+  border: #915438 solid 2px;
+  border-radius: 25px;
+  text-align: center;
+  width: 5rem;
+  height: 1.2rem;
+  margin-left: 1.5rem;
+}
+
+.ind_cart_prod_functions > select:focus-visible {
+  background-color: #d09462;
+  outline: none;
+}
+
+.ind_cart_prod_functions > button {
+  margin-left: 0.5rem;
+  background-color: #e8d19b;
+  color: #915438;
+  border-radius: 25px;
+}
+
+#checkout_cart {
+  display: flex;
+  justify-content: center;
+}
+
+#checkout_button > a {
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #d0dcd0;
+  color: #915438;
+  border: #915438 solid 2px;
+  border-radius: 10px;
+  width: 100%;
+  padding: 0.3rem 5rem 0.3rem 5rem;
+  margin-top: 1rem;
 }
 
 form div {
@@ -280,7 +358,7 @@ form div {
   display: flex;
   width: 30%;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -301,6 +379,51 @@ form div {
   width: 8rem;
   height: 3rem;
   transition-duration: 0.3s;
+}
+
+.single_product_quantity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.single_product_quantity > input {
+  background-color: #e8d19b;
+  border: 2px solid #729772;
+  border-radius: 25px;
+  text-align: center;
+}
+
+#hidden_added_cart {
+  display: none;
+}
+
+#shown_added_cart {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #729772;
+  margin: -1rem;
+}
+
+#hidden_dupe_error {
+  display: none;
+}
+
+#shown_dupe_error {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #729772;
+  margin: -1rem;
+}
+
+#hidden_added_wl {
+  display: none;
+}
+
+#shown_added_wl {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #729772;
 }
 
 .auth_form {
@@ -483,44 +606,6 @@ textarea {
   height: 10rem;
 }
 
-.ind_cart_prod {
-  display: flex;
-  flex-direction: column;
-  border: #e8d19b;
-  border-style: solid;
-  border-radius: 25px;
-  margin: 1rem;
-}
-
-.ind_cart_prod_info {
-  display: flex;
-  align-items: center;
-  margin-bottom: -0.5rem;
-}
-
-.ind_cart_prod_functions {
-  margin-bottom: 1rem;
-  /* fix margin bottom div is going into both divs */
-}
-
-.ind_cart_prod_functions > input {
-  height: 1rem;
-  background-color: #e8d19b;
-  border-color: #915438;
-  border-radius: 25px;
-  text-align: center;
-  width: 5rem;
-  margin-left: 1.5rem;
-}
-
-.ind_cart_prod_functions > button {
-  margin-left: 0.5rem;
-  background-color: #e8d19b;
-  color: #915438;
-  border: 915438;
-  border-radius: 25px;
-}
-
 .all-products-functions {
   display: flex;
   justify-content: space-between;
@@ -528,12 +613,12 @@ textarea {
 }
 
 .filter-products-label {
-  color:#5f3a1c;
+  color: #5f3a1c;
   margin: 0.5rem;
 }
 
 .filter-products {
-  color:#5f3a1c;
+  color: #5f3a1c;
   border-radius: 15rem;
   padding: 0.2rem;
 }

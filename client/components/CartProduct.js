@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import {
   deleteProduct,
+  reloadGuestProduct,
   updateProduct,
   _deleteGuestProduct,
 } from "../store/orders";
@@ -52,6 +53,8 @@ class CartProduct extends React.Component {
 
   handleGuestUpdate(productId, quantity) {
     localStorage.setItem(productId, quantity);
+
+    this.props.reloadGuestProduct(productId);
   }
 
   handleDelete(productId) {
@@ -70,7 +73,6 @@ class CartProduct extends React.Component {
     const isLoggedIn = !!this.props.auth.id;
 
     const product = this.props.product;
-
     return (
       <div>
         {isLoggedIn ? (
@@ -83,11 +85,19 @@ class CartProduct extends React.Component {
               </div>
             </div>
             <div className="ind_cart_prod_functions">
-              <input
+              <select
                 name="quantity"
-                value={this.state.quantity}
                 onChange={this.handleChange}
-              />
+                value={this.state.quantity}
+              >
+                {Array.from(Array(10), (e, i) => i + 1).map((el) => {
+                  return (
+                    <option value={el} key={el}>
+                      {el}
+                    </option>
+                  );
+                })}
+              </select>
               <button
                 type="button"
                 onClick={() =>
@@ -105,28 +115,43 @@ class CartProduct extends React.Component {
             </div>
           </div>
         ) : (
-          <div>
-            <img src={product.imageURL} />
-            {product.name} ${product.price}
-            <input
-              name="quantity"
-              value={this.state.quantity}
-              onChange={this.handleChange}
-            />
-            <button
-              type="button"
-              onClick={() =>
-                this.handleGuestUpdate(product.id, this.state.quantity)
-              }
-            >
-              save
-            </button>
-            <button
-              type="button"
-              onClick={() => this.handleGuestDelete(product.id)}
-            >
-              delete
-            </button>
+          <div className="ind_cart_prod">
+            <div className="ind_cart_prod_info">
+              <img src={product.imageURL} />
+              <div>
+                <h2>{product.name}</h2>
+                <p>${product.price}</p>
+              </div>
+            </div>
+            <div className="ind_cart_prod_functions">
+              <select
+                name="quantity"
+                onChange={this.handleChange}
+                value={this.state.quantity}
+              >
+                {Array.from(Array(10), (e, i) => i + 1).map((el) => {
+                  return (
+                    <option value={el} key={el}>
+                      {el}
+                    </option>
+                  );
+                })}
+              </select>
+              <button
+                type="button"
+                onClick={() =>
+                  this.handleGuestUpdate(product.id, this.state.quantity)
+                }
+              >
+                save
+              </button>
+              <button
+                type="button"
+                onClick={() => this.handleGuestDelete(product.id)}
+              >
+                delete
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -145,6 +170,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateCart: (id, product) => dispatch(updateProduct(id, product)),
   deleteProduct: (id, productId) => dispatch(deleteProduct(id, productId)),
   deleteGuestProduct: (id) => dispatch(_deleteGuestProduct(id)),
+  reloadGuestProduct: (prodId) => dispatch(reloadGuestProduct(prodId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProduct);
