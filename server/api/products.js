@@ -6,9 +6,6 @@ const {
 router.get("/", async (req, res, next) => {
   try {
     const products = await Product.findAll();
-    for (let i = 0; i < products.length; i++) {
-      products[i].price = products[i].price / 100;
-    }
     res.json(products);
   } catch (err) {
     next(err);
@@ -18,7 +15,6 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
-    product.price = product.price / 100;
     res.json(product);
   } catch (err) {
     next(err);

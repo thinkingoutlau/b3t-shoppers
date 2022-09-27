@@ -520,3 +520,20 @@ textarea {
   border: 915438;
   border-radius: 25px;
 }
+
+.all-products-functions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-products-label {
+  color:#5f3a1c;
+  margin: 0.5rem;
+}
+
+.filter-products {
+  color:#5f3a1c;
+  border-radius: 15rem;
+  padding: 0.2rem;
+}
