@@ -86,13 +86,23 @@ nav a:hover {
 }
 
 .cart_button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
 .cart_img {
-  width: 4.5rem;
+  width: 3.5rem;
+}
+
+.cart_button > p {
+  margin: 0;
+  color: #729772;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
 }
 
 #cart_view {

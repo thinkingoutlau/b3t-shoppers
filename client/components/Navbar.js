@@ -20,7 +20,25 @@ function handleCart() {
   }
 }
 
-const Navbar = ({ handleClick, isLoggedIn, auth }) => {
+const Navbar = ({ handleClick, isLoggedIn, auth, order }) => {
+  let prices;
+
+  if (isLoggedIn) {
+    prices = order.products.map(
+      (el) => el.order_products.price * el.order_products.quantity
+    );
+  } else {
+    prices = order.guestCart.map(
+      (el) => el.price * Number(localStorage.getItem(el.id))
+    );
+  }
+
+  const cartSum = prices.reduce(
+    (previousValue, currentValue) => previousValue + currentValue,
+    0
+  );
+
+  console.log(order);
   return (
     <div>
       <div id="store_name">
@@ -54,6 +72,7 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
                     src="/images/Menu_Nook_Shopping_NH_Icon.png"
                     className="cart_img"
                   />
+                  <p>({order.products.length})</p>
                 </button>
               </div>
               {auth.isAdmin ? (
@@ -92,6 +111,7 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
                     src="/images/Menu_Nook_Shopping_NH_Icon.png"
                     className="cart_img"
                   />
+                  <p>({order.guestCart.length})</p>
                 </button>
               </div>
               <Link to="/login">Login</Link>
@@ -104,11 +124,12 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
         <div id="cart_view">
           <div id="inner_cart_view">
             <div id="cart_text">
-              <h2>YOUR CART:</h2>
+              <h2>YOUR CART: </h2>
               <button type="button" onClick={() => handleCart()}>
                 X
               </button>
             </div>
+            <p>${cartSum}</p>
             <div className="cart_products">
               <Cart />
             </div>
@@ -129,6 +150,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
     auth: state.auth,
+    order: state.currentOrder,
   };
 };
 
