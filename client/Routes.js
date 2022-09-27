@@ -17,7 +17,7 @@ import Others from "./components/Others";
 import Outdoors from "./components/Outdoors";
 import Indoors from "./components/Indoors";
 import ProductForm from "./components/ProductForm";
-import CartCheckout from "./components/CartCheckout";
+import Stripe from "./components/StripeContainer";
 import NewProductForm from "./components/NewProductForm";
 
 /**
@@ -45,7 +45,7 @@ class Routes extends Component {
             <Route path="/food" component={Food} />
             <Route path="/indoors" component={Indoors} />
             <Route path="/others" component={Others} />
-            <Route path="/checkout" component={CartCheckout} />
+            <Route path="/checkout" component={Stripe} />
             <Route path="/productForm/:id" component={ProductForm} />
             <Route path="/newProductForm" component={NewProductForm} />
             {this.props.auth.isAdmin ? (
@@ -65,7 +65,7 @@ class Routes extends Component {
             <Route path="/food" component={Food} />
             <Route path="/indoors" component={Indoors} />
             <Route path="/others" component={Others} />
-            <Route path="/checkout" component={CartCheckout} />
+            <Route path="/checkout" component={Stripe} />
           </Switch>
         )}
       </div>
