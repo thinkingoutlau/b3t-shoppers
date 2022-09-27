@@ -61,11 +61,15 @@ class Outdoors extends Component {
               <option value="Garden">Garden</option>
             </select>
           </p>
-          <Link to="/newProductForm">
-            <button type="button" className="all_products_actions">
-              Add New Product
-            </button>
-          </Link>
+          {auth.isAdmin ? (
+            <Link to="/newProductForm">
+              <button type="button" className="all_products_actions">
+                Add New Product
+              </button>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="products">
           {products.map((product) => {
