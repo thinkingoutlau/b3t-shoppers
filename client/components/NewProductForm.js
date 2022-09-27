@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { gotSingleProduct } from "../store/singleProduct";
-import { editProduct } from "../store/allProducts";
+import { newProduct } from "../store/allProducts";
 
 class NewProductForm extends React.Component {
   constructor() {
@@ -11,22 +10,10 @@ class NewProductForm extends React.Component {
       price: "",
       description: "",
       inventory: "",
+      imageURL: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {}
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.product.id !== this.props.product.id) {
-      this.setState({
-        name: this.props.product.name || "",
-        price: this.props.product.price || "",
-        description: this.props.product.description || "",
-        inventory: this.props.product.inventory || "",
-      });
-    }
   }
 
   handleChange(evt) {
@@ -37,11 +24,11 @@ class NewProductForm extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.editProduct({ ...this.props.product, ...this.state });
+    this.props.newProduct({ ...this.props.product, ...this.state });
   }
 
   render() {
-    const { name, price, description, inventory } = this.state;
+    const { name, price, description, inventory, imageURL } = this.state;
     const { handleSubmit, handleChange } = this;
 
     return (
@@ -59,6 +46,15 @@ class NewProductForm extends React.Component {
             onChange={handleChange}
             value={name}
             name="name"
+          ></input>
+          <label htmlFor="imageURL" className="product-input-labels">
+            Image URL:
+          </label>
+          <input
+            className="product-inputs"
+            onChange={handleChange}
+            value={imageURL}
+            name="imageURL"
           ></input>
           <label htmlFor="current-price" className="product-input-labels">
             Current Price:
@@ -88,7 +84,7 @@ class NewProductForm extends React.Component {
             name="inventory"
           ></input>
           <button type="submit" className="submit-product-form">
-            Save changes
+            Submit
           </button>
         </form>
       </div>
@@ -101,7 +97,9 @@ const mapStateToProps = () => {
 };
 
 const mapDispatchToProps = (dispatch, { history }) => {
-  return {};
+  return {
+    newProduct: (product) => dispatch(newProduct(product, history)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewProductForm);
