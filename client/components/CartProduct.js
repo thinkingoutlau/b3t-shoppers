@@ -70,7 +70,6 @@ class CartProduct extends React.Component {
     const isLoggedIn = !!this.props.auth.id;
 
     const product = this.props.product;
-
     return (
       <div>
         {isLoggedIn ? (
@@ -83,11 +82,19 @@ class CartProduct extends React.Component {
               </div>
             </div>
             <div className="ind_cart_prod_functions">
-              <input
+              <select
                 name="quantity"
-                value={this.state.quantity}
                 onChange={this.handleChange}
-              />
+                value={this.state.quantity}
+              >
+                {Array.from(Array(10), (e, i) => i + 1).map((el) => {
+                  return (
+                    <option value={el} key={el}>
+                      {el}
+                    </option>
+                  );
+                })}
+              </select>
               <button
                 type="button"
                 onClick={() =>
@@ -114,11 +121,19 @@ class CartProduct extends React.Component {
               </div>
             </div>
             <div className="ind_cart_prod_functions">
-              <input
+              <select
                 name="quantity"
-                value={this.state.quantity}
                 onChange={this.handleChange}
-              />
+                value={this.state.quantity}
+              >
+                {Array.from(Array(10), (e, i) => i + 1).map((el) => {
+                  return (
+                    <option value={el} key={el}>
+                      {el}
+                    </option>
+                  );
+                })}
+              </select>
               <button
                 type="button"
                 onClick={() =>
