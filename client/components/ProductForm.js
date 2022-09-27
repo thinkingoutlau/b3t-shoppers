@@ -33,6 +33,7 @@ class ProductForm extends React.Component {
   }
 
   handleChange(evt) {
+    console.log("evt.target.name", evt.target.name);
     this.setState({
       [evt.target.name]: evt.target.value,
     });
@@ -61,6 +62,7 @@ class ProductForm extends React.Component {
             className="product-inputs"
             onChange={handleChange}
             value={name}
+            name="name"
           ></input>
           <label htmlFor="current-price" className="product-input-labels">
             Current Price:
@@ -69,6 +71,7 @@ class ProductForm extends React.Component {
             className="product-inputs"
             onChange={handleChange}
             value={price}
+            name="price"
           ></input>
           <label htmlFor="description" className="product-input-labels">
             Description:
@@ -77,6 +80,7 @@ class ProductForm extends React.Component {
             className="product-inputs"
             onChange={handleChange}
             value={description}
+            name="description"
           ></textarea>
           <label htmlFor="inventory" className="product-input-labels">
             Inventory:
@@ -85,6 +89,7 @@ class ProductForm extends React.Component {
             className="product-inputs"
             onChange={handleChange}
             value={inventory}
+            name="inventory"
           ></input>
           <button type="submit" className="submit-product-form">
             Save changes
