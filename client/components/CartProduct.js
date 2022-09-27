@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import {
   deleteProduct,
+  reloadGuestProduct,
   updateProduct,
   _deleteGuestProduct,
 } from "../store/orders";
@@ -52,6 +53,8 @@ class CartProduct extends React.Component {
 
   handleGuestUpdate(productId, quantity) {
     localStorage.setItem(productId, quantity);
+
+    this.props.reloadGuestProduct(productId);
   }
 
   handleDelete(productId) {
@@ -167,6 +170,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateCart: (id, product) => dispatch(updateProduct(id, product)),
   deleteProduct: (id, productId) => dispatch(deleteProduct(id, productId)),
   deleteGuestProduct: (id) => dispatch(_deleteGuestProduct(id)),
+  reloadGuestProduct: (prodId) => dispatch(reloadGuestProduct(prodId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProduct);

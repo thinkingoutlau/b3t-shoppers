@@ -240,11 +240,19 @@ nav a:hover {
 }
 
 #checkout_cart {
-  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+}
+
+#checkout_button > a {
+  font-size: 1rem;
   font-weight: bold;
   background-color: #d0dcd0;
   color: #915438;
+  border: #915438 solid 2px;
   border-radius: 10px;
+  width: 100%;
+  padding: 0.3rem 5rem 0.3rem 5rem;
   margin-top: 1rem;
 }
 
