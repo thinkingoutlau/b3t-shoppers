@@ -61,11 +61,11 @@ class Food extends Component {
 
     return (
       <>
-        <div>
+        <div className="all-products-functions">
           <p>
-            <label className="filterByFoods"> Filter By:</label>
+            <label className="filter-products-label"> Filter By:</label>
             <select
-              className="filterByFoods"
+              className="filter-products"
               name="filter"
               value={filter}
               onChange={this.handleFilter}
@@ -74,6 +74,15 @@ class Food extends Component {
               <option value="Fish">Fish</option>
             </select>
           </p>
+          {auth.isAdmin ? (
+            <Link to="/newProductForm">
+              <button type="button" className="all_products_actions">
+                Add New Product
+              </button>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
         <button onClick={this.handlePrevious}> &laquo; Previous </button>&nbsp;
         {this.state.currentPage}&nbsp;

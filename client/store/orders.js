@@ -7,6 +7,7 @@ const ADD_GUEST_PRODUCT = "ADD_GUEST_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const DELETE_GUEST_PRODUCT = "DELETE_GUEST_PRODUCT";
+const RELOAD_GUEST_PRODUCT = "RELOAD_GUEST_PRODUCT";
 const LOG_OUT = "LOG_OUT";
 
 //action creators
@@ -38,6 +39,11 @@ const _deleteProduct = (product) => ({
 export const _deleteGuestProduct = (productId) => ({
   type: DELETE_GUEST_PRODUCT,
   productId,
+});
+
+const _reloadGuestProduct = (product) => ({
+  type: RELOAD_GUEST_PRODUCT,
+  product,
 });
 
 //thunk creators
@@ -98,6 +104,17 @@ export const deleteProduct = (userId, productId) => {
   };
 };
 
+export const reloadGuestProduct = (prodId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/api/products/${prodId}`);
+      dispatch(_reloadGuestProduct([data]));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 const initialState = () => {
   return {
     products: [],
@@ -130,6 +147,8 @@ export default (state = initialState(), action) => {
         (prod) => prod.id !== action.productId
       );
       return { ...state, guestCart: guestCartProducts };
+    case RELOAD_GUEST_PRODUCT:
+      return { ...state, guestCart: [...state.guestCart] };
     case LOG_OUT:
       return initialState();
     default:
