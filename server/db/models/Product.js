@@ -26,4 +26,12 @@ Product.beforeSave(function (product) {
   product.price = product.price * 100;
 });
 
+Product.findAllPriceConversion = function () {
+  const allProducts = this.findAll();
+  for (let i = 0; i < allProducts.length; i++) {
+    console.log(allProducts[i].price);
+  }
+  return allProducts;
+};
+
 module.exports = Product;

@@ -5,7 +5,7 @@ const {
 
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll();
+    const products = await Product.findAllPriceConversion();
     res.json(products);
   } catch (err) {
     next(err);
