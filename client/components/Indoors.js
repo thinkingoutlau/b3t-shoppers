@@ -92,11 +92,11 @@ class Indoors extends Component {
 
     return (
       <>
-        <div>
+        <div className="all-products-functions">
           <p>
-            <label className="filterByIndoorItems"> Filter By:</label>
+            <label className="filter-products-label"> Filter By:</label>
             <select
-              className="filterByIndoorItems"
+              className="filter-products"
               name="filter"
               value={filter}
               onChange={this.handleFilter}
@@ -120,6 +120,11 @@ class Indoors extends Component {
               <option value="TV">TV</option>
             </select>
           </p>
+          <Link to="/newProductForm">
+            <button type="button" className="all_products_actions">
+              Add New Product
+            </button>
+          </Link>
         </div>
         <div className="products">
           {products.map((product) => {
