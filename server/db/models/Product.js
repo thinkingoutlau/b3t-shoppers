@@ -26,4 +26,18 @@ Product.beforeSave(function (product) {
   product.price = product.price * 100;
 });
 
+Product.findAllPriceConversion = async function () {
+  const allProducts = await this.findAll();
+  for (let i = 0; i < allProducts.length; i++) {
+    allProducts[i].price = allProducts[i].price / 100;
+  }
+  return allProducts;
+};
+
+Product.findOnePriceConversion = async function (id) {
+  const product = await this.findByPk(id);
+  product.price = product.price / 100;
+  return product;
+};
+
 module.exports = Product;

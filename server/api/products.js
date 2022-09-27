@@ -5,7 +5,7 @@ const {
 
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll();
+    const products = await Product.findAllPriceConversion();
     res.json(products);
   } catch (err) {
     next(err);
@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const product = await Product.findByPk(req.params.id);
+    const product = await Product.findOnePriceConversion(req.params.id);
     res.json(product);
   } catch (err) {
     next(err);
