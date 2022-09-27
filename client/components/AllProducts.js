@@ -6,14 +6,18 @@ import { getAllProducts, deleteProduct } from "../store/allProducts";
 import { addProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
+// change page back to 1 when filtering
 class AllProducts extends Component {
   constructor() {
     super();
     this.state = {
       filter: "All Products",
+      currentPage: 1,
+      productsPerPage: 9,
     };
     this.handleFilter = this.handleFilter.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handleNext = this.handleNext.bind(this);
   }
   componentDidMount() {
     this.props.getAllProducts();
@@ -34,6 +38,18 @@ class AllProducts extends Component {
     this.props.addToCart(userId, product);
   }
 
+  handlePrevious = () => {
+    if (this.state.currentPage > 1) {
+      this.setState({ currentPage: this.state.currentPage - 1 });
+    }
+  };
+  handleNext = () => {
+    const productsLength = this.props.allProducts.length;
+    if (productsLength / this.state.productsPerPage > this.state.currentPage) {
+      this.setState({ currentPage: this.state.currentPage + 1 });
+    }
+  };
+
   handleCardClick(event) {
     if (event.target.className === "all_products_actions") {
       event.preventDefault();
@@ -45,6 +61,7 @@ class AllProducts extends Component {
     const { auth } = this.props;
     const isLoggedIn = !!this.props.auth.id;
 
+    // create a function for filter option and page to 1 in setstate
     const products = this.props.allProducts.filter((product) => {
       if (filter === "All Products") {
         return product;
@@ -119,7 +136,6 @@ class AllProducts extends Component {
         return product.type.includes("Seasonal Decor");
       }
     });
-
     return (
       <>
         <div>
@@ -158,7 +174,63 @@ class AllProducts extends Component {
             </select>
           </p>
         </div>
-        <div className="products">
+        <button onClick={this.handlePrevious}> &laquo; Previous </button>&nbsp;
+        {this.state.currentPage}&nbsp;
+        <button onClick={this.handleNext}>Next &raquo;</button>
+        <div>
+          <div className="products">
+            {products.map((product, index) =>
+              index >=
+                (this.state.currentPage - 1) * this.state.productsPerPage &&
+              index < this.state.currentPage * this.state.productsPerPage ? (
+                <Link
+                  to={`/products/${product.id}`}
+                  key={product.id}
+                  onClick={this.handleCardClick}
+                >
+                  <div className="productCard">
+                    <h3>{product.name}</h3>
+                    <img
+                      src={product.imageURL}
+                      alt="product image"
+                      className="product_image"
+                    />
+                    <p>${product.price}</p>
+                    {auth.isAdmin ? (
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        id={product.id}
+                        onClick={() => this.props.deleteProduct(product.id)}
+                      >
+                        Remove product
+                      </button>
+                    ) : isLoggedIn ? (
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        onClick={this.handleAddToCart}
+                      >
+                        Add to cart!
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="all_products_actions"
+                        onClick={this.handleGuestAddToCart}
+                      >
+                        Add to cart!
+                      </button>
+                    )}
+                  </div>
+                </Link>
+              ) : (
+                ""
+              )
+            )}
+          </div>
+        </div>
+        {/* <div className="products">
           {products.map((product) => {
             return (
               <Link
@@ -204,7 +276,7 @@ class AllProducts extends Component {
               </Link>
             );
           })}
-        </div>
+        </div> */}
       </>
     );
   }

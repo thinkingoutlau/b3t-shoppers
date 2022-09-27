@@ -25,6 +25,22 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// pull products by route
+router.get("/tags/:tagname", async (req, res, next) => {
+  console.log(`"print tagname", ${req.params.tagname}`);
+  try {
+    const tags = await Product.findAll({
+      where: {
+        type: req.params.tagname,
+      },
+    });
+
+    res.json(tags);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/new", async (req, res, next) => {
   try {
     res.status(201).send(await Product.create(req.body));

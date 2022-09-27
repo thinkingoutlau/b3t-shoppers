@@ -11,9 +11,14 @@ class Food extends Component {
     super();
     this.state = {
       filter: "All Foods",
+      currentPage: 1,
+      productsPerPage: 9,
     };
     this.handleFilter = this.handleFilter.bind(this);
+    this.handleNext = this.handleNext.bind(this);
   }
+
+  //only grab the food products
   componentDidMount() {
     this.props.getAllProducts();
   }
@@ -27,6 +32,18 @@ class Food extends Component {
       event.preventDefault();
     }
   }
+
+  handlePrevious = () => {
+    if (this.state.currentPage > 1) {
+      this.setState({ currentPage: this.state.currentPage - 1 });
+    }
+  };
+  handleNext = () => {
+    const productsLength = this.props.allProducts.length;
+    if (productsLength / this.state.productsPerPage > this.state.currentPage) {
+      this.setState({ currentPage: this.state.currentPage + 1 });
+    }
+  };
 
   render() {
     const { filter } = this.state;
@@ -58,8 +75,11 @@ class Food extends Component {
             </select>
           </p>
         </div>
+        <button onClick={this.handlePrevious}> &laquo; Previous </button>&nbsp;
+        {this.state.currentPage}&nbsp;
+        <button onClick={this.handleNext}>Next &raquo;</button>
         <div className="products">
-          {products.map((product) => {
+          {products.map((product, index) => {
             if (product.type === "foodFish") {
               return (
                 <Link
