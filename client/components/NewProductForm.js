@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { gotSingleProduct } from "../store/singleProduct";
-import { editProduct } from "../store/allProducts";
+import { newProduct } from "../store/allProducts";
 
-class ProductForm extends React.Component {
+class NewProductForm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -11,25 +10,10 @@ class ProductForm extends React.Component {
       price: "",
       description: "",
       inventory: "",
+      imageURL: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.gotSingleProduct(this.props.match.params.id);
-    this.setState(this.props.product);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.product.id !== this.props.product.id) {
-      this.setState({
-        name: this.props.product.name || "",
-        price: this.props.product.price || "",
-        description: this.props.product.description || "",
-        inventory: this.props.product.inventory || "",
-      });
-    }
   }
 
   handleChange(evt) {
@@ -40,11 +24,11 @@ class ProductForm extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.editProduct({ ...this.props.product, ...this.state });
+    this.props.newProduct({ ...this.props.product, ...this.state });
   }
 
   render() {
-    const { name, price, description, inventory } = this.state;
+    const { name, price, description, inventory, imageURL } = this.state;
     const { handleSubmit, handleChange } = this;
 
     return (
@@ -62,6 +46,15 @@ class ProductForm extends React.Component {
             onChange={handleChange}
             value={name}
             name="name"
+          ></input>
+          <label htmlFor="imageURL" className="product-input-labels">
+            Image URL:
+          </label>
+          <input
+            className="product-inputs"
+            onChange={handleChange}
+            value={imageURL}
+            name="imageURL"
           ></input>
           <label htmlFor="current-price" className="product-input-labels">
             Current Price:
@@ -91,7 +84,7 @@ class ProductForm extends React.Component {
             name="inventory"
           ></input>
           <button type="submit" className="submit-product-form">
-            Save changes
+            Submit
           </button>
         </form>
       </div>
@@ -99,17 +92,14 @@ class ProductForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    product: state.product,
-  };
+const mapStateToProps = () => {
+  return {};
 };
 
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    gotSingleProduct: (id) => dispatch(gotSingleProduct(id)),
-    editProduct: (product) => dispatch(editProduct(product, history)),
+    newProduct: (product) => dispatch(newProduct(product, history)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductForm);
+export default connect(mapStateToProps, mapDispatchToProps)(NewProductForm);
