@@ -11,20 +11,20 @@ const AuthFormLogin = (props) => {
     <div>
       <form onSubmit={handleSubmit} name={name} className="auth_form">
         <div>
-          <label htmlFor="username">
+          <label htmlFor="username" className="auth-input-labels">
             <strong>
               <small>Username</small>
             </strong>
           </label>
-          <input name="username" type="text" />
+          <input name="username" type="text" className="auth-inputs" />
         </div>
         <div>
-          <label htmlFor="password">
+          <label htmlFor="password" className="auth-input-labels">
             <strong>
               <small>Password</small>
             </strong>
           </label>
-          <input name="password" type="password" />
+          <input name="password" type="password" className="auth-inputs" />
         </div>
         <div>
           <button type="submit" className="auth_button">
