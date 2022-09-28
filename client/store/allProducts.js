@@ -88,7 +88,7 @@ export const editProduct = (product, history) => {
         history.push(`/products/${product.id}`);
       }
     } catch (error) {
-      console.log(error);
+      history.push("/formError");
     }
   };
 };
@@ -111,7 +111,7 @@ export const newProduct = (product, history) => {
         history.push(`/products/${created.id}`);
       }
     } catch (error) {
-      console.log(error);
+      history.push("/formError");
     }
   };
 };

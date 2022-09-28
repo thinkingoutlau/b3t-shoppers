@@ -8,7 +8,7 @@ export const _getOrderHistory = (orderHistory) => ({
   orderHistory,
 });
 
-export const getOrderHistory = (id) => {
+export const getOrderHistory = (id, history) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
@@ -18,7 +18,11 @@ export const getOrderHistory = (id) => {
             authorization: token,
           },
         });
-        dispatch(_getOrderHistory(order));
+        if (order === null) {
+          history.push("/noOrderHistory");
+        } else {
+          dispatch(_getOrderHistory(order));
+        }
       }
     } catch (error) {
       console.log(error);

@@ -19,6 +19,8 @@ import Indoors from "./components/Indoors";
 import ProductForm from "./components/ProductForm";
 import Stripe from "./components/StripeContainer";
 import NewProductForm from "./components/NewProductForm";
+import NoOrderHistory from "./components/NoOrderHistory";
+import FormError from "./components/FormError";
 
 /**
  * COMPONENT
@@ -46,11 +48,13 @@ class Routes extends Component {
             <Route path="/indoors" component={Indoors} />
             <Route path="/others" component={Others} />
             <Route path="/checkout" component={Stripe} />
+            <Route path="/noOrderHistory" component={NoOrderHistory} />
             {this.props.auth.isAdmin ? (
               <Switch>
                 <Route path="/productForm/:id" component={ProductForm} />
                 <Route path="/newProductForm" component={NewProductForm} />
                 <Route path="/myAdminAccount" component={AdminAccPage} />
+                <Route path="/formError" component={FormError} />
               </Switch>
             ) : (
               <Route path="/myAccount" component={UserAccPage} />

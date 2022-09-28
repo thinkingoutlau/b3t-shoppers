@@ -25,7 +25,7 @@ export const Home = (props) => {
             </div>
             <div className="home_ind_banners outdoor">
               <h3>Outdoors Style</h3>
-              <Link to="/indoors">
+              <Link to="/outdoors">
                 <img src="/images/outdoor-style.png" />
               </Link>
             </div>
