@@ -13,7 +13,6 @@ class AdminAccPage extends Component {
   }
   async componentDidMount() {
     await this.props.getAllUsers();
-    console.log(this.props);
   }
 
   handlePrevious = () => {

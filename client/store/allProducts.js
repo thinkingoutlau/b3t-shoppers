@@ -108,8 +108,8 @@ export const newProduct = (product, history) => {
           }
         );
         dispatch(_createProduct(created));
+        history.push(`/products/${created.id}`);
       }
-      history.push(`/products/${created.id}`);
     } catch (error) {
       console.log(error);
     }
@@ -130,7 +130,6 @@ export const filterByMultipleTags = (multipleTags) => {
     const { data: productTags } = await axios.get(
       `/api/products/multipleTags/${multipleTags}`
     );
-    console.log(productTags);
     dispatch(_getAllProducts(productTags));
   };
 };

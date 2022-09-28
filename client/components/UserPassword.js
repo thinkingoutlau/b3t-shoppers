@@ -38,7 +38,7 @@ class UserPassword extends Component {
       <div>
         <form onSubmit={this.handleSubmit} className="change_password_form">
           <div>
-            <label htmlFor="currentPassword:">
+            <label htmlFor="currentPassword:" className="password-input-labels">
               <strong>
                 <small>Current password:</small>
               </strong>
@@ -47,10 +47,11 @@ class UserPassword extends Component {
               name="currentPassword"
               value={currentPassword}
               onChange={this.handleChange}
+              className="password-inputs"
             />
           </div>
           <div>
-            <label htmlFor="newPassword">
+            <label htmlFor="newPassword" className="password-input-labels">
               <strong>
                 <small>New password:</small>
               </strong>
@@ -59,10 +60,11 @@ class UserPassword extends Component {
               name="newPassword"
               value={newPassword}
               onChange={this.handleChange}
+              className="password-inputs"
             />
           </div>
           <div>
-            <label htmlFor="reenterPassword">
+            <label htmlFor="reenterPassword" className="password-input-labels">
               <strong>
                 <small>Reenter new password:</small>
               </strong>
@@ -71,6 +73,7 @@ class UserPassword extends Component {
               name="reenterPassword"
               value={reenterPassword}
               onChange={this.handleChange}
+              className="password-inputs"
             />
           </div>
           <div>

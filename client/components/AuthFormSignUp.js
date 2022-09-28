@@ -11,7 +11,7 @@ const AuthFormSignUp = (props) => {
     <div>
       <form onSubmit={handleSubmit} name={name} className="auth_form">
         <div>
-          <label htmlFor="fullname">
+          <label htmlFor="fullname" className="auth-input-labels">
             <strong>
               <small>Full Name</small>
             </strong>
@@ -20,31 +20,32 @@ const AuthFormSignUp = (props) => {
             name="fullname"
             type="text"
             placeholder="First and Last Name"
+            className="auth-inputs"
           />
         </div>
         <div>
-          <label htmlFor="username">
+          <label htmlFor="username" className="auth-input-labels">
             <strong>
               <small>Username</small>
             </strong>
           </label>
-          <input name="username" type="text" />
+          <input name="username" type="text" className="auth-inputs" />
         </div>
         <div>
-          <label htmlFor="email">
+          <label htmlFor="email" className="auth-input-labels">
             <strong>
               <small>Email</small>
             </strong>
           </label>
-          <input name="email" type="text" />
+          <input name="email" type="text" className="auth-inputs" />
         </div>
         <div>
-          <label htmlFor="password">
+          <label htmlFor="password" className="auth-input-labels">
             <strong>
               <small>Password</small>
             </strong>
           </label>
-          <input name="password" type="password" />
+          <input name="password" type="password" className="auth-inputs" />
         </div>
         <div>
           <button type="submit" className="auth_button">
