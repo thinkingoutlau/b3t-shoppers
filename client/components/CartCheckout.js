@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { clearCart, _clearGuestCart } from "../store/orders";
+import { updateInventory } from "../store/singleProduct";
 import axios from "axios";
 
 const CARD_OPTIONS = {
@@ -50,8 +51,20 @@ function CartCheckout(props) {
           console.log("successful payment");
           setSuccess(true);
           if (props.isLoggedIn) {
+            props.order.products.forEach((prod) => {
+              props.updateInventory(prod.id, {
+                inventory: prod.inventory - prod.order_products.quantity,
+              });
+            });
+
             props.clearOrder(props.auth.id, { status: "fulfilled" });
           } else {
+            props.order.guestCart.forEach((prod) => {
+              props.updateInventory(prod.id, {
+                inventory: prod.inventory - localStorage.getItem(prod.id),
+              });
+            });
+
             props.clearGuestOrder();
             localStorage.clear();
           }
@@ -97,6 +110,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => ({
   clearOrder: (id, status) => dispatch(clearCart(id, status)),
   clearGuestOrder: () => dispatch(_clearGuestCart()),
+  updateInventory: (id, quantity) => dispatch(updateInventory(id, quantity)),
 });
 
 export default connect(mapState, mapDispatch)(CartCheckout);

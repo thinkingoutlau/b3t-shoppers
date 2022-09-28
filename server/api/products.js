@@ -69,4 +69,13 @@ router.put("/:id", requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
+router.put("/inventory/:id", async (req, res, next) => {
+  try {
+    const product = await Product.findOnePriceConversion(req.params.id);
+    res.send(await product.update({ inventory: req.body.inventory }));
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
