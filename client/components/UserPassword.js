@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updatePassword } from "../store/auth";
 
-//new password must === reenter password
-//if user enters same password,send a request to server with data like this:
-// {current: newPassword
-//  new: newPassword }
 class UserPassword extends Component {
   constructor() {
     super();
