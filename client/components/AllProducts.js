@@ -106,9 +106,6 @@ class AllProducts extends Component {
             <></>
           )}
         </div>
-        <button onClick={this.handlePrevious}> &laquo; Previous </button>&nbsp;
-        {this.state.currentPage}&nbsp;
-        <button onClick={this.handleNext}>Next &raquo;</button>
         <div>
           <div className="products">
             {this.props.allProducts.map((product, index) =>
@@ -161,6 +158,20 @@ class AllProducts extends Component {
               )
             )}
           </div>
+        </div>
+        <div className="pagination">
+          <button
+            onClick={this.handlePrevious}
+            className="all_products_actions"
+          >
+            {" "}
+            &laquo; Previous{" "}
+          </button>
+          &nbsp;
+          <strong>{this.state.currentPage}</strong>&nbsp;
+          <button onClick={this.handleNext} className="all_products_actions">
+            Next &raquo;
+          </button>
         </div>
       </>
     );
