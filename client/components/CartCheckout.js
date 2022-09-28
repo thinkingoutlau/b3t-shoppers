@@ -97,50 +97,63 @@ function CartCheckout(props) {
 
   return (
     <div>
-      <div>
-        <h2>Checkout</h2>
-        {showOrder.map((product) => {
-          return (
-            <div className="checkout_prod_info" key={product.id}>
-              <img src={product.imageURL} />
-              <div>
-                <h2>{product.name}</h2>
-                <p>
-                  $
-                  {props.isLoggedIn
-                    ? product.order_products.price
-                    : product.price}
-                  x
-                  {props.isLoggedIn
-                    ? product.order_products.quantity
-                    : localStorage.getItem(product.id)}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-        <h2>
-          {checkOutSum
-            ? `Total Amount: $${checkOutSum}`
-            : "Nothing to checkout!"}
-        </h2>
-      </div>
       {!success ? (
-        <form onSubmit={handleSubmit}>
-          <fieldset className="FormGroup">
-            <div className="FormRow">
-              <CardElement options={CARD_OPTIONS} />
+        <div>
+          <div className="checkout_component">
+            <div className="checkout_title">
+              <img src="/images/100_Bells_NH_Inv_Icon.png" />
+              <h2>Checkout</h2>
+              <img src="/images/100_Bells_NH_Inv_Icon.png" />
             </div>
-          </fieldset>
-          <div id="pay_button">
-            <button
-              type="button"
-              className={showOrder.length ? "" : "disabled"}
-            >
-              Pay
-            </button>
+            {showOrder.length ? (
+              <div className="checkout_avail_text">
+                <div className="checkout_items">
+                  {showOrder.map((product) => {
+                    return (
+                      <div className="checkout_prod_info" key={product.id}>
+                        <img src={product.imageURL} />
+                        <div>
+                          <h2>{product.name}</h2>
+                          <p>
+                            $
+                            {props.isLoggedIn
+                              ? product.order_products.price
+                              : product.price}
+                            &nbsp;x&nbsp;
+                            {props.isLoggedIn
+                              ? product.order_products.quantity
+                              : localStorage.getItem(product.id)}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <h3>Total Amount: ${checkOutSum}</h3>
+              </div>
+            ) : (
+              <div className="checkout_avail_text">
+                <h3>{"You don't have items to checkout!"}</h3>
+              </div>
+            )}
           </div>
-        </form>
+          <form>
+            <fieldset className="FormGroup">
+              <div className="FormRow">
+                <CardElement options={CARD_OPTIONS} />
+              </div>
+            </fieldset>
+            <div id="pay_button">
+              <button
+                type="button"
+                className={showOrder.length ? "" : "disabled"}
+                onClick={handleSubmit}
+              >
+                Pay
+              </button>
+            </div>
+          </form>
+        </div>
       ) : (
         <div>
           <h2>Payment completed</h2>
