@@ -2,8 +2,9 @@ const router = require("express").Router();
 const {
   models: { Order, Product },
 } = require("../db");
+const { requireToken } = require("./gateKeepingMiddleware");
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", requireToken, async (req, res, next) => {
   try {
     let cart = await Order.findOne({
       where: {

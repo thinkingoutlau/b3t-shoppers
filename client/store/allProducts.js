@@ -1,10 +1,12 @@
 import axios from "axios";
+import { token } from "morgan";
 
 const initialState = [];
 const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const EDIT_PRODUCT = "EDIT_PRODUCT";
 const CREATE_PRODUCT = "CREATE_PRODUCT";
+const TOKEN = "token";
 
 export const _getAllProducts = (allProducts) => ({
   type: GET_ALL_PRODUCTS,
@@ -40,10 +42,16 @@ export const getAllProducts = () => {
 export const deleteProduct = (id, history) => {
   return async (dispatch) => {
     try {
-      console.log("history", history);
-      const { data: product } = await axios.delete(`/api/products/${id}`);
-      dispatch(_deleteProduct(product));
-      history.goBack();
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data: product } = await axios.delete(`/api/products/${id}`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_deleteProduct(product));
+        history.goBack();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -53,12 +61,20 @@ export const deleteProduct = (id, history) => {
 export const editProduct = (product, history) => {
   return async (dispatch) => {
     try {
-      const { data: updated } = await axios.put(
-        `/api/products/${product.id}`,
-        product
-      );
-      dispatch(_editProduct(updated));
-      history.push(`/products/${product.id}`);
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data: updated } = await axios.put(
+          `/api/products/${product.id}`,
+          product,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        dispatch(_editProduct(updated));
+        history.push(`/products/${product.id}`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -68,8 +84,19 @@ export const editProduct = (product, history) => {
 export const newProduct = (product, history) => {
   return async (dispatch) => {
     try {
-      const { data: created } = await axios.post(`/api/products/new`, product);
-      dispatch(_createProduct(created));
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data: created } = await axios.post(
+          `/api/products/new`,
+          product,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        dispatch(_createProduct(created));
+      }
       history.push(`/products/${created.id}`);
     } catch (error) {
       console.log(error);
