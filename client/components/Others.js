@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getAllProducts, deleteProduct } from "../store/allProducts";
+import {
+  getAllProducts,
+  deleteProduct,
+  filterByTag,
+  filterByMultipleTags,
+} from "../store/allProducts";
 import { addProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
@@ -11,15 +16,25 @@ class Others extends Component {
     super();
     this.state = {
       filter: "All Others",
+      currentPage: 1,
+      productsPerPage: 9,
     };
     this.handleFilter = this.handleFilter.bind(this);
   }
   componentDidMount() {
-    this.props.getAllProducts();
+    this.props.filterByMultipleTags(
+      "Easter,Game Console,Insect,Seasonal Decor,Toy"
+    );
   }
 
   handleFilter(event) {
     this.setState({ filter: event.target.value });
+    this.setState({ currentPage: 1 });
+    if (event.target.value === "All Others") {
+      return this.props.filterByTag("Easter");
+    } else {
+      this.props.filterByTag(event.target.value);
+    }
   }
 
   handleCardClick(event) {
@@ -28,31 +43,22 @@ class Others extends Component {
     }
   }
 
+  handlePrevious = () => {
+    if (this.state.currentPage > 1) {
+      this.setState({ currentPage: this.state.currentPage - 1 });
+    }
+  };
+  handleNext = () => {
+    const productsLength = this.props.allProducts.length;
+    if (productsLength / this.state.productsPerPage > this.state.currentPage) {
+      this.setState({ currentPage: this.state.currentPage + 1 });
+    }
+  };
+
   render() {
     const { filter } = this.state;
     const { auth } = this.props;
     const isLoggedIn = !!this.props.auth.id;
-
-    const products = this.props.allProducts.filter((product) => {
-      if (filter === "All Others") {
-        return product;
-      }
-      if (filter === "Easter") {
-        return product.type.includes("Easter");
-      }
-      if (filter === "Game Console") {
-        return product.type.includes("Game Console");
-      }
-      if (filter === "Insect") {
-        return product.type.includes("Insect");
-      }
-      if (filter === "Seasonal Decor") {
-        return product.type.includes("Seasonal Decor" || "Seasonal decor");
-      }
-      if (filter === "Toy") {
-        return product.type.includes("Toy");
-      }
-    });
 
     return (
       <>
@@ -83,60 +89,59 @@ class Others extends Component {
             <></>
           )}
         </div>
+        <button onClick={this.handlePrevious}> &laquo; Previous </button>&nbsp;
+        {this.state.currentPage}&nbsp;
+        <button onClick={this.handleNext}>Next &raquo;</button>
         <div className="products">
-          {products.map((product) => {
-            if (
-              product.type === "Easter" ||
-              product.type === "Game Console" ||
-              product.type === "Insect" ||
-              product.type === "Seasonal Decor" ||
-              product.type === "Toy"
-            ) {
-              return (
-                <Link
-                  to={`/products/${product.id}`}
-                  key={product.id}
-                  onClick={this.handleCardClick}
-                >
-                  <div className="productCard">
-                    <h3>{product.name}</h3>
-                    <img
-                      src={product.imageURL}
-                      alt="product image"
-                      className="product_image"
-                    />
-                    <p>${product.price}</p>
-                    {auth.isAdmin ? (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        id={product.id}
-                        onClick={() => this.props.deleteProduct(product.id)}
-                      >
-                        Remove product
-                      </button>
-                    ) : isLoggedIn ? (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        onClick={this.handleAddToCart}
-                      >
-                        Add to cart!
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        onClick={this.handleGuestAddToCart}
-                      >
-                        Add to cart!
-                      </button>
-                    )}
-                  </div>
-                </Link>
-              );
-            }
-          })}
+          {this.props.allProducts.map((product, index) =>
+            index >=
+              (this.state.currentPage - 1) * this.state.productsPerPage &&
+            index < this.state.currentPage * this.state.productsPerPage ? (
+              <Link
+                to={`/products/${product.id}`}
+                key={product.id}
+                onClick={this.handleCardClick}
+              >
+                <div className="productCard">
+                  <h3>{product.name}</h3>
+                  <img
+                    src={product.imageURL}
+                    alt="product image"
+                    className="product_image"
+                  />
+                  <p>${product.price}</p>
+                  {auth.isAdmin ? (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      id={product.id}
+                      onClick={() => this.props.deleteProduct(product.id)}
+                    >
+                      Remove product
+                    </button>
+                  ) : isLoggedIn ? (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      onClick={this.handleAddToCart}
+                    >
+                      Add to cart!
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      onClick={this.handleGuestAddToCart}
+                    >
+                      Add to cart!
+                    </button>
+                  )}
+                </div>
+              </Link>
+            ) : (
+              ""
+            )
+          )}
         </div>
       </>
     );
@@ -154,6 +159,8 @@ const mapDispatchToProps = (dispatch) => ({
   addToCart: (userId, product) => dispatch(addProduct(userId, product)),
   getUserFromServer: (username) => dispatch(getUserFromServer(username)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
+  filterByTag: (tagname) => dispatch(filterByTag(tagname)),
+  filterByMultipleTags: (tags) => dispatch(filterByMultipleTags(tags)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Others);

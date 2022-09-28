@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getAllProducts, deleteProduct } from "../store/allProducts";
+import {
+  getAllProducts,
+  deleteProduct,
+  filterByTag,
+  filterByMultipleTags,
+} from "../store/allProducts";
 import { addProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
@@ -11,15 +16,27 @@ class Indoors extends Component {
     super();
     this.state = {
       filter: "All Indoor Items",
+      currentPage: 1,
+      productsPerPage: 9,
     };
     this.handleFilter = this.handleFilter.bind(this);
   }
   componentDidMount() {
-    this.props.getAllProducts();
+    this.props.filterByMultipleTags(
+      "Air Conditioning,Arch,Audio,Bathroom Things,Bathtub,Bed,Chair,Desk,Dresser,Folk Craft Decor,House Door Decor,Sofa,Table,TV"
+    );
   }
 
   handleFilter(event) {
     this.setState({ filter: event.target.value });
+    this.setState({ currentPage: 1 });
+    if (event.target.value === "All Indoor Items") {
+      this.props.filterByMultipleTags(
+        "Air Conditioning,Arch,Audio,Bathroom Things,Bathtub,Bed,Chair,Desk,Dresser,Folk Craft Decor,House Door Decor,Sofa,Table,TV"
+      );
+    } else {
+      this.props.filterByTag(event.target.value);
+    }
   }
 
   handleCardClick(event) {
@@ -28,67 +45,22 @@ class Indoors extends Component {
     }
   }
 
+  handlePrevious = () => {
+    if (this.state.currentPage > 1) {
+      this.setState({ currentPage: this.state.currentPage - 1 });
+    }
+  };
+  handleNext = () => {
+    const productsLength = this.props.allProducts.length;
+    if (productsLength / this.state.productsPerPage > this.state.currentPage) {
+      this.setState({ currentPage: this.state.currentPage + 1 });
+    }
+  };
+
   render() {
     const { filter } = this.state;
     const { auth } = this.props;
     const isLoggedIn = !!this.props.auth.id;
-
-    const products = this.props.allProducts.filter((product) => {
-      if (filter === "All Indoor Items") {
-        return product;
-      }
-      if (filter === "Air Conditioning") {
-        return product.type.includes("Air Conditioning");
-      }
-      if (filter === "Arch") {
-        return product.type.includes("Arch");
-      }
-      if (filter === "Audio") {
-        return product.type.includes("Audio");
-      }
-      if (filter === "Bathroom Things") {
-        return product.type.includes("Bathroom Things");
-      }
-      if (filter === "Bathtub") {
-        return product.type.includes("Bathtub");
-      }
-      if (filter === "Bed") {
-        return product.type.includes("Bed");
-      }
-      if (filter === "Chair") {
-        return product.type.includes("Chair");
-      }
-      if (filter === "Clocks") {
-        return product.type.includes("Clocks");
-      }
-      if (filter === "Decor") {
-        return product.type.includes("Decor");
-      }
-      if (filter === "Desk") {
-        return product.type.includes("Desk");
-      }
-      if (filter === "Dresser") {
-        return product.type.includes("Dresser");
-      }
-      if (filter === "Folk Craft Decor") {
-        return product.type.includes("Folk Craft Decor");
-      }
-      if (filter === "Home Appliances") {
-        return product.type.includes("Home Appliances");
-      }
-      if (filter === "House Door Decor") {
-        return product.type.includes("House Door Decor");
-      }
-      if (filter === "Sofa") {
-        return product.type.includes("Sofa");
-      }
-      if (filter === "Table") {
-        return product.type.includes("Table");
-      }
-      if (filter === "TV") {
-        return product.type.includes("TV");
-      }
-    });
 
     return (
       <>
@@ -101,7 +73,7 @@ class Indoors extends Component {
               value={filter}
               onChange={this.handleFilter}
             >
-              <option value="All Indoor Items">All Home Appliances</option>
+              <option value="All Indoor Items">All Indoor Items</option>
               <option value="Air Conditioning">Air Conditioning</option>
               <option value="Arch">Arch</option>
               <option value="Audio">Audio</option>
@@ -109,8 +81,6 @@ class Indoors extends Component {
               <option value="Bathtub">Bathtub</option>
               <option value="Bed">Bed</option>
               <option value="Chair">Chair</option>
-              <option value="Clocks">Clocks</option>
-              <option value="Decor">Decor</option>
               <option value="Desk">Desk</option>
               <option value="Dresser">Dresser</option>
               <option value="Folk Craft Decor">Folk Craft Decor</option>
@@ -130,72 +100,59 @@ class Indoors extends Component {
             <></>
           )}
         </div>
+        <button onClick={this.handlePrevious}> &laquo; Previous </button>&nbsp;
+        {this.state.currentPage}&nbsp;
+        <button onClick={this.handleNext}>Next &raquo;</button>
         <div className="products">
-          {products.map((product) => {
-            if (
-              product.type === "Home Appliances" ||
-              product.type === "Air Conditioning" ||
-              product.type === "Arch" ||
-              product.type === "Audio" ||
-              product.type === "Bathroom Things" ||
-              product.type === "Bathtub" ||
-              product.type === "Bed" ||
-              product.type === "Clocks" ||
-              product.type === "Chair" ||
-              product.type === "Decor" ||
-              product.type === "Desk" ||
-              product.type === "Dresser" ||
-              product.type === "Folk Craft Decor" ||
-              product.type === "House Door Decor" ||
-              product.type === "Sofa" ||
-              product.type === "Table" ||
-              product.type === "TV"
-            ) {
-              return (
-                <Link
-                  to={`/products/${product.id}`}
-                  key={product.id}
-                  onClick={this.handleCardClick}
-                >
-                  <div className="productCard">
-                    <h3>{product.name}</h3>
-                    <img
-                      src={product.imageURL}
-                      alt="product image"
-                      className="product_image"
-                    />
-                    <p>${product.price}</p>
-                    {auth.isAdmin ? (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        id={product.id}
-                        onClick={() => this.props.deleteProduct(product.id)}
-                      >
-                        Remove product
-                      </button>
-                    ) : isLoggedIn ? (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        onClick={this.handleAddToCart}
-                      >
-                        Add to cart!
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        onClick={this.handleGuestAddToCart}
-                      >
-                        Add to cart!
-                      </button>
-                    )}
-                  </div>
-                </Link>
-              );
-            }
-          })}
+          {this.props.allProducts.map((product, index) =>
+            index >=
+              (this.state.currentPage - 1) * this.state.productsPerPage &&
+            index < this.state.currentPage * this.state.productsPerPage ? (
+              <Link
+                to={`/products/${product.id}`}
+                key={product.id}
+                onClick={this.handleCardClick}
+              >
+                <div className="productCard">
+                  <h3>{product.name}</h3>
+                  <img
+                    src={product.imageURL}
+                    alt="product image"
+                    className="product_image"
+                  />
+                  <p>${product.price}</p>
+                  {auth.isAdmin ? (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      id={product.id}
+                      onClick={() => this.props.deleteProduct(product.id)}
+                    >
+                      Remove product
+                    </button>
+                  ) : isLoggedIn ? (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      onClick={this.handleAddToCart}
+                    >
+                      Add to cart!
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      onClick={this.handleGuestAddToCart}
+                    >
+                      Add to cart!
+                    </button>
+                  )}
+                </div>
+              </Link>
+            ) : (
+              ""
+            )
+          )}
         </div>
       </>
     );
@@ -213,6 +170,8 @@ const mapDispatchToProps = (dispatch) => ({
   addToCart: (userId, product) => dispatch(addProduct(userId, product)),
   getUserFromServer: (username) => dispatch(getUserFromServer(username)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
+  filterByTag: (tagname) => dispatch(filterByTag(tagname)),
+  filterByMultipleTags: (tags) => dispatch(filterByMultipleTags(tags)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Indoors);
