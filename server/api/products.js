@@ -21,17 +21,21 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// pull products by route
 router.get("/tags/:tagname", async (req, res, next) => {
-  console.log(`"print tagname", ${req.params.tagname}`);
   try {
-    const tags = await Product.findAll({
-      where: {
-        type: req.params.tagname,
-      },
-    });
+    const tag = await Product.findByTagPriceConversion(req.params.tagname);
+    res.json(tag);
+  } catch (err) {
+    next(err);
+  }
+});
 
-    res.json(tags);
+router.get("/multipleTags/:tags", async (req, res, next) => {
+  const splitTags = req.params.tags.split(",");
+
+  try {
+    const multipleTags = await Product.findByMultipleTags(splitTags);
+    res.json(multipleTags);
   } catch (err) {
     next(err);
   }

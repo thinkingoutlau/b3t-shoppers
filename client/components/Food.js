@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getAllProducts, deleteProduct } from "../store/allProducts";
+import {
+  getAllProducts,
+  deleteProduct,
+  filterByTag,
+} from "../store/allProducts";
 import { addProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
@@ -15,16 +19,21 @@ class Food extends Component {
       productsPerPage: 9,
     };
     this.handleFilter = this.handleFilter.bind(this);
-    this.handleNext = this.handleNext.bind(this);
   }
 
   //only grab the food products
   componentDidMount() {
-    this.props.getAllProducts();
+    this.props.filterByTag("foodFish");
   }
 
   handleFilter(event) {
     this.setState({ filter: event.target.value });
+    this.setState({ currentPage: 1 });
+    if (event.target.value === "All Foods") {
+      return this.props.filterByTag("foodFish");
+    } else {
+      this.props.filterByTag(event.target.value);
+    }
   }
 
   handleCardClick(event) {
@@ -50,15 +59,6 @@ class Food extends Component {
     const { auth } = this.props;
     const isLoggedIn = !!this.props.auth.id;
 
-    const products = this.props.allProducts.filter((product) => {
-      if (filter === "All Foods") {
-        return product.type.includes("foodFish");
-      }
-      if (filter === "Fish") {
-        return product.type.includes("foodFish");
-      }
-    });
-
     return (
       <>
         <div className="all-products-functions">
@@ -68,10 +68,10 @@ class Food extends Component {
               className="filter-products"
               name="filter"
               value={filter}
-              onChange={this.handleFilter}
+              onChange={(event) => this.handleFilter(event)}
             >
               <option value="All Foods">All Foods</option>
-              <option value="Fish">Fish</option>
+              <option value="foodFish">Fish</option>
             </select>
           </p>
           {auth.isAdmin ? (
@@ -88,53 +88,55 @@ class Food extends Component {
         {this.state.currentPage}&nbsp;
         <button onClick={this.handleNext}>Next &raquo;</button>
         <div className="products">
-          {products.map((product, index) => {
-            if (product.type === "foodFish") {
-              return (
-                <Link
-                  to={`/products/${product.id}`}
-                  key={product.id}
-                  onClick={this.handleCardClick}
-                >
-                  <div className="productCard">
-                    <h3>{product.name}</h3>
-                    <img
-                      src={product.imageURL}
-                      alt="product image"
-                      className="product_image"
-                    />
-                    <p>${product.price}</p>
-                    {auth.isAdmin ? (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        id={product.id}
-                        onClick={() => this.props.deleteProduct(product.id)}
-                      >
-                        Remove product
-                      </button>
-                    ) : isLoggedIn ? (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        onClick={this.handleAddToCart}
-                      >
-                        Add to cart!
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="all_products_actions"
-                        onClick={this.handleGuestAddToCart}
-                      >
-                        Add to cart!
-                      </button>
-                    )}
-                  </div>
-                </Link>
-              );
-            }
-          })}
+          {this.props.allProducts.map((product, index) =>
+            index >=
+              (this.state.currentPage - 1) * this.state.productsPerPage &&
+            index < this.state.currentPage * this.state.productsPerPage ? (
+              <Link
+                to={`/products/${product.id}`}
+                key={product.id}
+                onClick={this.handleCardClick}
+              >
+                <div className="productCard">
+                  <h3>{product.name}</h3>
+                  <img
+                    src={product.imageURL}
+                    alt="product image"
+                    className="product_image"
+                  />
+                  <p>${product.price}</p>
+                  {auth.isAdmin ? (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      id={product.id}
+                      onClick={() => this.props.deleteProduct(product.id)}
+                    >
+                      Remove product
+                    </button>
+                  ) : isLoggedIn ? (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      onClick={this.handleAddToCart}
+                    >
+                      Add to cart!
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="all_products_actions"
+                      onClick={this.handleGuestAddToCart}
+                    >
+                      Add to cart!
+                    </button>
+                  )}
+                </div>
+              </Link>
+            ) : (
+              ""
+            )
+          )}
         </div>
       </>
     );
@@ -147,10 +149,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllProducts: () => dispatch(getAllProducts()),
+  // getAllProducts: () => dispatch(getAllProducts()),
   addToCart: (userId, product) => dispatch(addProduct(userId, product)),
   getUserFromServer: (username) => dispatch(getUserFromServer(username)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
+  filterByTag: (tagname) => dispatch(filterByTag(tagname)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Food);

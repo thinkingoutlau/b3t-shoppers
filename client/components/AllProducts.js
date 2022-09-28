@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getAllProducts, deleteProduct } from "../store/allProducts";
+import {
+  getAllProducts,
+  deleteProduct,
+  filterByTag,
+} from "../store/allProducts";
 import { addProduct, addGuestProduct } from "../store/orders";
 import { getUserFromServer } from "../store/user";
 
@@ -16,10 +20,8 @@ class AllProducts extends Component {
       productsPerPage: 9,
     };
     this.handleFilter = this.handleFilter.bind(this);
-    this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handlePrevious = this.handlePrevious.bind(this);
     this.handleNext = this.handleNext.bind(this);
-    // this.handleAddToCart = this.handleAddToCart.bind(this);
-    // this.handleGuestAddToCart = this.handleGuestAddToCart.bind(this);
   }
   componentDidMount() {
     this.props.getAllProducts();
@@ -27,26 +29,13 @@ class AllProducts extends Component {
 
   handleFilter(event) {
     this.setState({ filter: event.target.value });
+    this.setState({ currentPage: 1 });
+    if (event.target.value === "All Products") {
+      return this.props.getAllProducts();
+    } else {
+      this.props.filterByTag(event.target.value);
+    }
   }
-
-  // handleAddToCart(id, price) {
-  //   const userId = this.props.auth.id;
-  //   const product = {
-  //     productId: id,
-  //     price: price,
-  //     quantity: "1",
-  //   };
-
-  //   this.props.addToCart(userId, product);
-  // }
-
-  // handleGuestAddToCart(id) {
-  //   if (!Object.keys(localStorage).includes(JSON.stringify(id))) {
-  //     localStorage.setItem(id, 1);
-
-  //     this.props.addGuestProduct(id);
-  //   }
-  // }
 
   handlePrevious = () => {
     if (this.state.currentPage > 1) {
@@ -71,81 +60,6 @@ class AllProducts extends Component {
     const { auth } = this.props;
     const isLoggedIn = !!this.props.auth.id;
 
-    // create a function for filter option and page to 1 in setstate
-    const products = this.props.allProducts.filter((product) => {
-      if (filter === "All Products") {
-        return product;
-      }
-      if (filter === "Air Conditioning") {
-        return product.type.includes("Air Conditioning");
-      }
-      if (filter === "Arch") {
-        return product.type.includes("Arch");
-      }
-      if (filter === "Audio") {
-        return product.type.includes("Audio");
-      }
-      if (filter === "Bathroom Things") {
-        return product.type.includes("Bathroom Things");
-      }
-      if (filter === "Bathtub") {
-        return product.type.includes("Bathtub");
-      }
-      if (filter === "Bed") {
-        return product.type.includes("Bed");
-      }
-      if (filter === "Chair") {
-        return product.type.includes("Chair");
-      }
-      if (filter === "Decor") {
-        return product.type.includes("Decor");
-      }
-      if (filter === "Desk") {
-        return product.type.includes("Desk");
-      }
-      if (filter === "Dresser") {
-        return product.type.includes("Dresser");
-      }
-      if (filter === "Easter") {
-        return product.type.includes("Easter");
-      }
-      if (filter === "Fish") {
-        return product.type.includes("foodFish");
-      }
-      if (filter === "Folk Craft Decor") {
-        return product.type.includes("Folk Craft Decor");
-      }
-      if (filter === "Fossils") {
-        return product.type.includes("fossils");
-      }
-      if (filter === "Garden") {
-        return product.type.includes("Garden");
-      }
-      if (filter === "Home Appliances") {
-        return product.type.includes("Home Appliances");
-      }
-      if (filter === "House Door Decor") {
-        return product.type.includes("House Door Decor");
-      }
-      if (filter === "Insect") {
-        return product.type.includes("Insect");
-      }
-      if (filter === "Outdoors Decor") {
-        return product.type.includes("Outdoors Decor");
-      }
-      if (filter === "Sofa") {
-        return product.type.includes("Sofa");
-      }
-      if (filter === "Table") {
-        return product.type.includes("Table");
-      }
-      if (filter === "Toy") {
-        return product.type.includes("Toy");
-      }
-      if (filter === "Seasonal Decor") {
-        return product.type.includes("Seasonal Decor");
-      }
-    });
     return (
       <>
         <div className="all-products-functions">
@@ -155,7 +69,7 @@ class AllProducts extends Component {
               className="filter-products"
               name="filter"
               value={filter}
-              onChange={this.handleFilter}
+              onChange={(event) => this.handleFilter(event)}
             >
               <option value="All Products">All Products</option>
               <option value="Air Conditioning">Air Conditioning</option>
@@ -165,13 +79,12 @@ class AllProducts extends Component {
               <option value="Bathtub">Bathtub</option>
               <option value="Bed">Bed</option>
               <option value="Chair">Chair</option>
-              <option value="Decor">Decor</option>
               <option value="Desk">Desk</option>
               <option value="Dresser">Dresser</option>
               <option value="Easter">Easter</option>
               <option value="Fish">Fish</option>
               <option value="Folk Craft Decor">Folk Craft Decor</option>
-              <option value="Fossils">Fossils</option>
+              <option value="fossils">Fossils</option>
               <option value="Garden">Garden</option>
               <option value="Home Appliances">Home Appliances</option>
               <option value="House Door Decor">House Door Decor</option>
@@ -198,7 +111,7 @@ class AllProducts extends Component {
         <button onClick={this.handleNext}>Next &raquo;</button>
         <div>
           <div className="products">
-            {products.map((product, index) =>
+            {this.props.allProducts.map((product, index) =>
               index >=
                 (this.state.currentPage - 1) * this.state.productsPerPage &&
               index < this.state.currentPage * this.state.productsPerPage ? (
@@ -249,55 +162,6 @@ class AllProducts extends Component {
             )}
           </div>
         </div>
-        {/* <div className="products">
-          {products.map((product) => {
-            return (
-              <Link
-                to={`/products/${product.id}`}
-                key={product.id}
-                onClick={this.handleCardClick}
-              >
-                <div className="productCard">
-                  <h3>{product.name}</h3>
-                  <img
-                    src={product.imageURL}
-                    alt="product image"
-                    className="product_image"
-                  />
-                  <p>${product.price}</p>
-                  {auth.isAdmin ? (
-                    <button
-                      type="button"
-                      className="all_products_actions"
-                      id={product.id}
-                      onClick={() => this.props.deleteProduct(product.id)}
-                    >
-                      Remove product
-                    </button>
-                  ) : isLoggedIn ? (
-                    <button
-                      type="button"
-                      className="all_products_actions"
-                      id={product.id}
-                      // onClick={this.handleAddToCart(product.id, product.price)}
-                    >
-                      Add to cart!
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="all_products_actions"
-                      id={product.id}
-                      // onClick={this.handleGuestAddToCart(product.id)}
-                    >
-                      Add to cart!
-                    </button>
-                  )}
-                </div>
-              </Link>
-            );
-          })}
-        </div> */}
       </>
     );
   }
@@ -311,10 +175,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAllProducts: () => dispatch(getAllProducts()),
-  // addToCart: (userId, product) => dispatch(addProduct(userId, product)),
   getUserFromServer: (username) => dispatch(getUserFromServer(username)),
-  // addGuestProduct: (prodId) => dispatch(addGuestProduct(prodId)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
+  filterByTag: (tagname) => dispatch(filterByTag(tagname)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);

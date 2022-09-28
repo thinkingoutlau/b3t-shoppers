@@ -3,12 +3,6 @@ import { connect } from "react-redux";
 import { getUserFromServer } from "../store/user";
 import { Link } from "react-router-dom";
 
-//what we still want:
-//include email
-//reset password button
-//personal info --> address, payment info //add in edit button
-//history
-
 class UserAccPage extends Component {
   componentDidMount() {
     this.props.getUserFromServer(this.props.auth.username);
