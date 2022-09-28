@@ -23,7 +23,7 @@ function handleCart() {
 const Navbar = ({ handleClick, isLoggedIn, auth, order }) => {
   let prices;
 
-  if (isLoggedIn) {
+  if (isLoggedIn && order.products) {
     prices = order.products.map(
       (el) => el.order_products.price * el.order_products.quantity
     );
@@ -71,7 +71,7 @@ const Navbar = ({ handleClick, isLoggedIn, auth, order }) => {
                     src="/images/Menu_Nook_Shopping_NH_Icon.png"
                     className="cart_img"
                   />
-                  <p>({order.products.length})</p>
+                  <p>({order.products ? order.products.length : 0})</p>
                 </button>
               </div>
               {auth.isAdmin ? (

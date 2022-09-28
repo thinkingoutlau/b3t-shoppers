@@ -29,9 +29,10 @@ function CartCheckout(props) {
   const [success, setSuccess] = useState(false);
 
   let showOrder;
+
   props.isLoggedIn
-    ? (showOrder = props.order.products)
-    : (showOrder = props.order.guestCart);
+    ? (showOrder = props.order.products || [])
+    : (showOrder = props.order.guestCart || []);
 
   let prices = showOrder.map((prod) => {
     let price;
