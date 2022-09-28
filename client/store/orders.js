@@ -8,10 +8,12 @@ const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const DELETE_GUEST_PRODUCT = "DELETE_GUEST_PRODUCT";
 const RELOAD_GUEST_PRODUCT = "RELOAD_GUEST_PRODUCT";
+const CLEAR_CART = "CLEAR_CART";
+const CLEAR_GUEST_CART = "CLEAR_GUEST_CART";
 const LOG_OUT = "LOG_OUT";
 
 //action creators
-const _getCurrentOrder = (order) => ({
+export const _getCurrentOrder = (order) => ({
   type: GET_CURRENT_ORDER,
   order,
 });
@@ -46,12 +48,20 @@ const _reloadGuestProduct = (product) => ({
   product,
 });
 
+const _clearCart = () => ({
+  type: CLEAR_GUEST_CART,
+});
+
+export const _clearGuestCart = () => ({
+  type: CLEAR_GUEST_CART,
+});
+
 //thunk creators
 export const getCurrentOrder = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/currentOrder/${id}`);
-      dispatch(_getCurrentOrder(data));
+      dispatch(_getCurrentOrder(data.products));
     } catch (err) {
       console.log(err);
     }
@@ -115,6 +125,17 @@ export const reloadGuestProduct = (prodId) => {
   };
 };
 
+export const clearCart = (id, status) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`/api/currentOrder/${id}`, status);
+      dispatch(_clearCart());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 const initialState = () => {
   return {
     products: [],
@@ -149,6 +170,10 @@ export default (state = initialState(), action) => {
       return { ...state, guestCart: guestCartProducts };
     case RELOAD_GUEST_PRODUCT:
       return { ...state, guestCart: [...state.guestCart] };
+    case CLEAR_CART:
+      return initialState();
+    case CLEAR_GUEST_CART:
+      return initialState();
     case LOG_OUT:
       return initialState();
     default:
