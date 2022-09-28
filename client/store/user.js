@@ -3,6 +3,7 @@ import axios from "axios";
 const initialState = {};
 const GET_USER = "GET_USER";
 const UPDATE_USER = "UPDATE_USER";
+const TOKEN = "token";
 
 export const _getUser = (user) => ({
   type: GET_USER,
@@ -17,8 +18,15 @@ export const _updateUser = (user) => ({
 export const getUserFromServer = (username) => {
   return async (dispatch) => {
     try {
-      const { data: user } = await axios.get(`/api/users/${username}`);
-      dispatch(_getUser(user));
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data: user } = await axios.get(`/api/users/${username}`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_getUser(user));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -28,11 +36,19 @@ export const getUserFromServer = (username) => {
 export const updateUser = (user) => {
   return async (dispatch) => {
     try {
-      const { data: user } = await axios.put(
-        `/api/users/${user.username}`,
-        user
-      );
-      dispatch(_updateUser(user));
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data: user } = await axios.put(
+          `/api/users/${user.username}`,
+          user,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        dispatch(_updateUser(user));
+      }
     } catch (error) {
       console.log(error);
     }

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const GET_ORDER_HISTORY = "GET_ORDER_HISTORY";
+const TOKEN = "token";
 
 export const _getOrderHistory = (orderHistory) => ({
   type: GET_ORDER_HISTORY,
@@ -10,8 +11,15 @@ export const _getOrderHistory = (orderHistory) => ({
 export const getOrderHistory = (id) => {
   return async (dispatch) => {
     try {
-      const { data: order } = await axios.get(`/api/orderHistory/${id}`);
-      dispatch(_getOrderHistory(order));
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data: order } = await axios.get(`/api/orderHistory/${id}`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_getOrderHistory(order));
+      }
     } catch (error) {
       console.log(error);
     }
