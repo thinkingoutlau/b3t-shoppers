@@ -21,7 +21,7 @@ router.get("/:id", async (req, res, next) => {
       });
     }
 
-    res.json(cart.products);
+    res.json(cart);
   } catch (err) {
     next(err);
   }
@@ -74,11 +74,15 @@ router.put("/:id", async (req, res, next) => {
       },
     });
 
-    const currentProduct = cart.products.filter(
-      (obj) => obj.id === req.body.productId
-    )[0].order_products;
+    if (req.body.status) {
+      cart.update(req.body);
+    } else {
+      const currentProduct = cart.products.filter(
+        (obj) => obj.id === req.body.productId
+      )[0].order_products;
 
-    await currentProduct.update(req.body);
+      await currentProduct.update(req.body);
+    }
 
     cart = await Order.findOne({
       where: {
