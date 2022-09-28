@@ -9,24 +9,42 @@ const CARD_OPTIONS = {
   iconStyle: "solid",
   style: {
     base: {
-      iconColor: "#c4f0ff",
-      color: "#fff",
+      iconColor: "#aac0aa",
+      color: "#aac0aa",
       fontWeight: 500,
       fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
       fontSize: "16px",
       fontSmoothing: "antialiased",
-      ":-webkit-autofill": { color: "#fce883" },
-      "::placeholder": { color: "#87bbfd" },
+      ":-webkit-autofill": { color: "#aac0aa" },
+      "::placeholder": { color: "#aac0aa" },
     },
     invalid: {
-      iconColor: "#ffc7ee",
-      color: "#ffc7ee",
+      iconColor: "#aac0aa",
+      color: "#aac0aa",
     },
   },
 };
 
 function CartCheckout(props) {
   const [success, setSuccess] = useState(false);
+
+  let showOrder;
+  props.isLoggedIn
+    ? (showOrder = props.order.products)
+    : (showOrder = props.order.guestCart);
+
+  let prices = showOrder.map((prod) => {
+    let price;
+    props.isLoggedIn
+      ? (price = prod.order_products.price * prod.order_products.quantity)
+      : (price = prod.price * Number(localStorage.getItem(prod.id)));
+    return price;
+  });
+
+  const checkOutSum = prices.reduce(
+    (previousValue, currentValue) => previousValue + currentValue,
+    0
+  );
 
   const stripe = useStripe();
   const elements = useElements();
@@ -43,7 +61,7 @@ function CartCheckout(props) {
       try {
         const { id } = paymentMethod;
         const response = await axios.post("http://localhost:8080/payment", {
-          amount: props.total,
+          amount: checkOutSum,
           id,
         });
 
@@ -79,6 +97,34 @@ function CartCheckout(props) {
 
   return (
     <div>
+      <div>
+        <h2>Checkout</h2>
+        {showOrder.map((product) => {
+          return (
+            <div className="checkout_prod_info" key={product.id}>
+              <img src={product.imageURL} />
+              <div>
+                <h2>{product.name}</h2>
+                <p>
+                  $
+                  {props.isLoggedIn
+                    ? product.order_products.price
+                    : product.price}
+                  x
+                  {props.isLoggedIn
+                    ? product.order_products.quantity
+                    : localStorage.getItem(product.id)}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+        <h2>
+          {checkOutSum
+            ? `Total Amount: $${checkOutSum}`
+            : "Nothing to checkout!"}
+        </h2>
+      </div>
       {!success ? (
         <form onSubmit={handleSubmit}>
           <fieldset className="FormGroup">
@@ -87,7 +133,12 @@ function CartCheckout(props) {
             </div>
           </fieldset>
           <div id="pay_button">
-            <button>Pay</button>
+            <button
+              type="button"
+              className={showOrder.length ? "" : "disabled"}
+            >
+              Pay
+            </button>
           </div>
         </form>
       ) : (
