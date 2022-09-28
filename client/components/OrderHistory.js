@@ -48,12 +48,10 @@ class OrderHistory extends Component {
 
     return (
       <>
-        <div>
-          <strong>Your Order History:</strong>
-        </div>
-        <div>
-          <p>
-            <label className="filterByDate"> Filter By:</label>
+        <div className="order-history-nav">
+          <strong className="order-history-text">Your Order History:</strong>
+          <p className="order-history-filter">
+            <label className="order-history-text"> Filter By:</label>
             <select
               className="filterByDate"
               name="filter"
@@ -77,19 +75,21 @@ class OrderHistory extends Component {
               {productsPurchasedByUser?.map((product) => {
                 return (
                   <div className="productsFromOrderHistory" key={product.id}>
-                    <h2>
-                      <p>
-                        <strong>{product.name}</strong>
+                    <div className="order-history-info">
+                      <h2 className="order-history-text">
+                        <p>
+                          <strong>{product.name}</strong>
+                        </p>
+                      </h2>
+                      <p className="order-history-text">
+                        <strong>Order placed:</strong> {orderHistoryDate}
                       </p>
-                    </h2>
-                    <p>
-                      <strong>Order placed:</strong> {orderHistoryDate}
-                    </p>
-                    <p>
-                      <strong>Quantity purchased: </strong>{" "}
-                      {product.order_products.quantity}
-                    </p>
-                    <p>
+                      <p className="order-history-text">
+                        <strong>Quantity purchased: </strong>{" "}
+                        {product.order_products.quantity}
+                      </p>
+                    </div>
+                    <p className="order-history-product-image">
                       <img src={product.imageURL} alt="rpoduct image" />
                     </p>
                   </div>
@@ -214,8 +214,8 @@ const mapStateToProps = ({ orderHistory }) => ({
   orderHistory,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getOrderHistory: (id) => dispatch(getOrderHistory(id)),
+const mapDispatchToProps = (dispatch, { history }) => ({
+  getOrderHistory: (id) => dispatch(getOrderHistory(id, history)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderHistory);
