@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-//cardel might be paymentelement
+import { connect } from "react-redux";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { clearCart, _clearGuestCart } from "../store/orders";
 import axios from "axios";
 
 const CARD_OPTIONS = {
@@ -23,7 +24,7 @@ const CARD_OPTIONS = {
   },
 };
 
-export default function CartCheckout(props) {
+function CartCheckout(props) {
   const [success, setSuccess] = useState(false);
 
   const stripe = useStripe();
@@ -48,6 +49,12 @@ export default function CartCheckout(props) {
         if (response.data.success) {
           console.log("successful payment");
           setSuccess(true);
+          if (props.isLoggedIn) {
+            props.clearOrder(props.auth.id, { status: "fulfilled" });
+          } else {
+            props.clearGuestOrder();
+            localStorage.clear();
+          }
         }
       } catch (e) {
         console.log("error", e);
@@ -78,3 +85,18 @@ export default function CartCheckout(props) {
     </div>
   );
 }
+
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.auth.id,
+    auth: state.auth,
+    order: state.currentOrder,
+  };
+};
+
+const mapDispatch = (dispatch) => ({
+  clearOrder: (id, status) => dispatch(clearCart(id, status)),
+  clearGuestOrder: () => dispatch(_clearGuestCart()),
+});
+
+export default connect(mapState, mapDispatch)(CartCheckout);

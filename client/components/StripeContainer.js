@@ -47,7 +47,11 @@ function StripeContainer({ isLoggedIn, order }) {
             </div>
           );
         })}
-        <h2>Total Amount: {checkOutSum}</h2>
+        <h2>
+          {checkOutSum
+            ? `Total Amount: ${checkOutSum}`
+            : "Nothing to checkout!"}
+        </h2>
       </div>
       <Elements stripe={stripeTestPromise}>
         <CartCheckOut total={checkOutSum} />
