@@ -1,30 +1,13 @@
 const router = require("express").Router();
+const session = require("express-session");
 const {
   models: { User },
 } = require("../db");
+const { requireToken, isAdmin } = require("./gateKeepingMiddleware");
 
 module.exports = router;
 
-const adminsOnly = (req, res, next) => {
-  console.log("req", req.token);
-  let { id, fullName, email, password, isAdmin } = req.user.dataValues;
-
-  if (id && fullName && email && password) {
-    if (!isAdmin) {
-      const err = new Error(
-        "You don't have the correct admin rights to do this!"
-      );
-      err.status = 401;
-      return next(err);
-    }
-  } else {
-    const err = new Error("Please log in as admin to do this!");
-    err.status = 401;
-    return next(err);
-  }
-};
-
-router.get("/", async (req, res, next) => {
+router.get("/", requireToken, isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       attributes: [
@@ -69,7 +52,7 @@ router.put("/:username", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     if (user.dataValues.isAdmin === false) {
