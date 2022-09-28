@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-import CartCheckOut from "./CartCheckOut";
+import CartCheckout from "./CartCheckout";
 
 //maybe need to log in for this key
 const PUBLIC_KEY = "pk_test_TYooMQauvdEDq54NiTphI7jx";
@@ -54,7 +54,7 @@ function StripeContainer({ isLoggedIn, order }) {
         </h2>
       </div>
       <Elements stripe={stripeTestPromise}>
-        <CartCheckOut total={checkOutSum} />
+        <CartCheckout total={checkOutSum} />
       </Elements>
     </div>
   );
