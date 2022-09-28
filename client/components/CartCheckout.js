@@ -77,7 +77,6 @@ function CartCheckout(props) {
     }
   };
 
-  console.log(props.order);
   return (
     <div>
       {!success ? (
