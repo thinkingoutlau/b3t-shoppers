@@ -38,7 +38,6 @@ const Navbar = ({ handleClick, isLoggedIn, auth, order }) => {
     0
   );
 
-  console.log(order);
   return (
     <div>
       <div id="store_name">

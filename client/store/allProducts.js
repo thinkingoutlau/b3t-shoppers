@@ -4,6 +4,8 @@ const initialState = [];
 const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
 const EDIT_PRODUCT = "EDIT_PRODUCT";
+const FILTER_BY_TAG = "FILTER_BY_TAG";
+const FILTER_BY_TAGS = "FILTER_BY_TAGS";
 const CREATE_PRODUCT = "CREATE_PRODUCT";
 
 export const _getAllProducts = (allProducts) => ({
@@ -19,6 +21,16 @@ export const _deleteProduct = (product) => ({
 export const _editProduct = (product) => ({
   type: EDIT_PRODUCT,
   product,
+});
+
+export const _filterByTag = (tag) => ({
+  type: FILTER_BY_TAG,
+  tag,
+});
+
+export const _filterByMyltipleTags = (tags) => ({
+  type: FILTER_BY_TAGS,
+  tags,
 });
 
 export const _createProduct = (product) => ({
@@ -77,6 +89,25 @@ export const newProduct = (product, history) => {
   };
 };
 
+export const filterByTag = (tagname) => {
+  return async (dispatch) => {
+    const { data: productTag } = await axios.get(
+      `/api/products/tags/${tagname}`
+    );
+    dispatch(_getAllProducts(productTag));
+  };
+};
+
+export const filterByMultipleTags = (multipleTags) => {
+  return async (dispatch) => {
+    const { data: productTags } = await axios.get(
+      `/api/products/multipleTags/${multipleTags}`
+    );
+    console.log(productTags);
+    dispatch(_getAllProducts(productTags));
+  };
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_PRODUCTS:
@@ -87,6 +118,10 @@ export default (state = initialState, action) => {
       return state.map((product) =>
         product.id === action.product.id ? action.product : product
       );
+    case FILTER_BY_TAG:
+      return action.tag;
+    case FILTER_BY_TAGS:
+      return action.tags;
     case CREATE_PRODUCT:
       return [...state, action.product];
     default:
