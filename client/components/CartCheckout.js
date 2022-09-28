@@ -23,7 +23,7 @@ const CARD_OPTIONS = {
   },
 };
 
-export default function CartCheckout() {
+export default function CartCheckout(props) {
   const [success, setSuccess] = useState(false);
 
   const stripe = useStripe();
@@ -41,7 +41,7 @@ export default function CartCheckout() {
       try {
         const { id } = paymentMethod;
         const response = await axios.post("http://localhost:8080/payment", {
-          amount: 1000,
+          amount: props.total,
           id,
         });
 
