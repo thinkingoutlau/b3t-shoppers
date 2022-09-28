@@ -748,6 +748,29 @@ textarea {
   background-color: #fff;
 }
 
+.purchase_confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #915438;
+}
+
+.purchase_confirm > img {
+  width: 20rem;
+}
+
+.purchase_confirm > h3 {
+  display: flex;
+  align-items: center;
+  margin-top: -1rem;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+.purchase_confirm > h3 > img {
+  width: 2rem;
+}
+
 .pagination {
   display: flex;
   justify-content: center;

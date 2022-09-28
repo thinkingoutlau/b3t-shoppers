@@ -155,8 +155,12 @@ function CartCheckout(props) {
           </form>
         </div>
       ) : (
-        <div>
-          <h2>Payment completed</h2>
+        <div className="purchase_confirm">
+          <img src="/images/Nook's_Cranny_(Upgraded)_NH_Map_Icon.png" />
+          <h2>Purchase completed!</h2>
+          <h3>
+            Come again soon! <img src="/images/logo.png" />
+          </h3>
         </div>
       )}
     </div>
