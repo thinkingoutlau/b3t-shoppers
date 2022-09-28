@@ -5,7 +5,7 @@ const {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const cart = await Order.findOne({
+    let cart = await Order.findOne({
       where: {
         userId: req.params.id,
         status: "unfulfilled",
