@@ -9,31 +9,40 @@ class UserAccPage extends Component {
   }
   render() {
     return (
-      <div>
-        <h1>{`Welcome ${this.props.auth.fullName}!`}</h1>
-        {/* <br></br> */}
-        <p>
-          <strong>Name:</strong> {this.props.auth.fullName}
-        </p>
-        <p>
-          <strong>Username:</strong> {this.props.auth.username}
-        </p>
-        <p>
-          <strong>Email:</strong> {this.props.auth.email}
-        </p>
-        <p>
-          <strong>Password:</strong> ***********{" "}
-          <Link to="/editPassword">Edit Password</Link>
-        </p>
-        {/* <p>
-          <strong>
-            <Link to="/orderHistory">Order History</Link>
-          </strong>
-        </p> */}
-        <p>
-          <strong>Order History: </strong>
-          <Link to={`/orderHistory/${this.props.auth.id}`}>Show History</Link>
-        </p>
+      <div className="account">
+        <div className="account-text">
+          <h1>{`Welcome ${this.props.auth.fullName}!`}</h1>
+          <div className="account-info">
+            <p>
+              <strong>Name:</strong> {this.props.auth.fullName}
+            </p>
+            <p>
+              <strong>Username:</strong> {this.props.auth.username}
+            </p>
+            <p>
+              <strong>Email:</strong> {this.props.auth.email}
+            </p>
+            <p>
+              <strong>Password:</strong> ***********{" "}
+              <Link to="/editPassword">Edit Password</Link>
+            </p>
+          </div>
+        </div>
+        <div className="account-image">
+          <img
+            src={this.props.auth.imageURL}
+            alt="profile-pic"
+            className="account-image-components"
+          />
+          <Link
+            to={`/orderHistory/${this.props.auth.id}`}
+            className="account-image-components"
+          >
+            <button type="button" className="order-history">
+              Order History
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }

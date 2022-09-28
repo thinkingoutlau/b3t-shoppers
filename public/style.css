@@ -623,6 +623,45 @@ textarea {
   padding: 0.2rem;
 }
 
+.account {
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  border: 4px solid #915438;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+.account-info {
+  color: #5f3a1c;
+}
+
+.account-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.account-image-components {
+  padding: 1rem;
+}
+
+.order-history {
+  background-color: #e6cb91;
+  border-radius: 15px;
+  border-color: #5f3a1c;
+  color: #5f3a1c;
+  padding: 0.5rem;
+}
+
+.account-text {
+  align-items: flex-start;
+  justify-content: left;
+  width: 50%;
+}
+
 .FormGroup {
   margin: 0 15px 20px;
   padding: 0;
