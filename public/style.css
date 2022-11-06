@@ -581,7 +581,7 @@ form div {
   border-width: 3px;
   border-style: solid;
   border-radius: 15px;
-  border-color: #3586BB;
+  border-color: #3586bb;
   padding: 20px;
   margin: 1rem;
 }
@@ -828,11 +828,11 @@ textarea {
 }
 
 .order-history-text {
-  color: #5395B7
+  color: #5395b7;
 }
 
 .filterByDate {
-  color: #3586BB;
+  color: #3586bb;
   border-radius: 15rem;
   padding: 0.2rem;
   margin: 1rem;
