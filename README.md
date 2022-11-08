@@ -1,4 +1,4 @@
-<b><i>When asked what was the most popular game played during the pandemic, what comes to mind? </i></b>
+<h2><i>When asked what was the most popular game played during the pandemic, what comes to mind? </i></h2>
 
 Yes, Animal Crossing! Our Animal Crossing E-commerce site was inspired by the love and attention it garnered during the beginning of the pandemic. Though it has been around for quite some time, it wasn't until everyone had to stay indoors did this game become so popular amongst friends and family. 
 
