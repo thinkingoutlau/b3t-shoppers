@@ -11,4 +11,4 @@ Node.js | React | Redux |
 Express | PostgreSQL | Sequelize |
 JWT | Stripe | bcrypt
 
- <img src="public/images/Homepage.png" width="350">
+ <img src="public/images/Homepage.png">
