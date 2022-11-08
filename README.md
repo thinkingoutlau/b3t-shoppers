@@ -12,4 +12,4 @@ Express | PostgreSQL | Sequelize |
 JWT | Stripe | bcrypt
 
 
- <img src="/images/Homepage.png" />
+![Homepage][Homepage.png]
