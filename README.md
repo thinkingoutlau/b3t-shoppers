@@ -11,5 +11,4 @@ Node.js | React | Redux |
 Express | PostgreSQL | Sequelize |
 JWT | Stripe | bcrypt
 
-
-![Homepage](Homepage.png)
+ <img src="Homepage.png" width="350">
