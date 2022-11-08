@@ -10,3 +10,6 @@ Users have the ability to either purchase as a guest, where items in the cart pe
 Node.js | React | Redux |
 Express | PostgreSQL | Sequelize |
 JWT | Stripe | bcrypt
+
+
+ <img src="/images/Homepage.png" />
