@@ -7,6 +7,6 @@ For this project, we had obtained Animal Crossing's API to display our favorite 
 Users have the ability to either purchase as a guest, where items in the cart persist, or to sign up for an account. Users with an account may change their username or password and view their order history. Lastly, Stripe was implemented with a confirmation page to show order has been successful.
 
 Technologies that were used in our project: 
-Node.js | React | Redux
-Express | PostgreSQL | Sequelize
+Node.js | React | Redux |
+Express | PostgreSQL | Sequelize |
 JWT | Stripe | bcrypt
