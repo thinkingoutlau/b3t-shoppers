@@ -1,4 +1,4 @@
-<i>When asked what was the most popular game played during the pandemic, what comes to mind? </i>
+<b><i>When asked what was the most popular game played during the pandemic, what comes to mind? </i></b>
 
 Yes, Animal Crossing! Our Animal Crossing E-commerce site was inspired by the love and attention it garnered during the beginning of the pandemic. Though it has been around for quite some time, it wasn't until everyone had to stay indoors did this game become so popular amongst friends and family. 
 
@@ -6,7 +6,7 @@ For this project, we had obtained Animal Crossing's API to display our favorite 
 
 Users have the ability to either purchase as a guest, where items in the cart persist, or to sign up for an account. Users with an account may change their username or password and view their order history. Lastly, Stripe was implemented with a confirmation page to show order has been successful.
 
-Technologies that were used in our project: 
+<b>Technologies that were used in our project: </b>
 Node.js | React | Redux |
 Express | PostgreSQL | Sequelize |
 JWT | Stripe | bcrypt
