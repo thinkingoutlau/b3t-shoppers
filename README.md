@@ -13,6 +13,8 @@ JWT | Stripe | bcrypt
 
 <p align="center">
  <img src="public/images/Homepage.png" width="750">
- </p>
+</p>
 
+<p align="center">
 Video of our e-commerce site is in public folder :)
+</p>
