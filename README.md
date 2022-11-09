@@ -11,6 +11,4 @@ Node.js | React | Redux |
 Express | PostgreSQL | Sequelize |
 JWT | Stripe | bcrypt
 
-<p align="center">
- <video src="/public/images/AnimalCrossing.mp4" controls width="750"></video>
- </p>
+![Animal Crossing Homepage](https://user-images.githubusercontent.com/107082994/200898427-becfa832-0be1-43e2-aa29-6ed9e3ab0f69.png)
