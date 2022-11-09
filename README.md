@@ -16,5 +16,5 @@ JWT | Stripe | bcrypt
 </p>
 
 <p align="center">
-Video of our e-commerce site is in public folder :)
+ <b>Video of our e-commerce site is in the public folder :)</b>
 </p>
