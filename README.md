@@ -12,5 +12,5 @@ Express | PostgreSQL | Sequelize |
 JWT | Stripe | bcrypt
 
 <p align="center">
- <video src="/AnimalCrossing.mp4" controls width="750"></video>
+ <video src="/public/AnimalCrossing.mp4" controls width="750"></video>
  </p>
